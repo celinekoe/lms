@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 use App\Unit;
+use App\Announcement;
 use App\Section;
-use App\Subsection;
-use App\File;
 
 class UnitController extends Controller
 {
@@ -21,22 +21,17 @@ class UnitController extends Controller
     }
 
     /**
-     * Show the section page.
+     * Show the unit page.
      *
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request)
     {
-        $section = Section::find($request->section_id);
-        $subsections = Subsection::where('section_id', $section->id)->get();
-        foreach ($subsections as $subsection)
-        {
-            $files = File::where('subsection_id', $subsection->id)->get();
-            $subsection->files = $files;
-        }
-        $data['section'] = $section;
-        $data['subsections'] = $subsections;
-        return view('section', ['data' => $data]);
+        $unit = Unit::find($request->id);
+        $sections = Section::where('unit_id', $unit->id)->get();
+        $data['unit'] = $unit;
+        $data['sections'] = $sections;    
+        return view('unit', ['data' => $data]);
     }
 
     /**
@@ -49,6 +44,24 @@ class UnitController extends Controller
         $unit = Unit::find($request->unit_id);
         $data['unit'] = $unit;
         return view('unit_info', ['data' => $data]);
+    }
+
+    /**
+     * Show the unit announcements page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function announcements(Request $request)
+    {
+        $unit = Unit::find($request->unit_id);
+        $announcements = Announcement::where('unit_id', $unit->id)->get();
+        foreach ($announcements as $announcement)
+        {
+            $announcement->user = User::find($announcement->user_id);
+        }
+        $data['unit'] = $unit;
+        $data['announcements'] = $announcements;
+        return view('unit_announcements', ['data' => $data]);
     }
 
 }

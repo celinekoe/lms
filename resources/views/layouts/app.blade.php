@@ -39,15 +39,19 @@
                     @else
                         @if (strpos($url, 'unit') == true)
                             @if (strpos($url, 'info') == true) <!-- Info page -->
-                                <a class="navbar-brand back" href="{{ url('unit/'.$unit_id) }}">
+                                <a class="navbar-brand" href="{{ url('unit/'.$unit_id) }}">
+                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                </a>
+                            @elseif (strpos($url, 'announcements') == true) <!-- Section page -->
+                                <a class="navbar-brand" href="{{ url('unit/'.$unit_id) }}">
                                     <span class="glyphicon glyphicon-chevron-left"></span>
                                 </a>
                             @elseif (strpos($url, 'section') == true) <!-- Section page -->
-                                <a class="navbar-brand back" href="{{ url('unit/'.$unit_id) }}">
+                                <a class="navbar-brand" href="{{ url('unit/'.$unit_id) }}">
                                     <span class="glyphicon glyphicon-chevron-left"></span>
                                 </a>
                             @else <!-- Unit page -->
-                                <a class="navbar-brand back" href="{{ url('home') }}">
+                                <a class="navbar-brand" href="{{ url('home') }}">
                                     <span class="glyphicon glyphicon-chevron-left"></span>
                                 </a>
                             @endif

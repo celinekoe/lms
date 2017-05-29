@@ -36,13 +36,4 @@ class HomeController extends Controller
         }  
         return view('home', ['units' => $units]);
     }
-
-    public function show(Request $request)
-    {
-        $unit = Unit::find($request->id);
-        $sections = Section::where('unit_id', $unit->id)->get();
-        $data['unit'] = $unit;
-        $data['sections'] = $sections;    
-        return view('unit', ['data' => $data]);
-    }
 }

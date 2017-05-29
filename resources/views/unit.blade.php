@@ -19,15 +19,17 @@
                             </a>
                         </div>
                         <div class="col-xs-3 unit-tab">
-                            <div class="glyphicon glyphicon-bullhorn" aria-hidden="true"></div>
-                            <br>
-                            <span class="unit-tab-text">
-                                Announce-
-                            </span>
-                            <br>
-                            <span class="unit-tab-text">
-                                ments
-                            </span>
+                            <a href="{{ url('unit/'.$data['unit']->id.'/announcements') }}">
+                                <div class="glyphicon glyphicon-bullhorn" aria-hidden="true"></div>
+                                <br>
+                                <span class="unit-tab-text">
+                                    Announce-
+                                </span>
+                                <br>
+                                <span class="unit-tab-text">
+                                    ments
+                                </span>
+                            </a>
                         </div>
                         <div class="col-xs-3 unit-tab">
                             <div class="glyphicon glyphicon-star" aria-hidden="true"></div>
