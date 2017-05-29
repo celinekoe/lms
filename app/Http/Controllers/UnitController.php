@@ -7,6 +7,7 @@ use App\User;
 use App\Unit;
 use App\Announcement;
 use App\Assignment;
+use App\UserAssignment;
 use App\Section;
 
 class UnitController extends Controller
@@ -63,5 +64,31 @@ class UnitController extends Controller
         $data['unit'] = $unit;
         $data['announcements'] = $announcements;
         return view('unit_announcements', ['data' => $data]);
+    }
+
+    /**
+     * Show the unit grades page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function grades(Request $request)
+    {
+        $unit = Unit::find($request->unit_id);
+        $assignments = Assignment::where('unit_id', $unit->id)->get();
+        foreach ($assignments as $assignment)
+        {
+            $user_assignment = UserAssignment::where('assignment_id', $assignment->id)->first();
+            $assignment->grade = 0;
+            if ($user_assignment != NULL )
+            {
+                if ($user_assignment->graded_at != NULL)
+                {
+                    $assignment->grade = $user_assignment->grade;
+                }
+            }
+        }
+        $data['unit'] = $unit;
+        $data['assignments'] = $assignments;
+        return view('unit_grades', ['data' => $data]);
     }
 }

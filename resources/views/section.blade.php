@@ -26,6 +26,9 @@
                                 </a>
                             </div>
                         @endforeach
+                        @foreach ($subsection->quizzes as $quiz)
+                            asdf
+                        @endforeach
                         <div class="margin-bottom-20"></div>
                     @endforeach
                 </div>

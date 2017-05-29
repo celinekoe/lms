@@ -22,7 +22,7 @@ class AssignmentController extends Controller
         $assignments = Assignment::where('unit_id', $unit->id)->get();
         $data['unit'] = $unit;
         $data['assignments'] = $assignments;
-        return view('user_assignments', ['data' => $data]);
+        return view('unit_assignments', ['data' => $data]);
     }
 
     public function show(Request $request)

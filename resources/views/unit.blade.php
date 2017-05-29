@@ -19,7 +19,7 @@
                             </a>
                         </div>
                         <div class="col-xs-3 unit-tab">
-                            <a href="{{ url('unit/'.$data['unit']->id.'/announcements') }}">
+                            <a href="{{ url('unit/'.$data['unit']->id.'/announcement') }}">
                                 <div class="glyphicon glyphicon-bullhorn" aria-hidden="true"></div>
                                 <br>
                                 <span class="unit-tab-text">
@@ -32,7 +32,7 @@
                             </a>
                         </div>
                         <div class="col-xs-3 unit-tab">
-                            <a href="{{ url('unit/'.$data['unit']->id.'/assignments') }}">
+                            <a href="{{ url('unit/'.$data['unit']->id.'/assignment') }}">
                                 <div class="glyphicon glyphicon-star" aria-hidden="true"></div>
                                 <br>
                                 <span class="unit-tab-text">
@@ -45,11 +45,13 @@
                             </a>
                         </div>
                         <div class="col-xs-3 unit-tab">
-                            <div class="glyphicon glyphicon-signal" aria-hidden="true"></div>
-                            <br>
-                            <span class="unit-tab-text">
-                                Grades
-                            </span>
+                            <a href="{{ url('unit/'.$data['unit']->id.'/grade') }}">
+                                <div class="glyphicon glyphicon-signal" aria-hidden="true"></div>
+                                <br>
+                                <span class="unit-tab-text">
+                                    Grades
+                                </span>
+                            </a>
                         </div>
                     </div>
                 </div>

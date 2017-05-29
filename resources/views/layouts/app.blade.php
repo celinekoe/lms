@@ -16,18 +16,9 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
+        <nav class="navbar navbar-default navbar-static-top margin-0">
             <div class="container">
-                <div class="navbar-header">
-
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-
+                <div class="navbar-header width-100">
                     <!-- Back -->
                     <?php
                         $url = Request::url(); 
@@ -42,7 +33,19 @@
                                 <a class="navbar-brand" href="{{ url('unit/'.$unit_id) }}">
                                     <span class="glyphicon glyphicon-chevron-left"></span>
                                 </a>
-                            @elseif (strpos($url, 'announcements') == true) <!-- Section page -->
+                            @elseif (strpos($url, 'announcement') == true) <!-- Announcement page -->
+                                <a class="navbar-brand" href="{{ url('unit/'.$unit_id) }}">
+                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                </a>
+                            @elseif (strpos($url, 'assignment/') == true) <!-- Unit assignment page -->
+                                <a class="navbar-brand" href="{{ url('unit/'.$unit_id.'assignment') }}">
+                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                </a>
+                            @elseif (strpos($url, 'assignment') == true) <!-- Unit assignments page -->
+                                <a class="navbar-brand" href="{{ url('unit/'.$unit_id) }}">
+                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                </a>
+                            @elseif (strpos($url, 'grade') == true) <!-- Grade page -->
                                 <a class="navbar-brand" href="{{ url('unit/'.$unit_id) }}">
                                     <span class="glyphicon glyphicon-chevron-left"></span>
                                 </a>
@@ -57,46 +60,53 @@
                             @endif
                         @endif
                     @endif
-                </div>
-
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endif
-                    </ul>
+                
+                    <!-- Sidebar open -->
+                    <span class="sidebar-open navbar-brand glyphicon glyphicon-menu-hamburger pull-right"></span>
                 </div>
             </div>
         </nav>
-        @yield('content')
+        <!-- Sidebar -->
+        <div class="sidebar bg-white height-100">
+            @if (Auth::guest())
+                <li><a href="{{ route('login') }}">Login</a></li>
+                <li><a href="{{ route('register') }}">Register</a></li>
+            @else
+                <div class="sidebar-close padding-10">
+                    <div class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></div>
+                </div>
+                <a href="#">
+                    <div class="sidebar-nav padding-10">{{ Auth::user()->name }}</div>
+                </a>
+                <a href="#">
+                    <div class="padding-10">Dashboard</div>
+                </a>
+                <a href="#">
+                    <div class="padding-10">Forums</div>
+                </a>
+                <a href="#">
+                    <div class="padding-10">Messages</div>
+                </a>
+                <a href="#">
+                    <div class="padding-10">Notifications</div>
+                </a>
+                <a href="#">
+                    <div class="padding-10">Downloads</div>
+                </a>
+                <a href="{{ route('logout') }}" 
+                    onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
+                    <div class="padding-10">Logout</div>
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                </form>
+            @endif
+        </div>
+        <div class="content margin-top-20">
+            @yield('content')    
+        </div>
     </div>
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>

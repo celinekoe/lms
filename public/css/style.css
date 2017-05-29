@@ -10,6 +10,10 @@ html {
 	background: #EEEEEE;
 }
 
+.bg-white {
+	background: #FFFFFF;
+}
+
 .border-0 {
 	border: 0px;
 }
@@ -102,6 +106,30 @@ html {
 
 .width-100 {
 	width: 100%;
+}
+
+.content {
+	display: inline-block;
+	position: absolute;
+}
+
+.custom {
+	float: right;
+}
+
+.sidebar {
+	float: left;
+	position: absolute;
+	width: 300px;
+	z-index: 1;
+}
+
+.sidebar-nav {
+	clear: right;
+}
+
+.sidebar-open {
+	top: 0px;
 }
 
 .unit-tabs {
