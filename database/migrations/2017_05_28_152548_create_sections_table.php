@@ -15,7 +15,7 @@ class CreateSectionsTable extends Migration
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('unit_id')->unsigned()->nullable();
+            $table->integer('unit_id')->unsigned();
             $table->string('name');
             $table->foreign('unit_id')->references('id')->on('units');
             $table->timestamps();

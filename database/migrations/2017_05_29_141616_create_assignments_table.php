@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSubsectionsTable extends Migration
+class CreateAssignmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateSubsectionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('subsections', function (Blueprint $table) {
+        Schema::create('assignments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('section_id')->unsigned();
+            $table->integer('unit_id')->unsigned();
             $table->string('name');
-            $table->foreign('section_id')->references('id')->on('sections');
+            $table->date('submit_by');
+            $table->foreign('unit_id')->references('id')->on('units');
             $table->timestamps();
         });
     }
@@ -30,7 +31,7 @@ class CreateSubsectionsTable extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('subsections');
+        Schema::dropIfExists('assignments');
         Schema::enableForeignKeyConstraints();
     }
 }

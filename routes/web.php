@@ -23,12 +23,14 @@ Route::get('/unit/{id}', 'UnitController@show')->name('unit');
 
 Route::get('/unit/{unit_id}/info', 'UnitController@info')->name('unit_info');
 
-Route::get('/unit/{unit_id}/announcements', 'UnitController@announcements')->name('announcements');
+Route::get('/unit/{unit_id}/announcement', 'UnitController@announcements')->name('announcements');
 
-Route::get('/unit/{unit_id}/assignments', 'UnitController@assignments')->name('assignments');
+Route::get('/unit/{unit_id}/assignment', 'AssignmentController@index')->name('assignments');
 
-Route::get('/unit/{unit_id}/grades', 'UnitController@grades')->name('grades');
+Route::get('/unit/{unit_id}/assignment/{assignment_id}', 'AssignmentController@show')->name('assignments');
+
+Route::get('/unit/{unit_id}/grade', 'UnitController@grades')->name('grades');
 
 Route::get('/unit/{unit_id}/section/{section_id}', 'SectionController@show')->name('section');
 
-Route::get('/unit/{unit_id}/section/{section_id}/file/{file_id}', 'SectionController@file');
+Route::get('/unit/{unit_id}/section/{section_id}/file/{file_id}', 'SectionController@file')->name('file');

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Unit;
 use App\Announcement;
+use App\Assignment;
 use App\Section;
 
 class UnitController extends Controller
@@ -63,5 +64,4 @@ class UnitController extends Controller
         $data['announcements'] = $announcements;
         return view('unit_announcements', ['data' => $data]);
     }
-
 }

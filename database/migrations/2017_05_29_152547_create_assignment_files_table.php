@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSubsectionsTable extends Migration
+class CreateAssignmentFilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateSubsectionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('subsections', function (Blueprint $table) {
+        Schema::create('assignment_files', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('section_id')->unsigned();
+            $table->integer('assignment_id')->unsigned();
             $table->string('name');
-            $table->foreign('section_id')->references('id')->on('sections');
+            $table->string('type');
+            $table->string('extension');
+            $table->string('url');
+            $table->foreign('assignment_id')->references('id')->on('assignments');
             $table->timestamps();
         });
     }
@@ -30,7 +33,7 @@ class CreateSubsectionsTable extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('subsections');
+        Schema::dropIfExists('files');
         Schema::enableForeignKeyConstraints();
     }
 }

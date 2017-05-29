@@ -32,15 +32,17 @@
                             </a>
                         </div>
                         <div class="col-xs-3 unit-tab">
-                            <div class="glyphicon glyphicon-star" aria-hidden="true"></div>
-                            <br>
-                            <span class="unit-tab-text">
-                                Assign-
-                            </span>
-                            <br>
-                            <span class="unit-tab-text">
-                                ments
-                            </span>
+                            <a href="{{ url('unit/'.$data['unit']->id.'/assignments') }}">
+                                <div class="glyphicon glyphicon-star" aria-hidden="true"></div>
+                                <br>
+                                <span class="unit-tab-text">
+                                    Assign-
+                                </span>
+                                <br>
+                                <span class="unit-tab-text">
+                                    ments
+                                </span>
+                            </a>
                         </div>
                         <div class="col-xs-3 unit-tab">
                             <div class="glyphicon glyphicon-signal" aria-hidden="true"></div>
