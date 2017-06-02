@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAssignmentFilesTable extends Migration
+class CreateOptionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class CreateAssignmentFilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('assignment_files', function (Blueprint $table) {
+        Schema::create('options', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('assignment_id')->unsigned();
-            $table->string('name');
-            $table->string('type');
-            $table->string('extension');
-            $table->string('url');
-            $table->foreign('assignment_id')->references('id')->on('assignments');
+            $table->integer('question_id')->unsigned();
+            $table->string('option');
+            $table->boolean('is_correct');
+            $table->foreign('question_id')->references('id')->on('questions');
             $table->timestamps();
         });
     }
@@ -33,7 +31,7 @@ class CreateAssignmentFilesTable extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('assignment_files');
+        Schema::dropIfExists('options');
         Schema::enableForeignKeyConstraints();
     }
 }

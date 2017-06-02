@@ -1,3 +1,5 @@
+Sidebar
+
 var sidebar = document.querySelector(".sidebar");
 var sidebar_close = document.querySelector(".sidebar-close");
 sidebar_close.onclick = toggleSidebar;

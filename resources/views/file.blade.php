@@ -14,7 +14,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
-<body class="height-100 margin-0">
+<body class="height-100p margin-0">
 	<nav class="navbar navbar-default navbar-static-top margin-bottom-0">
 	    <div class="container">
 	        <div class="navbar-header">
@@ -73,9 +73,9 @@
 		    <iframe width="560" height="315" src="{{ $data['file']->url }}" frameborder="0" allowfullscreen></iframe>
 		</div>
 	@else
-		<iframe src="{{ $data['file']->url }}" frameborder="0" class="height-100 width-100"></iframe>
+		<iframe src="{{ $data['file']->url }}" frameborder="0" class="height-100p width-100p"></iframe>
 	@endif
-	<!-- <iframe src="{{ url('storage/'.$data['file']->name.$data['file']->extension) }}" frameborder="0" class="height-100 width-100"></iframe> -->
+	<!-- <iframe src="{{ url('storage/'.$data['file']->name.$data['file']->extension) }}" frameborder="0" class="height-100p width-100p"></iframe> -->
 	<!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/script.js') }}"></script>

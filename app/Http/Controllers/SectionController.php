@@ -9,6 +9,7 @@ use App\Unit;
 use App\Section;
 use App\Subsection;
 use App\File;
+use App\Quiz;
 
 class SectionController extends Controller
 {
@@ -25,6 +26,8 @@ class SectionController extends Controller
         {
             $files = File::where('subsection_id', $subsection->id)->get();
             $subsection->files = $files;
+            $quizzes = Quiz::where('subsection_id', $subsection->id)->get();
+            $subsection->quizzes = $quizzes;
         }
         $data['section'] = $section;
         $data['subsections'] = $subsections;

@@ -27,7 +27,12 @@
                             </div>
                         @endforeach
                         @foreach ($subsection->quizzes as $quiz)
-                            asdf
+                            <div class="bg-light-grey margin-left-right-20 padding-10">
+                                <span class="glyphicon glyphicon-star margin-left-10"></span>
+                                <a href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/quiz/'.$quiz->id) }}">
+                                    <span class="margin-left-20">{{ $quiz->name }}</span>
+                                </a>
+                            </div>
                         @endforeach
                         <div class="margin-bottom-20"></div>
                     @endforeach

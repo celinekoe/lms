@@ -18,13 +18,24 @@
     <div id="app">
         <nav class="navbar navbar-default navbar-static-top margin-0">
             <div class="container">
-                <div class="navbar-header width-100">
+                <div class="navbar-header width-100p">
                     <!-- Back -->
                     <?php
                         $url = Request::url(); 
                         $start = strpos($url, '/unit/') + 6;
                         $length = strpos(substr($url, $start), '/') + 1;
                         $unit_id = substr($url, $start, $length);
+                        if (strpos($url, 'section') == true) 
+                        {
+                            $start = strpos($url, '/section/') + 9;
+                            $length = strpos(substr($url, $start), '/') + 1;
+                            $section_id = substr($url, $start, $length);
+                            if (strpos($url, 'quiz') == true) 
+                            {
+                                $start = strpos($url, '/quiz/') + 6;
+                                $length = strpos(substr($url, $start), '/') + 1;
+                                $quiz_id = substr($url, $start, $length);                            }
+                        }
                     ?>
                     @if (strpos($url, 'home') == true) <!-- Dashboard -->
                     @else
@@ -49,10 +60,22 @@
                                 <a class="navbar-brand" href="{{ url('unit/'.$unit_id) }}">
                                     <span class="glyphicon glyphicon-chevron-left"></span>
                                 </a>
-                            @elseif (strpos($url, 'section') == true) <!-- Section page -->
+                            @elseif (strpos($url, 'section') == true) 
+                                @if (strpos($url, 'quiz') == true) <!-- Quiz page -->
+                                    @if (strpos($url, 'question') == true)
+                                        <a class="navbar-brand" href="{{ url('unit/'.$unit_id.'section/'.$section_id.'quiz/'.$quiz_id) }}">
+                                            <span class="glyphicon glyphicon-chevron-left"></span>
+                                        </a>
+                                    @else
+                                        <a class="navbar-brand" href="{{ url('unit/'.$unit_id.'section/'.$section_id) }}">
+                                            <span class="glyphicon glyphicon-chevron-left"></span>
+                                        </a>
+                                    @endif
+                                @else <!-- Section page -->
                                 <a class="navbar-brand" href="{{ url('unit/'.$unit_id) }}">
                                     <span class="glyphicon glyphicon-chevron-left"></span>
                                 </a>
+                                @endif
                             @else <!-- Unit page -->
                                 <a class="navbar-brand" href="{{ url('home') }}">
                                     <span class="glyphicon glyphicon-chevron-left"></span>
@@ -67,7 +90,7 @@
             </div>
         </nav>
         <!-- Sidebar -->
-        <div class="sidebar bg-white height-100">
+        <div class="sidebar bg-white height-100p">
             @if (Auth::guest())
                 <li><a href="{{ route('login') }}">Login</a></li>
                 <li><a href="{{ route('register') }}">Register</a></li>
@@ -104,12 +127,13 @@
                 </form>
             @endif
         </div>
-        <div class="content margin-top-20">
+        <div class="content">
             @yield('content')    
         </div>
     </div>
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/script.js') }}"></script>
+    @yield('script')
 </body>
 </html>

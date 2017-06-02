@@ -21,5 +21,10 @@ class DatabaseSeeder extends Seeder
         $this->call(SectionsTableSeeder::class);
         $this->call(SubsectionsTableSeeder::class);
         $this->call(FilesTableSeeder::class);
+        $this->call(QuizzesTableSeeder::class);
+        $this->call(QuestionsTableSeeder::class);
+        $this->call(OptionsTableSeeder::class);
+        $this->call(UserQuizzesTableSeeder::class);
+        $this->call(UserQuestionsTableSeeder::class);
     }
 }

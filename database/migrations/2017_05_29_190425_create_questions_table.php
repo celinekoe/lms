@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAssignmentFilesTable extends Migration
+class CreateQuestionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class CreateAssignmentFilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('assignment_files', function (Blueprint $table) {
+        Schema::create('questions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('assignment_id')->unsigned();
-            $table->string('name');
-            $table->string('type');
-            $table->string('extension');
-            $table->string('url');
-            $table->foreign('assignment_id')->references('id')->on('assignments');
+            $table->integer('quiz_id')->unsigned();
+            $table->integer('question_no');
+            $table->string('question');
+            $table->foreign('quiz_id')->references('id')->on('quizzes');
             $table->timestamps();
         });
     }
@@ -33,7 +31,7 @@ class CreateAssignmentFilesTable extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('assignment_files');
+        Schema::dropIfExists('questions');
         Schema::enableForeignKeyConstraints();
     }
 }
