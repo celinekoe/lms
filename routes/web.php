@@ -35,7 +35,9 @@ Route::get('/unit/{unit_id}/grade', 'UnitController@grades')->name('grades');
 
 Route::get('/unit/{unit_id}/section/{section_id}', 'SectionController@show')->name('section');
 
-Route::get('/unit/{unit_id}/section/{section_id}/file/{file_id}', 'SectionController@file')->name('file');
+Route::get('/unit/{unit_id}/section/{section_id}/file/{file_id}', 'SectionController@file');
+
+Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/file/{file_id}/download', 'SectionController@download');
 
 Route::get('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}', 'QuizController@show')->name('quiz');
 

@@ -3,6 +3,13 @@ html {
 	background: #EEEEEE;
 }
 
+a:link, a:hover, a:active, a:visited 
+{
+     color: inherit; 
+     text-decoration: none; 
+     cursor: pointer;  
+}
+
 /*
 	
 	Color
@@ -19,10 +26,6 @@ html {
 
 .bg-failure {
 	background: #d9534f;
-}
-
-.bg-blue-grey {
-	background: #D3E0E9;
 }
 
 .bg-dark-grey {
@@ -49,12 +52,12 @@ html {
 	border: 1px solid #EEEEEE;
 }
 
-.border-blue-grey {
-	border: 1px solid #D3E0E9;
-}
-
 .text-link-blue {
 	color: #3097D1;
+}
+
+.text-dark-grey {
+	color: #636B6F;
 }
 
 .text-light-grey {
@@ -67,12 +70,23 @@ html {
 
 /*
 	
-	Positioning
+	Position
 
 */
 
 .display-inline {
 	display: inline;
+}
+
+.flex-align-center {
+	display: flex;
+	align-items: center;
+}
+
+.flex-align-center-justify-end {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
 }
 
 .height-50 {
@@ -139,6 +153,10 @@ html {
 .margin-top-bottom-2 {
 	margin-top: 2px;
 	margin-bottom: 2px;
+}
+
+.margin-top-4 {
+	margin-top: 4px;
 }
 
 .margin-10 {
@@ -264,12 +282,6 @@ html {
 .padding-top-bottom-20 {
 	padding-top: 20px;
 	padding-bottom: 20px;
-}
-
-.align-center-justify-end {
-	display: flex;
-	align-items: center;
-	justify-content: flex-end;
 }
 
 .width-50p {
