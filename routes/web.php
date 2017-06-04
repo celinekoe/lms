@@ -27,7 +27,9 @@ Route::get('/unit/{unit_id}/announcement', 'UnitController@announcements')->name
 
 Route::get('/unit/{unit_id}/assignment', 'AssignmentController@index')->name('assignments');
 
-Route::get('/unit/{unit_id}/assignment/{assignment_id}', 'AssignmentController@show')->name('assignments');
+Route::get('/unit/{unit_id}/assignment/{assignment_id}', 'AssignmentController@show');
+
+Route::post('/unit/{unit_id}/assignment/{assignment_id}', 'AssignmentController@submit');
 
 Route::get('/unit/{unit_id}/grade', 'UnitController@grades')->name('grades');
 

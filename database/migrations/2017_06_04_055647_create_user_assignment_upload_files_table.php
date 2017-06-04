@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserQuestionsTable extends Migration
+class CreateUserAssignmentUploadFilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,16 @@ class CreateUserQuestionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_questions', function (Blueprint $table) {
+        Schema::create('user_assignment_upload_files', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->integer('question_id')->unsigned();
-            $table->integer('option_id')->unsigned();
-            $table->integer('attempt_no');
+            $table->integer('assignment_id')->unsigned();
+            $table->string('name');
+            $table->string('type');
+            $table->string('extension');
+            $table->string('url')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('question_id')->references('id')->on('questions');
-            $table->foreign('option_id')->references('id')->on('options');
+            $table->foreign('assignment_id')->references('id')->on('assignments');
             $table->timestamps();
         });
     }
@@ -34,7 +35,7 @@ class CreateUserQuestionsTable extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('user_questions');
+        Schema::dropIfExists('user_assignment_upload_files');
         Schema::enableForeignKeyConstraints();
     }
 }

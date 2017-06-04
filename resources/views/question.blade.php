@@ -27,7 +27,7 @@
         $next_url = $url . '/' . $next_question_no;
     }
 ?>
-<div class="container">
+<div class="container margin-top-20">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="bg-blue-grey panel panel-default margin-0">
@@ -38,15 +38,22 @@
                     {{ $data['question']->question }}
                 </div>
                 @foreach ($data['options'] as $option)
-                    <div class="radio bg-light-grey margin-0 padding-10">
-                        <label><input type="radio" value="{{ $option->id }}" class="option">{{ $option->option }}</label>
-                    </div>
+                    @if ($data['user_question']->option_id == $option->id)
+                        <div class="radio bg-white margin-0 padding-10">
+                            <label><input type="radio" name="option" value="{{ $option->id }}" class="option">{{ $option->option }}</label>
+                        </div>
+                    @else
+                        <div class="radio bg-light-grey margin-0 padding-10">
+                            <label><input type="radio" name="option" value="{{ $option->id }}" class="option">{{ $option->option }}</label>
+                        </div>
+                    @endif
                 @endforeach
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" class="token">
             </div>
             <div class="margin-top-20">
                 @if ($has_prev)
                     <form action="{{ $prev_url }}" method="POST" class="display-inline">
+                        <input type="hidden" name="current_question_no" value="{{ $data['question']->question_no }}">
                         <input type="hidden" name="option" class="hidden_option">
                         <input type="submit" class="btn btn-default" value="Prev">
                         {{ csrf_field() }}  
@@ -54,12 +61,14 @@
                 @endif
                 @if ($has_next)
                     <form action="{{ $next_url }}" method="POST" class="display-inline">
+                        <input type="hidden" name="current_question_no" value="{{ $data['question']->question_no }}">
                         <input type="hidden" name="option" class="hidden_option">
                         <input type="submit" class="btn btn-default pull-right" value="Next">
                         {{ csrf_field() }}   
                     </form>
                 @else
                     <form action="{{ $submit_url }}" method="POST" class="display-inline">
+                        <input type="hidden" name="current_question_no" value="{{ $data['question']->question_no }}">
                         <input type="hidden" name="option" class="hidden_option">
                         <input type="submit" class="btn btn-default pull-right" value="Submit">
                         {{ csrf_field() }}   

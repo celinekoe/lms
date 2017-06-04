@@ -46,26 +46,31 @@ class QuizController extends Controller
         $user = Auth::user();
         $section = Section::find($request->section_id);
         $quiz = Quiz::find($request->quiz_id);
-        $question = Question::where('quiz_id', $quiz->id)
-                                ->where('question_no', $request->question_no)
+        $current_question = Question::where('quiz_id', $quiz->id)
+                                ->where('question_no', $request->current_question_no)
                                 ->first();
         $option = Option::find($request->option);
         if ($option != null) 
         {
-            $user_question = UserQuestion::updateOrCreate([
-                'user_id' => $user->id,
-                'question_id' => $question->id,
-                'option_id' => $option->id
-            ]);
-            $user_question->save();
+            $user_question = UserQuestion::updateOrCreate(
+                ['user_id' => $user->id, 'question_id' => $current_question->id],
+                ['option_id' => $option->id]
+            );
         }
 
         // Show next question
+        $question = Question::where('quiz_id', $quiz->id)
+                                ->where('question_no', $request->question_no)
+                                ->first();
+        $user_question = UserQuestion::where('user_id', $user->id)
+                                        ->where('question_id', $question->id)
+                                        ->first();
 
         $options = Option::where('question_id', $question->id)->get();
         $data['section'] = $section;
         $data['quiz'] = $quiz;
         $data['question'] = $question;
+        $data['user_question'] = $user_question;
         $data['options'] = $options;
         return view('question', ['data' => $data]);
     }
@@ -81,25 +86,26 @@ class QuizController extends Controller
         // Store option
         
         $user = Auth::user();
-        $section = Section::find($request->section_id);
         $quiz = Quiz::find($request->quiz_id);
-        $question = Question::where('quiz_id', $quiz->id)
-                                ->where('question_no', $request->question_no)
+        $current_question = Question::where('quiz_id', $quiz->id)
+                                ->where('question_no', $request->current_question_no)
                                 ->first();
         $option = Option::find($request->option);
         if ($option != null) 
         {
-            $user_question = UserQuestion::updateOrCreate([
-                'user_id' => $user->id,
-                'question_id' => $question->id,
-                'option_id' => $option->id
-            ]);
-            $user_question->save();
+            $user_question = UserQuestion::updateOrCreate(
+                ['user_id' => $user->id, 'question_id' => $current_question->id],
+                ['option_id' => $option->id]
+            );
         }
 
         // Show quiz review page
+        $section = Section::find($request->section_id);
         $user_quiz = UserQuiz::where('user_id', $user->id)
                                 ->where('quiz_id', $quiz->id)
+                                ->first();
+        $question = Question::where('quiz_id', $quiz->id)
+                                ->where('question_no', $request->question_no)
                                 ->first();
         $questions = Question::where('quiz_id', $quiz->id)->get();
         foreach ($questions as $question)
@@ -125,7 +131,7 @@ class QuizController extends Controller
         $data['user_quiz'] = $user_quiz;
         $data['question'] = $question;
         $data['questions'] = $questions;
-        
+
         return view('quiz_review', ['data' => $data]);
     }
 }

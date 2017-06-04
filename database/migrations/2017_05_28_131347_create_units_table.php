@@ -16,6 +16,7 @@ class CreateUnitsTable extends Migration
         Schema::create('units', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('course_id')->unsigned();
+            $table->string('unit_code');
             $table->string('name');
             $table->text('info')->nullable();
             $table->foreign('course_id')->references('id')->on('courses');

@@ -105,6 +105,9 @@
                     <div class="padding-10">Dashboard</div>
                 </a>
                 <a href="#">
+                    <div class="padding-10">Calendar</div>
+                </a>
+                <a href="#">
                     <div class="padding-10">Forums</div>
                 </a>
                 <a href="#">
@@ -127,7 +130,7 @@
                 </form>
             @endif
         </div>
-        <div class="content">
+        <div class="content margin-top-20">
             @yield('content')    
         </div>
     </div>

@@ -21,5 +21,25 @@ class UserAssignmentsTableSeeder extends Seeder
             'grade_comment' => 'gradecomment1',
             'graded_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
+
+        DB::table('user_assignments')->insert([
+            'student_id' => '1',
+            'staff_id' => '1',
+            'assignment_id' => '2',
+            'submitted_at' => null,
+            'grade' => null,
+            'grade_comment' => null,
+            'graded_at' => null,
+        ]);
+
+        DB::table('user_assignments')->insert([
+            'student_id' => '1',
+            'staff_id' => '1',
+            'assignment_id' => '3',
+            'submitted_at' => null,
+            'grade' => null,
+            'grade_comment' => null,
+            'graded_at' => null,
+        ]);
     }
 }

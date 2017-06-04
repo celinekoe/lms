@@ -18,13 +18,14 @@ class DatabaseSeeder extends Seeder
         $this->call(AssignmentsTableSeeder::class);
         $this->call(AssignmentFilesTableSeeder::class);
         $this->call(UserAssignmentsTableSeeder::class);
+        $this->call(UserAssignmentUploadFilesTableSeeder::class);
         $this->call(SectionsTableSeeder::class);
         $this->call(SubsectionsTableSeeder::class);
-        $this->call(FilesTableSeeder::class);
+        $this->call(SubsectionFilesTableSeeder::class);
         $this->call(QuizzesTableSeeder::class);
+        $this->call(UserQuizzesTableSeeder::class);
         $this->call(QuestionsTableSeeder::class);
         $this->call(OptionsTableSeeder::class);
-        $this->call(UserQuizzesTableSeeder::class);
         $this->call(UserQuestionsTableSeeder::class);
     }
 }
