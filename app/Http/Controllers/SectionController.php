@@ -9,7 +9,7 @@ use App\Unit;
 use App\Section;
 use App\Subsection;
 use App\SubsectionFile;
-use App\UserSubsectionDownloadFile;
+use App\UserSubsectionFile;
 use App\Quiz;
 
 class SectionController extends Controller
@@ -24,29 +24,56 @@ class SectionController extends Controller
         $user = Auth::user();
         $section = Section::find($request->section_id);
         $subsections = Subsection::where('section_id', $section->id)->get();
+        $total_section_files = 0;
+        $completed_section_files = 0;
         foreach ($subsections as $subsection)
         {
             $files = SubsectionFile::where('subsection_id', $subsection->id)->get();
-            $user_subsection_download_files = UserSubsectionDownloadFile::where('user_id', $user->id)
-                                                                            ->where('subsection_id', $subsection->id)
+            $user_subsection_files = UserSubsectionFile::where('user_id', $user->id)
+                                                                            ->where('subsection_file_id', $subsection->id)
                                                                             ->get();
+            $total_subsection_files = 0;
+            $completed_subsection_files = 0;
             foreach ($files as $file)
             {
-                $file->downloaded = false;
-                foreach ($user_subsection_download_files as $user_subsection_download_file)
+                $total_subsection_files++;
+                foreach ($user_subsection_files as $user_subsection_file)
                 {
-                    if ($file->id == $user_subsection_download_file->id)
+                    if ($file->id == $user_subsection_file->id)
                     {
-                        $file->downloaded = true;
+                        if ($user_subsection_file->completed)
+                        {
+                            $completed_subsection_files++;
+                        }
+                        $file->completed = $user_subsection_file->completed;
+                        $file->downloaded = $user_subsection_file->downloaded;
                     }
                 }
+
             }
+            $total_section_files += $total_subsection_files;
+            $completed_section_files += $completed_subsection_files;
             $subsection->files = $files;
             $quizzes = Quiz::where('subsection_id', $subsection->id)->get();
             $subsection->quizzes = $quizzes;
         }
+        $section->progress = ($total_section_files > 0) ? round($completed_section_files/$total_section_files * 100) : 100;
+
+        $data = $this->calculateProgress($user, $section, $subsections);
+        foreach ($subsections as $subsection)
+        {
+            foreach ($data['subsections_progress'] as $subsection_progress)
+            {
+                if ($subsection->id == $subsection_progress->id)
+                {
+                    $subsection->progress = $subsection_progress->progress;
+                }
+            }
+        }
+
         $data['section'] = $section;
         $data['subsections'] = $subsections;
+        
         return view('section', ['data' => $data]);
     }
 
@@ -67,7 +94,53 @@ class SectionController extends Controller
     }
 
     /**
-     * Download the section file.
+     * Complete the subsection file.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function complete(Request $request)
+    {
+        $user = Auth::user();
+        $subsection_file = SubsectionFile::find($request->file_id);
+        $user_subsection_file = UserSubsectionFile::where('user_id', $user->id)
+                                                    ->where('subsection_file_id', $subsection_file->id)
+                                                    ->first();
+        $user_subsection_file->completed = true;
+        $user_subsection_file->save();
+        
+        $section = Section::find($request->section_id);
+        $subsections = Subsection::where('section_id', $section->id)->get();
+        $data = $this->calculateProgress($user, $section, $subsections);
+        $subsections = $data['subsections_progress'];
+
+        return $data;
+    }
+
+    /**
+     * Incomplete the subsection file.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function incomplete(Request $request)
+    {
+        $user = Auth::user();
+        $subsection_file = SubsectionFile::find($request->file_id);
+        $user_subsection_file = UserSubsectionFile::where('user_id', $user->id)
+                                                    ->where('subsection_file_id', $subsection_file->id)
+                                                    ->first();
+        $user_subsection_file->completed = false;
+        $user_subsection_file->save();
+
+        $section = Section::find($request->section_id);
+        $subsections = Subsection::where('section_id', $section->id)->get();
+        $data = $this->calculateProgress($user, $section, $subsections);
+        $subsections = $data['subsections_progress'];
+
+        return $data;
+    }
+
+    /**
+     * Download the subsection file.
      *
      * @return \Illuminate\Http\Response
      */
@@ -75,13 +148,54 @@ class SectionController extends Controller
     {
         $user = Auth::user();
         $subsection_file = SubsectionFile::find($request->file_id);
-        $user_subsection_download_files = UserSubsectionDownloadFile::create([
-            'user_id' => $user->id,
-            'subsection_id' => $request->subsection_id,
-            'name' => $subsection_file->name,
-            'type' => $subsection_file->type,
-            'extension' => $subsection_file->extension,
-            'url' => $subsection_file->url
-        ]);
+        $user_subsection_file = UserSubsectionFile::where('user_id', $user->id)
+                                                    ->where('subsection_file_id', $subsection_file->id)
+                                                    ->first();
+        $user_subsection_file->downloaded = true;
+        $user_subsection_file->save();
+    }
+
+    /**
+     * Calculate section progress.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    private function calculateProgress($user, $section, $subsections)
+    {
+        $total_section_files = 0;
+        $completed_section_files = 0;
+        foreach ($subsections as $subsection)
+        {
+            $files = SubsectionFile::where('subsection_id', $subsection->id)->get();
+            $user_subsection_files = UserSubsectionFile::where('user_id', $user->id)
+                                                                            ->where('subsection_file_id', $subsection->id)
+                                                                            ->get();
+            $total_subsection_files = 0;
+            $completed_subsection_files = 0;
+            foreach ($files as $file)
+            {
+                $total_subsection_files++;
+                foreach ($user_subsection_files as $user_subsection_file)
+                {
+                    if ($file->id == $user_subsection_file->id)
+                    {
+                        if ($user_subsection_file->completed)
+                        {
+                            $completed_subsection_files++;
+                        }
+                        $file->completed = $user_subsection_file->completed;
+                        $file->downloaded = $user_subsection_file->downloaded;
+                    }
+                }
+
+            }
+            $total_section_files += $total_subsection_files;
+            $completed_section_files += $completed_subsection_files;
+            $subsection->progress = ($total_subsection_files > 0) ? round($completed_subsection_files/$total_subsection_files * 100) : 100;
+        }
+        $section->progress = ($total_section_files > 0) ? round($completed_section_files/$total_section_files * 100) : 100;
+        $data['section_progress'] = $section->progress;
+        $data['subsections_progress'] = $subsections;
+        return $data;
     }
 }

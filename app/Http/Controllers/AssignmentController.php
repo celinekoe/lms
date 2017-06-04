@@ -23,6 +23,10 @@ class AssignmentController extends Controller
     {
         $unit = Unit::find($request->unit_id);
         $assignments = Assignment::where('unit_id', $unit->id)->get();
+        foreach ($assignments as $assignment)
+        {
+            $assignment->submit_by_date_format = Carbon::parse($assignment->submit_by_date)->toDateString();
+        }
         $data['unit'] = $unit;
         $data['assignments'] = $assignments;
         return view('unit_assignments', ['data' => $data]);

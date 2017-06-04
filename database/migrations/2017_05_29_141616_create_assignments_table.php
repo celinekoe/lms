@@ -17,7 +17,7 @@ class CreateAssignmentsTable extends Migration
             $table->increments('id');
             $table->integer('unit_id')->unsigned();
             $table->string('name');
-            $table->dateTime('submit_by');
+            $table->dateTime('submit_by_date');
             $table->foreign('unit_id')->references('id')->on('units');
             $table->timestamps();
         });

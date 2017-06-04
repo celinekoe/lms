@@ -1,16 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Unit Info</div>
-                <div>
-                    {{ $data['unit']->info }}
-                </div>
-            </div>
-        </div>
+<div class="margin-left-right-10">
+    <div class="bg-white margin-bottom-10 padding-10">
+        <div class="font-size-32">{{ $data['unit']->unit_code }} Unit Info</div>
     </div>
+    <div class="bg-white padding-10">{{ $data['unit']->info }}</div>
 </div>
 @endsection

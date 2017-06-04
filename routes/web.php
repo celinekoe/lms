@@ -37,7 +37,13 @@ Route::get('/unit/{unit_id}/section/{section_id}', 'SectionController@show')->na
 
 Route::get('/unit/{unit_id}/section/{section_id}/file/{file_id}', 'SectionController@file');
 
-Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/file/{file_id}/download', 'SectionController@download');
+Route::get('/unit/{unit_id}/section/{section_id}/file/{file_id}/complete', 'SectionController@complete');
+
+Route::get('/unit/{unit_id}/section/{section_id}/file/{file_id}/incomplete', 'SectionController@incomplete');
+
+Route::get('/unit/{unit_id}/section/{section_id}/file/{file_id}/download', 'SectionController@download');
+
+Route::get('/unit/{unit_id}/section/{section_id}/file/{file_id}/delete', 'SectionController@delete');
 
 Route::get('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}', 'QuizController@show')->name('quiz');
 

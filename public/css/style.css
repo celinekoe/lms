@@ -44,12 +44,61 @@ a:link, a:hover, a:active, a:visited
 	border: 0px;
 }
 
+.border-left-light-grey {
+	border-left: 1px solid #EEEEEE;
+}
+
+.border-right-light-grey {
+	border-right: 1px solid #EEEEEE;
+}
+
+.border-left-right-light-grey {
+	border-left: 1px solid #EEEEEE;
+	border-right: 1px solid #EEEEEE;
+}
+
 .border-dark-grey {
 	border: 1px solid #636B6F;
 }
 
 .border-light-grey {
 	border: 1px solid #EEEEEE;
+}
+
+.font-size-1em {
+	font-size: 1em !important;
+}
+
+.font-size-135em {
+	font-size: 1.35em !important;
+}
+
+.font-size-171em {
+	font-size: 1.71em !important;
+}
+
+.font-size-228em {
+	font-size: 2.28em !important;
+}
+
+.font-size-14 {
+	font-size: 14px;
+}
+
+.font-size-19 {
+	font-size: 19px;
+}
+
+.font-size-24 {
+	font-size: 24px;
+}
+
+.font-size-32 {
+	font-size: 32px;
+}
+
+.font-size-36 {
+	font-size: 36px;
 }
 
 .text-link-blue {
@@ -83,10 +132,27 @@ a:link, a:hover, a:active, a:visited
 	align-items: center;
 }
 
+.flex-align-center-justify-around {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.flex-align-center-justify-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
 .flex-align-center-justify-end {
 	display: flex;
 	align-items: center;
 	justify-content: flex-end;
+}
+
+.flex-justify-center {
+	display: flex;
+	justify-content: center;
 }
 
 .height-50 {
@@ -103,6 +169,10 @@ a:link, a:hover, a:active, a:visited
 
 .height-100p {
 	height: 100%;
+}
+
+.margin-left-auto {
+	margin-left: auto;
 }
 
 .margin-0 {
@@ -123,6 +193,10 @@ a:link, a:hover, a:active, a:visited
 
 .margin-bottom-0 {
 	margin-bottom: 0px;
+}
+
+.margin-top-1 {
+	margin-top: 1px;
 }
 
 .margin-2 {
@@ -155,8 +229,38 @@ a:link, a:hover, a:active, a:visited
 	margin-bottom: 2px;
 }
 
+.margin-top-3 {
+	margin-top: 3px;
+}
+
+.margin-4 {
+	margin: 4px;
+}
+
+.margin-left-4 {
+	margin-left: 4px;
+}
+
+.margin-right-4 {
+	margin-right: 4px;
+}
+
+.margin-left-right-4 {
+	margin-left: 4px;
+	margin-right: 4px;
+}
+
 .margin-top-4 {
 	margin-top: 4px;
+}
+
+.margin-bottom-4 {
+	margin-bottom: 4px;
+}
+
+.margin-top-bottom-4 {
+	margin-top: 4px;
+	margin-bottom: 4px;
 }
 
 .margin-10 {
@@ -284,6 +388,10 @@ a:link, a:hover, a:active, a:visited
 	padding-bottom: 20px;
 }
 
+.width-25p {
+	width: 25%;
+}
+
 .width-50p {
 	width: 50%;
 }
@@ -318,14 +426,13 @@ a:link, a:hover, a:active, a:visited
 	top: 0px;
 }
 
-.unit-tabs {
-	width: auto;
-}
-
 .unit-tab {
-    display: block;
     text-align: center;
     padding: 10px 0px;
+}
+
+.unit-tab .glyphicon {
+    margin-left: 4px;
 }
 
 .unit-tab-text {

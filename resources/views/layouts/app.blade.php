@@ -13,11 +13,12 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/circle.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-default navbar-static-top margin-0">
-            <div class="container">
+            <div>
                 <div class="navbar-header width-100p">
                     <!-- Back -->
                     <?php
@@ -130,7 +131,7 @@
                 </form>
             @endif
         </div>
-        <div class="content margin-top-20">
+        <div class="content margin-top-bottom-20">
             @yield('content')    
         </div>
     </div>

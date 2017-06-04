@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserSubsectionDownloadFilesTable extends Migration
+class CreateUserSubsectionFilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,14 @@ class CreateUserSubsectionDownloadFilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_subsection_download_files', function (Blueprint $table) {
+        Schema::create('user_subsection_files', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->integer('subsection_id')->unsigned();
-            $table->string('name');
-            $table->string('type');
-            $table->string('extension');
-            $table->string('url');
+            $table->integer('subsection_file_id')->unsigned();
+            $table->boolean('completed');
+            $table->boolean('downloaded');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('subsection_id')->references('id')->on('subsections');
+            $table->foreign('subsection_file_id')->references('id')->on('subsection_files');
             $table->timestamps();
         });
     }
@@ -35,7 +33,7 @@ class CreateUserSubsectionDownloadFilesTable extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('user_subsection_download_files');
+        Schema::dropIfExists('user_subsection_files');
         Schema::enableForeignKeyConstraints();
     }
 }

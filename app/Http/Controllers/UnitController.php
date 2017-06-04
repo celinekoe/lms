@@ -3,12 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 use App\User;
 use App\Unit;
 use App\Announcement;
 use App\Assignment;
 use App\UserAssignment;
 use App\Section;
+use App\Subsection;
+use App\SubsectionFile;
+use App\UserSubsectionFile;
+use Carbon\Carbon;
 
 class UnitController extends Controller
 {
@@ -29,10 +34,19 @@ class UnitController extends Controller
      */
     public function show(Request $request)
     {
+        $user = Auth::user();
         $unit = Unit::find($request->id);
-        $sections = Section::where('unit_id', $unit->id)->get();
+        $unit->sections = Section::where('unit_id', $unit->id)->get();
+        foreach ($unit->sections as $section)
+        {
+            $section->subsections = Subsection::where('section_id', $section->id)->get();
+            foreach ($section->subsections as $subsection)
+            {
+                $subsection->files = SubsectionFile::where('subsection_id', $subsection->id)->get();
+            }
+        }
+        $unit = $this->calculateUnitProgress($user, $unit);
         $data['unit'] = $unit;
-        $data['sections'] = $sections;    
         return view('unit', ['data' => $data]);
     }
 
@@ -60,6 +74,7 @@ class UnitController extends Controller
         foreach ($announcements as $announcement)
         {
             $announcement->user = User::find($announcement->user_id);
+            $announcement->created_by_date = Carbon::parse($announcement->created_at)->toDateString();
         }
         $data['unit'] = $unit;
         $data['announcements'] = $announcements;
@@ -90,5 +105,46 @@ class UnitController extends Controller
         $data['unit'] = $unit;
         $data['assignments'] = $assignments;
         return view('unit_grades', ['data' => $data]);
+    }
+
+    /**
+     * Calculate unit progress.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    private function calculateUnitProgress($user, $unit)
+    {
+        $total_unit_files = 0;
+        $completed_unit_files = 0;
+        foreach ($unit['sections'] as $section)
+        {
+            $total_section_files = 0;
+            $completed_section_files = 0;
+            foreach ($section->subsections as $subsection)
+            {
+                $total_subsection_files = 0;
+                $completed_subsection_files = 0;
+                foreach ($subsection->files as $file)
+                {
+                    $user_subsection_file = UserSubsectionFile::where('user_id', $user->id)
+                                                                ->where('subsection_file_id', $file->id)
+                                                                ->first();
+                    if ($user_subsection_file->completed)
+                    {
+                        $completed_subsection_files++;
+                    }
+                    $total_subsection_files++;
+
+                }
+                $total_section_files += $total_subsection_files;
+                $completed_section_files += $completed_subsection_files;
+                $subsection->progress = ($total_subsection_files > 0) ? round(($completed_subsection_files/$total_subsection_files) * 100) : 100;
+            }
+            $total_unit_files += $total_section_files;
+            $completed_unit_files += $completed_section_files;
+            $section->progress = ($total_section_files > 0) ? round($completed_section_files/$total_section_files * 100) : 100;
+        }
+        $unit->progress = ($total_unit_files > 0) ? round($completed_unit_files/$total_unit_files * 100) : 100;
+        return $unit;
     }
 }
