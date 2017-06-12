@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AssignmentFile extends Model
+class Notification extends Model
 {
     //
 }

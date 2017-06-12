@@ -13,24 +13,23 @@ class QuizzesTableSeeder extends Seeder
     public function run()
     {
         DB::table('quizzes')->insert([
-       		'subsection_id' => '1',
-            'name' => 'quiz1',
+       		'unit_id' => '1',
+            'section_id' => '1',
+            'subsection_id' => '1',
+            'name' => 'Quiz1',
+            'weight' => 10,
             'total_question' => 3,
-            'submit_by' => Carbon::now()->addDays(30)->format('Y-m-d H:i:s')
+            'submit_by_date' => Carbon::now()->addDay()->format('Y-m-d H:i:s')
         ]);
 
         DB::table('quizzes')->insert([
-        	'subsection_id' => '1',
-            'name' => 'quiz2',
+        	'unit_id' => '1',
+            'section_id' => '1',
+            'subsection_id' => '1',
+            'name' => 'Quiz2',
+            'weight' => 10,
             'total_question' => 3,
-            'submit_by' => Carbon::now()->addDays(30)->format('Y-m-d H:i:s')
-        ]);
-
-        DB::table('quizzes')->insert([
-        	'subsection_id' => '1',
-            'name' => 'quiz3',
-            'total_question' => 3,
-            'submit_by' => Carbon::now()->addDays(30)->format('Y-m-d H:i:s')
+            'submit_by_date' => Carbon::now()->addDays(2)->format('Y-m-d H:i:s')
         ]);
     }
 }

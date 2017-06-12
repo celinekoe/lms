@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Response;
 use Auth;
 use App\Unit;
 use App\Section;

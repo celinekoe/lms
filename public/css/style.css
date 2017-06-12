@@ -123,6 +123,10 @@ a:link, a:hover, a:active, a:visited
 
 */
 
+.clear {
+	clear: both;
+}
+
 .display-inline {
 	display: inline;
 }
@@ -148,6 +152,11 @@ a:link, a:hover, a:active, a:visited
 	display: flex;
 	align-items: center;
 	justify-content: flex-end;
+}
+
+.flex-align-start {
+	display: flex;
+	align-items: start;
 }
 
 .flex-justify-center {
@@ -411,7 +420,7 @@ a:link, a:hover, a:active, a:visited
 	float: left;
 	position: absolute;
 	width: 300px;
-	z-index: 1;
+	z-index: 5;
 }
 
 .quiz-header {

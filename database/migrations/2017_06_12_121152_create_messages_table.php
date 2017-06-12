@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAssignmentsTable extends Migration
+class CreateMessagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateAssignmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('assignments', function (Blueprint $table) {
+        Schema::create('messages', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('unit_id')->unsigned();
-            $table->string('name');
-            $table->integer('weight');
-            $table->dateTime('submit_by_date');
-            $table->foreign('unit_id')->references('id')->on('units');
+            $table->integer('receiver_id')->unsigned();
+            $table->integer('sender_id')->unsigned();
+            $table->text('body');
             $table->timestamps();
+            $table->foreign('receiver_id')->references('id')->on('users');
+            $table->foreign('sender_id')->references('id')->on('users');
         });
     }
 
@@ -32,7 +32,7 @@ class CreateAssignmentsTable extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('assignments');
+        Schema::dropIfExists('messages');
         Schema::enableForeignKeyConstraints();
     }
 }

@@ -31,7 +31,12 @@ Route::get('/unit/{unit_id}/assignment/{assignment_id}', 'AssignmentController@s
 
 Route::post('/unit/{unit_id}/assignment/{assignment_id}', 'AssignmentController@submit');
 
-Route::get('/unit/{unit_id}/grade', 'UnitController@grades')->name('grades');
+Route::get('/unit/{unit_id}/grade', 'GradeController@show');
+
+Route::get('/unit/{unit_id}/forum', 'ForumController@index');
+Route::get('/unit/{unit_id}/forum/create', 'ForumController@create');
+Route::get('/unit/{unit_id}/forum/{thread_id}', 'ForumController@show');
+
 
 Route::get('/unit/{unit_id}/section/{section_id}', 'SectionController@show')->name('section');
 
@@ -45,13 +50,28 @@ Route::get('/unit/{unit_id}/section/{section_id}/file/{file_id}/download', 'Sect
 
 Route::get('/unit/{unit_id}/section/{section_id}/file/{file_id}/delete', 'SectionController@delete');
 
-Route::get('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}', 'QuizController@show')->name('quiz');
+Route::get('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}', 'QuizController@show');
 
-Route::get('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}/question/{question_no}', 'QuestionController@show')->name('question');
+Route::get('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}/question/{question_no}', 'QuestionController@show');
 
-Route::post('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}/question/{question_no}', 'QuizController@next')->name('next');
+Route::post('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}/question/{question_no}', 'QuizController@next');
 
-Route::post('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}/question/{question_no}/submit', 'QuizController@submit')->name('submit');
+Route::post('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}/question/{question_no}/submit', 'QuizController@submit');
 
+Route::get('/grades', 'GradeController@index');
 
-// Submit
+Route::get('/calendar', 'CalendarController@index');
+
+Route::get('/calendar/create', 'CalendarController@create');
+
+Route::post('/calendar', 'CalendarController@store');
+
+Route::get('/messages', 'MessageController@index');
+
+Route::get('/messages/create', 'MessageController@create');
+
+Route::post('/messages', 'MessageController@store');
+
+Route::get('/notifications', 'NotificationController@index');
+
+Route::get('/downloads', 'DownloadController@index');

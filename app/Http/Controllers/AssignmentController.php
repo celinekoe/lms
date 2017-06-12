@@ -7,9 +7,9 @@ use Auth;
 use App\User;
 use App\Unit;
 use App\Assignment;
-use App\AssignmentFile;
 use App\UserAssignment;
-use App\UserAssignmentUploadFile;
+use App\File;
+use App\UserFile;
 use Carbon\Carbon;
 
 class AssignmentController extends Controller
@@ -37,29 +37,18 @@ class AssignmentController extends Controller
         $user = Auth::user();
         $unit = Unit::find($request->unit_id);
         $assignment = Assignment::find($request->assignment_id);
-        $assignment->time_remaining = Carbon::parse($assignment->submit_by)->diffForHumans();
-        $files = AssignmentFile::where('assignment_id', $assignment->id)->get();
-        $assignment->files = $files;
-        $user_assignment = UserAssignment::where('student_id', $user->id)
-                                            ->where('assignment_id', $assignment->id)
-                                            ->first();
-        if ($user_assignment->graded_at != null)
-        {
-            $user_assignment->staff = User::find($user_assignment->staff_id);    
-        }
-        $user_upload_files = UserAssignmentUploadFile::where('user_id', $user->id)
-                                                ->where('assignment_id', $assignment->id)
-                                                ->first();
+        $assignment = $this->getAssignment($user, $assignment);
+
         $data['unit'] = $unit;
         $data['assignment'] = $assignment;
-        $data['user_assignment'] = $user_assignment;
-        $data['user_upload_files'] = $user_upload_files;
+
         return view('unit_assignment', ['data' => $data]);
     }
 
     public function submit(Request $request)
     {
         $user = Auth::user();
+        $unit = Unit::find($request->unit_id);
         $assignment = Assignment::find($request->assignment_id);
         if ($request->file_type == "document")
         {
@@ -69,13 +58,19 @@ class AssignmentController extends Controller
         {
             $url = null;
         }
-        $user_assignment_upload_file = UserAssignmentUploadFile::create([
-            'user_id' => $user->id, 
+        $file = File::create([
             'assignment_id' => $assignment->id,
             'name' => $request->file_name,
             'type' => $request->file_type,
             'extension' => $request->file_extension,
             'url' => $url,
+        ]);
+        $user_file = UserFile::create([
+            'user_id' => $user->id, 
+            'file_id' => $file->id,
+            'completed' => 0,
+            'downloaded' => 0,
+            'uploaded' => 1,
         ]);
         $user_assignment = UserAssignment::where('student_id', $user->id)
                                             ->where('assignment_id', $assignment->id)
@@ -86,10 +81,24 @@ class AssignmentController extends Controller
                                                 'grade_comment' => $request->file_name . '_comment',
                                                 'graded_at' => Carbon::now(),
                                             ]);
+        $assignment = $this->getAssignment($user, $assignment);
 
-        $unit = Unit::find($request->unit_id);
+        $data['unit'] = $unit;
+        $data['assignment'] = $assignment;
+        
+        return view('unit_assignment', ['data' => $data]);
+    }
+
+    /**
+     * Get unit assignment
+     *
+     * @return App\Assignment
+     */
+    public function getAssignment($user, $assignment)
+    {
+        
         $assignment->time_remaining = Carbon::parse($assignment->submit_by)->diffForHumans();
-        $files = AssignmentFile::where('assignment_id', $assignment->id)->get();
+        $files = File::where('assignment_id', $assignment->id)->get();
         $assignment->files = $files;
         $user_assignment = UserAssignment::where('student_id', $user->id)
                                             ->where('assignment_id', $assignment->id)
@@ -98,13 +107,25 @@ class AssignmentController extends Controller
         {
             $user_assignment->staff = User::find($user_assignment->staff_id);    
         }
-        $user_upload_files = UserAssignmentUploadFile::where('user_id', $user->id)
-                                                ->where('assignment_id', $assignment->id)
-                                                ->first();
-        $data['unit'] = $unit;
-        $data['assignment'] = $assignment;
-        $data['user_assignment'] = $user_assignment;
-        $data['user_upload_files'] = $user_upload_files;
-        return view('unit_assignment', ['data' => $data]);
+        $file = File::where('user_id', $user->id)
+                        ->where('assignment_id', $assignment->id)
+                        ->first();
+        if ($file != null)
+        {
+            $user_file = UserFile::where('user_id', $user->id)
+                                        ->where('file_id', $file->id)
+                                        ->first();   
+            $user_file->name = $file->name;
+            $user_file->type = $file->type;
+            $user_file->extension = $file->extension;
+        }
+        else 
+        {
+            $user_file = null;
+        }
+        
+        $assignment->user_assignment = $user_assignment;
+        $assignment->user_file = $user_file;
+        return $assignment;
     }
 }

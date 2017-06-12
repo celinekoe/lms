@@ -31,15 +31,5 @@ class UserAssignmentsTableSeeder extends Seeder
             'grade_comment' => null,
             'graded_at' => null,
         ]);
-
-        DB::table('user_assignments')->insert([
-            'student_id' => '1',
-            'staff_id' => '1',
-            'assignment_id' => '3',
-            'submitted_at' => null,
-            'grade' => null,
-            'grade_comment' => null,
-            'graded_at' => null,
-        ]);
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateQuizzesTable extends Migration
+class CreateFilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,17 @@ class CreateQuizzesTable extends Migration
      */
     public function up()
     {
-        Schema::create('quizzes', function (Blueprint $table) {
+        Schema::create('files', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('unit_id')->unsigned();
-            $table->integer('section_id')->unsigned();
-            $table->integer('subsection_id')->unsigned();
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->integer('subsection_id')->unsigned()->nullable();
+            $table->integer('assignment_id')->unsigned()->nullable();
             $table->string('name');
-            $table->integer('weight');
-            $table->integer('total_question');
-            $table->date('submit_by_date');
-            $table->foreign('unit_id')->references('id')->on('units');
-            $table->foreign('section_id')->references('id')->on('sections');
+            $table->string('type');
+            $table->string('extension');
+            $table->string('url');
             $table->foreign('subsection_id')->references('id')->on('subsections');
+            $table->foreign('assignment_id')->references('id')->on('assignments');
             $table->timestamps();
         });
     }
@@ -37,7 +36,7 @@ class CreateQuizzesTable extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('quizzes');
+        Schema::dropIfExists('files');
         Schema::enableForeignKeyConstraints();
     }
 }

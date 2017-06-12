@@ -18,5 +18,10 @@ class UserQuizzesTableSeeder extends Seeder
             'submitted_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'grade' => 100,
         ]);
+
+        DB::table('user_quizzes')->insert([
+            'user_id' => '1',
+            'quiz_id' => '2',
+        ]);
     }
 }

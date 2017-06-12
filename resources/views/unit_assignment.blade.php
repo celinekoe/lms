@@ -2,18 +2,18 @@
 
 @section('content')
 <div class="margin-left-right-10">
-    <div class="bg-white padding-10">
+    <div class="bg-white margin-bottom-20 padding-10">
         <h1>{{ $data['unit']->unit_code }} {{ $data['assignment']->name }}</h1>
     </div>
     <div>
-        <div class="bg-white margin-top-10 margin-bottom-2 padding-10">
+        <div class="bg-white margin-bottom-2 padding-10">
             <div>Submission Status</div>
-            @if ($data['user_assignment']->submitted_at == NULL)
+            @if ($data['assignment']->user_assignment->submitted_at == null)
                 <span class="label label-danger">Not Submitted</span>
             @else
                 <span class="label label-success">Submitted</span>
             @endif
-            @if ($data['user_assignment']->graded_at == NULL)
+            @if ($data['assignment']->user_assignment->graded_at == null)
                 <span class="label label-danger">Not Graded</span>
             @else
                 <span class="label label-success">Graded</span>
@@ -41,15 +41,15 @@
                 {{ csrf_field() }}   
             </form>
         </div>
-        @if ($data['user_upload_files'] != NULL)
+        @if ($data['assignment']->user_file != null)
             <div class="bg-white margin-top-bottom-2 padding-10">
-                <div>{{ $data['user_upload_files']->name }}</div><span class="glyphicon glyphicon-download margin-top-2 margin-right-10"></span><span class="glyphicon glyphicon-remove margin-top-2 margin-right-10"></span>
-                <div class="small">{{ $data['user_upload_files']->created_at }}</div> 
+                <div>{{ $data['assignment']->user_file->name }}</div><span class="glyphicon glyphicon-download margin-top-2 margin-right-10"></span><span class="glyphicon glyphicon-remove margin-top-2 margin-right-10"></span>
+                <div class="small">{{ $data['assignment']->user_file->created_at }}</div> 
             </div>
         @endif
     </div>
 
-    @if ($data['user_assignment']->graded_at == NULL)
+    @if ($data['assignment']->user_assignment->grade == null)
         <div class="margin-top-10">
             <form action="{{ url('unit/'.$data['unit']->id.'/assignment/'.$data['assignment']->id ) }}" method="POST">
                 <input type="hidden" name="file_name" value="" class="file_name">
@@ -63,15 +63,15 @@
         <div>
             <div class="bg-white margin-top-10 margin-bottom-2 padding-10">
                 <div>Grade</div>
-                <div class="small">{{ $data['user_assignment']->grade }}</div> 
+                <div class="small">{{ $data['assignment']->user_assignment->grade }}</div> 
             </div>
             <div class="bg-white margin-top-bottom-2 padding-10">
                 <div>Feedback Comments</div>
-                <div class="small">{{ $data['user_assignment']->grade_comment }}</div>
+                <div class="small">{{ $data['assignment']->user_assignment->grade_comment }}</div>
             </div>
             <div class="bg-white margin-top-2 margin-bottom-10 padding-10">
                 <div>Graded By</div>
-                <div class="small">{{ $data['user_assignment']->staff->name }}</div>
+                <div class="small">{{ $data['assignment']->user_assignment->staff->name }}</div>
             </div>
         </div>
     @endif
