@@ -17,7 +17,7 @@ class CreateUserQuestionsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('question_id')->unsigned();
-            $table->integer('option_id')->unsigned();
+            $table->integer('option_id')->unsigned()->nullable();
             $table->integer('attempt_no');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('question_id')->references('id')->on('questions');

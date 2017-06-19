@@ -9,12 +9,12 @@
     	<div class="margin-bottom-10">
 	        <div class="bg-white margin-bottom-2 padding-10">
 	            <span>{{ $unit->name }}</span>
-	            <span class="pull-right">{{ $unit->total_grade }}</span>
+	            <span class="pull-right">{{ $unit->grade }}</span>
 	        </div>
 	        @foreach ($unit->gradeables as $gradeable)
 		    	<div class="bg-white margin-bottom-2 padding-10">
-		        	<span class="padding-left-10 small">{{ $gradeable->name }}</span>
-		            <span class="pull-right small">{{ $gradeable->weighted_grade }}</span>
+		        	<span class="padding-left-10">{{ $gradeable->name }}</span>
+		            <span class="pull-right">{{ $gradeable->weighted_grade }}</span>
 		        </div>
 		    @endforeach
 	    </div>

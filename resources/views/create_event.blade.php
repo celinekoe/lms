@@ -3,9 +3,9 @@
 @section('content')
 <div class="margin-left-right-10">
     <div class="bg-white margin-bottom-20 padding-10">
-        <div class="font-size-32">Create Event</div>
+        <div class="font-size-32">Add Event</div>
     </div>
-    <div class="bg-white padding-10">
+    <div class="bg-white margin-bottom-20 padding-10">
     	<form action="{{ url('calendar') }}" method="POST">
     		<div class="row">
     			<div class="col-xs-9">

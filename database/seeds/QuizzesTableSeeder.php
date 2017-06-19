@@ -18,7 +18,7 @@ class QuizzesTableSeeder extends Seeder
             'subsection_id' => '1',
             'name' => 'Quiz1',
             'weight' => 10,
-            'total_question' => 3,
+            'total_questions' => 3,
             'submit_by_date' => Carbon::now()->addDay()->format('Y-m-d H:i:s')
         ]);
 
@@ -28,7 +28,7 @@ class QuizzesTableSeeder extends Seeder
             'subsection_id' => '1',
             'name' => 'Quiz2',
             'weight' => 10,
-            'total_question' => 3,
+            'total_questions' => 3,
             'submit_by_date' => Carbon::now()->addDays(2)->format('Y-m-d H:i:s')
         ]);
     }

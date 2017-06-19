@@ -33,10 +33,11 @@ Route::post('/unit/{unit_id}/assignment/{assignment_id}', 'AssignmentController@
 
 Route::get('/unit/{unit_id}/grade', 'GradeController@show');
 
-Route::get('/unit/{unit_id}/forum', 'ForumController@index');
-Route::get('/unit/{unit_id}/forum/create', 'ForumController@create');
-Route::get('/unit/{unit_id}/forum/{thread_id}', 'ForumController@show');
-
+Route::get('/unit/{unit_id}/forum/create', 'ForumController@threadcreate');
+Route::get('/unit/{unit_id}/forum', 'ForumController@threadindex');
+Route::post('/unit/{unit_id}/forum', 'ForumController@threadstore');
+Route::get('/unit/{unit_id}/forum/{thread_id}', 'ForumController@postindex');
+Route::post('/unit/{unit_id}/forum/{thread_id}', 'ForumController@poststore');
 
 Route::get('/unit/{unit_id}/section/{section_id}', 'SectionController@show')->name('section');
 
@@ -51,12 +52,9 @@ Route::get('/unit/{unit_id}/section/{section_id}/file/{file_id}/download', 'Sect
 Route::get('/unit/{unit_id}/section/{section_id}/file/{file_id}/delete', 'SectionController@delete');
 
 Route::get('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}', 'QuizController@show');
-
 Route::get('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}/question/{question_no}', 'QuestionController@show');
-
-Route::post('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}/question/{question_no}', 'QuizController@next');
-
 Route::post('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}/question/{question_no}/submit', 'QuizController@submit');
+Route::post('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}/question/{question_no}', 'QuizController@next');
 
 Route::get('/grades', 'GradeController@index');
 

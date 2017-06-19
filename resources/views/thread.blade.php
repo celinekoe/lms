@@ -2,10 +2,6 @@
 
 @section('content')
 <div class="margin-left-right-10">
-    <div class="margin-bottom-10">
-        <a href="{{ url('unit/'.$data['unit']->id.'/forum/'.$data['thread']->id.'/create') }}" class="btn btn-default pull-right">Create Post</a> 
-        <div class="clear"></div>   
-    </div>
     <div class="bg-white margin-bottom-2 padding-10">
         <div class="font-size-32">{{ $data['thread']->title }}</div>
         <div class="bg-white">
@@ -14,6 +10,18 @@
         </div>
     </div>
     <div class="bg-white margin-bottom-20 padding-10">{{ $data['first_post']->body }}</div>  
+    <div class="margin-bottom-20">
+        <form action="{{ url('unit/'.$data['unit']->id.'/forum/'.$data['thread']->id) }}" method="POST">
+            <div class="form-group">
+                <textarea type="text" class="form-control" name="body"></textarea>      
+            </div>
+            <div>
+                <input type="submit" class="btn btn-default pull-right" value="Submit"> 
+                <div class="clear"></div>
+            </div>
+            {{ csrf_field() }}  
+        </form> 
+    </div>
     @foreach ($data['posts'] as $post)
         <div class="margin-bottom-10">
             <div class="bg-white margin-bottom-2 padding-10">

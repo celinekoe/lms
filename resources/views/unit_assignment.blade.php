@@ -29,7 +29,7 @@
         </div>
         <div class="bg-white margin-top-bottom-2 padding-10">
             <div>Due Date</div>
-            <div class="small">{{ $data['assignment']->submit_by }}</div>
+            <div class="small">{{ $data['assignment']->submit_by_date }}</div>
         </div>
     </div>
 
@@ -50,7 +50,7 @@
     </div>
 
     @if ($data['assignment']->user_assignment->grade == null)
-        <div class="margin-top-10">
+        <div class="margin-top-20">
             <form action="{{ url('unit/'.$data['unit']->id.'/assignment/'.$data['assignment']->id ) }}" method="POST">
                 <input type="hidden" name="file_name" value="" class="file_name">
                 <input type="hidden" name="file_type" value="" class="file_type">

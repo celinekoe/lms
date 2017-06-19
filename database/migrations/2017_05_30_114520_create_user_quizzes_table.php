@@ -17,7 +17,8 @@ class CreateUserQuizzesTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('quiz_id')->unsigned();
-            $table->integer('question_no')->nullable();
+            $table->integer('attempt_no');
+            $table->integer('question_no');
             $table->date('submitted_at')->nullable();
             $table->float('grade')->nullable();
             $table->foreign('user_id')->references('id')->on('users');

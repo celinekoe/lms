@@ -6,7 +6,7 @@
         <div class="font-size-32">Create Thread</div>
     </div>
     <div class="bg-white padding-10">
-    	<form action="{{ url('messages') }}" method="POST">
+    	<form action="{{ url('threads') }}" method="POST">
 	    	<div class="form-group">
 	    		<label for="title">Title</label>
 	    		<input type="text" class="form-control" name="title">		

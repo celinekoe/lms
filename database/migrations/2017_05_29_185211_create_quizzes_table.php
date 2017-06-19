@@ -20,7 +20,7 @@ class CreateQuizzesTable extends Migration
             $table->integer('subsection_id')->unsigned();
             $table->string('name');
             $table->integer('weight');
-            $table->integer('total_question');
+            $table->integer('total_questions');
             $table->date('submit_by_date');
             $table->foreign('unit_id')->references('id')->on('units');
             $table->foreign('section_id')->references('id')->on('sections');

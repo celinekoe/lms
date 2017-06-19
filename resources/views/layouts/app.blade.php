@@ -40,6 +40,10 @@
                         }
                     ?>
                     @if (strpos($url, 'home') == true) <!-- Dashboard -->
+                    @elseif (strpos($url, 'grades') == true) <!-- Messages page -->
+                        <a class="navbar-brand" href="{{ url('home') }}">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
                     @elseif (strpos($url, 'calendar') == true) <!-- Calendar page -->
                         @if (strpos($url, 'create') == true)
                             <a class="navbar-brand" href="{{ url('calendar') }}">
@@ -55,6 +59,10 @@
                             <span class="glyphicon glyphicon-chevron-left"></span>
                         </a>
                     @elseif (strpos($url, 'notifications') == true) <!-- Notifications page -->
+                        <a class="navbar-brand" href="{{ url('home') }}">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                    @elseif (strpos($url, 'downloads') == true) <!-- Notifications page -->
                         <a class="navbar-brand" href="{{ url('home') }}">
                             <span class="glyphicon glyphicon-chevron-left"></span>
                         </a>

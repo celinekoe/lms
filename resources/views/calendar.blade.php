@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="margin-left-right-10">
-	<div class="margin-bottom-10">
+	<div class="margin-bottom-20">
         <a href="{{ url('calendar/create') }}" class="btn btn-default pull-right">Add Event</a> 
         <div class="clear"></div>   
     </div>

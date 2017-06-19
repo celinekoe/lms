@@ -18,6 +18,7 @@ class CreateOptionsTable extends Migration
             $table->integer('question_id')->unsigned();
             $table->string('option');
             $table->boolean('is_correct');
+            $table->text('description')->nullable();
             $table->foreign('question_id')->references('id')->on('questions');
             $table->timestamps();
         });

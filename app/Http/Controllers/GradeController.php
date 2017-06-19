@@ -28,10 +28,10 @@ class GradeController extends Controller
         foreach ($units as $unit)
         {
         	$unit->gradeables = $this->calculateGrades($user, $unit);
-        	$unit->total_grade = 0;
+        	$unit->grade = 0;
         	foreach ($unit->gradeables as $gradeable)
         	{
-        		$unit->total_grade += $gradeable->weighted_grade;
+        		$unit->grade += $gradeable->weighted_grade;
         	}
         }
         
@@ -118,10 +118,10 @@ class GradeController extends Controller
         $gradeable2->weighted_grade = $gradeable2->weight * $gradeable2->grade/100;
         array_push($gradeables, $gradeable2);
 
-        $unit->total_grade = 0;
+        $unit->grade = 0;
         foreach($gradeables as $gradeable)
         {
-        	$unit->total_grade += $gradeable->weighted_grade;
+        	$unit->grade += $gradeable->weighted_grade;
         }
 
         return $gradeables;

@@ -17,7 +17,7 @@ class ForumController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function threadindex(Request $request)
     {
         $unit = Unit::find($request->unit_id);
         $forum = Forum::where('unit_id', $unit->id)->first();
@@ -38,7 +38,7 @@ class ForumController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function postindex(Request $request)
     {
         $unit = Unit::find($request->unit_id);
         $thread = Thread::find($request->thread_id);
@@ -61,7 +61,7 @@ class ForumController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function threadcreate(Request $request)
     {
         $data = null;
 
