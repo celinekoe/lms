@@ -35,7 +35,7 @@
                     <div>
                         @if ($file->type == 'video')
                             <span class="glyphicon glyphicon-facetime-video margin-left-10"></span>
-                        @elseif ($file->type == 'reading')
+                        @elseif ($file->type == 'document')
                             <span class="glyphicon glyphicon-book margin-left-10"></span>
                         @endif
                         <span class="margin-left-10">{{ $file->name }}</span>

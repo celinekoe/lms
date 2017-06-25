@@ -107,6 +107,7 @@ class QuizController extends Controller
 
         // Show quiz review page
         $section = Section::find($request->section_id);
+        $unit = Unit::find($section->unit_id);
         $user_quiz = UserQuiz::where('user_id', $user->id)
                                 ->where('quiz_id', $quiz->id)
                                 ->first();
@@ -141,6 +142,7 @@ class QuizController extends Controller
         $user_quiz->submitted_at = Carbon::now()->format('Y-m-d H:i:s');
         $user_quiz->save();
 
+        $data['unit'] = $unit;
         $data['section'] = $section;
         $data['quiz'] = $quiz;
         $data['user_quiz'] = $user_quiz;

@@ -14,7 +14,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
-<body class="height-100p margin-0">
+<body class="bg-light-grey height-100p margin-0">
 	<nav class="navbar navbar-default navbar-static-top margin-bottom-0">
 	    <div class="container">
 	        <div class="navbar-header">
@@ -68,7 +68,7 @@
 	    </div>
 	</nav>
 	@if ($data['file']->type == 'video')
-		<div class="container unit-tabs">
+		<div class="container">
 		<div class="video-container">
 		    <iframe width="560" height="315" src="{{ $data['file']->url }}" frameborder="0" allowfullscreen></iframe>
 		</div>

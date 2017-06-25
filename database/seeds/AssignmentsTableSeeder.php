@@ -15,15 +15,22 @@ class AssignmentsTableSeeder extends Seeder
         DB::table('assignments')->insert([
         	'unit_id' => '1',
             'name' => 'Assignment1',
-            'weight' => 20,
+            'weight' => 10,
             'submit_by_date' => Carbon::now()->addWeek()->format('Y-m-d H:i:s')
         ]);
 
         DB::table('assignments')->insert([
         	'unit_id' => '1',
             'name' => 'Assignment2',
-            'weight' => 20,
+            'weight' => 10,
             'submit_by_date' => Carbon::now()->addWeeks(2)->format('Y-m-d H:i:s')
+        ]);
+
+        DB::table('assignments')->insert([
+            'unit_id' => '1',
+            'name' => 'Assignment3',
+            'weight' => 20,
+            'submit_by_date' => Carbon::now()->addWeeks(3)->format('Y-m-d H:i:s')
         ]);
     }
 }

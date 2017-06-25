@@ -43,29 +43,29 @@ class NotificationController extends Controller
         	if ($notification->assignment_id != null)
         	{
         		$assignment = Assignment::find($notification->assignment_id);
-        		$submit_by_date = Carbon::parse($assignment->submit_by_date)->toDateString();
+        		$submit_by_date = Carbon::parse($assignment->submit_by_date)->toDateTimeString();
         		$notification->body = $assignment->name . ' is due by ' . $submit_by_date;
         	}
         	else if ($notification->quiz_id != null)
         	{
         		$quiz = Quiz::find($notification->quiz_id);
-        		$submit_by_date = Carbon::parse($quiz->submit_by_date)->toDateString();
+        		$submit_by_date = Carbon::parse($quiz->submit_by_date)->toDateTimeString();
         		$notification->body = $quiz->name . ' is due by ' . $submit_by_date;
         	}
         	else if ($notification->event_id != null)
         	{
         		$event = Event::find($notification->event_id);
-        		$date_start = Carbon::parse($event->date_start)->toDateString();
+        		$date_start = Carbon::parse($event->date_start)->toDateTimeString();
         		$notification->body = $event->name . ' starts at ' . $date_start;
         	}
         	else if ($notification->message_id != null)
         	{
         		$message = Message::find($notification->message_id);
                 $sender = User::find($message->sender_id);
-                $created_at_date = Carbon::parse($message->create_at)->toDateString();
+                $created_at_date = Carbon::parse($message->create_at)->toDateTimeString();
         		$notification->body = $sender->name . ' has sent you a message at ' . $created_at_date;
         	}
-            $notification->created_at_date = Carbon::parse($notification->created_at)->toDateString();
+            $notification->created_at_date = Carbon::parse($notification->created_at)->toDateTimeString();
         }
 
         return $notifications;

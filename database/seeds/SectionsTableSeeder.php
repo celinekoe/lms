@@ -13,17 +13,17 @@ class SectionsTableSeeder extends Seeder
     {
         DB::table('sections')->insert([
        		'unit_id' => '1',
-            'name' => 'section1'
+            'name' => 'Section1'
         ]);
 
         DB::table('sections')->insert([
         	'unit_id' => '1',
-            'name' => 'section2'
+            'name' => 'Section2'
         ]);
 
         DB::table('sections')->insert([
         	'unit_id' => '1',
-            'name' => 'section3'
+            'name' => 'Section3'
         ]);
     }
 }

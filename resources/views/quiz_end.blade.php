@@ -3,7 +3,7 @@
 @section('content')
 <div class="margin-left-right-10">
     <div class="bg-white margin-bottom-20 padding-10">
-        <div class="font-size-32">{{ $data['quiz']->name }}</div>
+        <div class="font-size-32">{{ $data['unit']->unit_code }} {{ $data['quiz']->name }}</div>
         <div class="flex-align-center">
             <div class="font-size-32 margin-left-auto">{{ $data['quiz']->grade }}</div>    
         </div>

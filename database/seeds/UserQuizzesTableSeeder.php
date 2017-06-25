@@ -25,6 +25,13 @@ class UserQuizzesTableSeeder extends Seeder
             'user_id' => '1',
             'quiz_id' => '2',
             'attempt_no' => '1',
+            'question_no' => '2',
+        ]);
+
+        DB::table('user_quizzes')->insert([
+            'user_id' => '1',
+            'quiz_id' => '3',
+            'attempt_no' => '1',
             'question_no' => '1',
         ]);
     }

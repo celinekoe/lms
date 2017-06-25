@@ -19,7 +19,7 @@ $(document).on('click', '.complete', function(e){
 		href="` + new_href + `"></span>`;
 		complete.replaceWith(new_complete);
 		var new_section_progress = `<div class="section-progress c100 p` + data.section_progress + ` ` + `
-		font-size-228em green"><div class="slice"><div class="bar"></div><div class="fill"></div></div></div>`
+		font-size-171em green"><div class="slice"><div class="bar"></div><div class="fill"></div></div></div>`
 		$(".section-progress").replaceWith(new_section_progress);
 	});
 });
@@ -35,7 +35,7 @@ $(document).on('click','.incomplete',function(e){
 		href="` + new_href + `"></span>`;
 		incomplete.replaceWith(new_incomplete);
 		var new_section_progress = `<div class="section-progress c100 p` + data.section_progress + ` ` + `
-		font-size-228em green"><div class="slice"><div class="bar"></div><div class="fill"></div></div></div>`
+		font-size-171em green"><div class="slice"><div class="bar"></div><div class="fill"></div></div></div>`
 		$(".section-progress").replaceWith(new_section_progress);
 	});
 });

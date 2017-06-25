@@ -19,9 +19,11 @@ class CreateQuizzesTable extends Migration
             $table->integer('section_id')->unsigned();
             $table->integer('subsection_id')->unsigned();
             $table->string('name');
+            $table->string('grading_method');
             $table->integer('weight');
             $table->integer('total_questions');
-            $table->date('submit_by_date');
+            $table->integer('time_limit');
+            $table->dateTime('submit_by_date');
             $table->foreign('unit_id')->references('id')->on('units');
             $table->foreign('section_id')->references('id')->on('sections');
             $table->foreign('subsection_id')->references('id')->on('subsections');

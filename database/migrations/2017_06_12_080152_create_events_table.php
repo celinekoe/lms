@@ -22,6 +22,7 @@ class CreateEventsTable extends Migration
             $table->boolean('full_day');
             $table->date('date_start');
             $table->date('date_end');
+            $table->text('description');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('assignment_id')->references('id')->on('assignments');

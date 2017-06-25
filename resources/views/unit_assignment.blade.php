@@ -34,6 +34,7 @@
     </div>
 
     <div>
+        @if ($data['assignment']->user_file == null)
         <div class="bg-white margin-top-10 margin-bottom-2 padding-10">
             <form action="">
                 <div>Add Submission</div>
@@ -41,15 +42,19 @@
                 {{ csrf_field() }}   
             </form>
         </div>
-        @if ($data['assignment']->user_file != null)
-            <div class="bg-white margin-top-bottom-2 padding-10">
-                <div>{{ $data['assignment']->user_file->name }}</div><span class="glyphicon glyphicon-download margin-top-2 margin-right-10"></span><span class="glyphicon glyphicon-remove margin-top-2 margin-right-10"></span>
+        @else
+            <div class="bg-white margin-top-10 margin-bottom-2 padding-10">
+                <div>{{ $data['assignment']->user_file->name }}</div>
+                <span class="glyphicon glyphicon-download margin-top-2 margin-right-10"></span>
+                @if ($data['assignment']->user_assignment->graded_at == null)
+                    <span class="glyphicon glyphicon-remove margin-top-2 margin-right-10"></span>
+                @endif
                 <div class="small">{{ $data['assignment']->user_file->created_at }}</div> 
             </div>
         @endif
     </div>
 
-    @if ($data['assignment']->user_assignment->grade == null)
+    @if ($data['assignment']->user_file == null)
         <div class="margin-top-20">
             <form action="{{ url('unit/'.$data['unit']->id.'/assignment/'.$data['assignment']->id ) }}" method="POST">
                 <input type="hidden" name="file_name" value="" class="file_name">
@@ -59,7 +64,8 @@
                 {{ csrf_field() }}   
             </form>
         </div>
-    @else
+    @endif
+    @if ($data['assignment']->user_assignment->graded_at != null)
         <div>
             <div class="bg-white margin-top-10 margin-bottom-2 padding-10">
                 <div>Grade</div>
