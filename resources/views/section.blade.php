@@ -22,7 +22,7 @@
     </div>
     <div class="section-tabs">
         <div class="flex-align-center-justify-around margin-bottom-2">
-            <div class="introduction-tab-header bg-white flex-align-center-justify-center margin-right-2 width-25p" style="height: 86px;">
+            <div class="tab-header introduction-tab-header bg-white flex-align-center-justify-center margin-right-2 width-25p" style="height: 86px;">
                 <div>
                     <div class="flex-justify-center glyphicon glyphicon-exclamation-sign margin-bottom-4" aria-hidden="true"></div>
                     <div>
@@ -30,7 +30,7 @@
                     </div>    
                 </div>
             </div>
-            <div class="guidelines-tab-header bg-white flex-align-center-justify-center margin-right-2 width-25p" style="height: 86px;">
+            <div class="tab-header guidelines-tab-header bg-white flex-align-center-justify-center margin-right-2 width-25p" style="height: 86px;">
                 <div>
                     <div class="flex-justify-center glyphicon glyphicon-tasks margin-bottom-4" aria-hidden="true"></div>
                     <div>
@@ -38,7 +38,7 @@
                     </div>
                 </div>
             </div>
-            <div class="learning-outcomes-tab-header bg-white flex-align-center-justify-center margin-right-2 width-25p" style="height: 86px;">
+            <div class="tab-header learning-outcomes-tab-header bg-white flex-align-center-justify-center margin-right-2 width-25p" style="height: 86px;">
                 <div>
                     <div class="flex-justify-center glyphicon glyphicon-list margin-bottom-4" aria-hidden="true"></div>
                     <div class="flex-justify-center">
@@ -49,7 +49,7 @@
                     </div>
                 </div>
             </div>
-            <div class="resources-tab-header bg-white flex-align-center-justify-center width-25p" style="height: 86px;">
+            <div class="tab-header resources-tab-header bg-white flex-align-center-justify-center width-25p" style="height: 86px;">
                 <div>
                     <div class="flex-justify-center glyphicon glyphicon-link margin-bottom-4" aria-hidden="true"></div>
                     <div>
@@ -58,17 +58,17 @@
                 </div>
             </div>
         </div>
-        <div class="introduction-tab-body bg-white padding-10" style="display: none;">
+        <div class="tab-body introduction-tab-body bg-white padding-10" style="display: none;">
             {{ $data['section']->introduction }}
         </div>
-        <div class="guidelines-tab-body bg-white padding-10" style="display: none;">
+        <div class="tab-body guidelines-tab-body bg-white padding-10" style="display: none;">
             {{ $data['section']->guidelines }}
         </div>
-        <div class="learning-outcomes-tab-body bg-white padding-10" style="display: none;">
-            {{ $data['section']->introduction }}
+        <div class="tab-body learning-outcomes-tab-body bg-white padding-10" style="display: none;">
+            {{ $data['section']->learning_outcomes }}
         </div>
-        <div class="resources-tab-body bg-white padding-10" style="display: none;">
-            {{ $data['section']->introduction }}
+        <div class="tab-body resources-tab-body bg-white padding-10" style="display: none;">
+            {{ $data['section']->resources }}
         </div>
     </div>
     @foreach ($data['subsections'] as $subsection)

@@ -1,3 +1,67 @@
+// Section tabs
+
+$(".introduction-tab-header").click(function(e) {
+	if ($(this).hasClass("bg-white")) {
+		$(".tab-header").addClass("bg-white");
+		$(".tab-header").removeClass("bg-primary");
+		$(this).removeClass("bg-white");
+		$(this).addClass("bg-primary");	
+		$(".tab-body").hide();
+		$(".introduction-tab-body").show();
+	} else {
+		$(this).removeClass("bg-primary");
+		$(this).addClass("bg-white");
+		$(".introduction-tab-body").hide();
+	}
+});
+
+$(".guidelines-tab-header").click(function(e) {
+	if ($(this).hasClass("bg-white")) {
+		$(".tab-header").addClass("bg-white");
+		$(".tab-header").removeClass("bg-primary");
+		$(this).removeClass("bg-white");
+		$(this).addClass("bg-primary");	
+		$(".tab-body").hide();
+		$(".guidelines-tab-body").show();
+	} else {
+		$(this).removeClass("bg-primary");
+		$(this).addClass("bg-white");
+		$(".guidelines-tab-body").hide();
+	}
+});
+
+$(".learning-outcomes-tab-header").click(function(e) {
+	if ($(this).hasClass("bg-white")) {
+		$(".tab-header").addClass("bg-white");
+		$(".tab-header").removeClass("bg-primary");
+		$(this).removeClass("bg-white");
+		$(this).addClass("bg-primary");	
+		$(".tab-body").hide();
+		$(".learning-outcomes-tab-body").show();
+	} else {
+		$(this).removeClass("bg-primary");
+		$(this).addClass("bg-white");
+		$(".learning-outcomes-tab-body").hide();
+	}
+});
+
+$(".resources-tab-header").click(function(e) {
+	if ($(this).hasClass("bg-white")) {
+		$(".tab-header").addClass("bg-white");
+		$(".tab-header").removeClass("bg-primary");
+		$(this).removeClass("bg-white");
+		$(this).addClass("bg-primary");	
+		$(".tab-body").hide();
+		$(".resources-tab-body").show();
+	} else {
+		$(this).removeClass("bg-primary");
+		$(this).addClass("bg-white");
+		$(".resources-tab-body").hide();
+	}
+});
+
+// Section mark as complete and incomplete
+
 var section_progress = $(".section-progress");
 
 $(document).on('click','.complete',function(e){
@@ -32,80 +96,8 @@ $(document).on('click','.incomplete',function(e){
 	});
 });
 
-// $(document).on('click', '.complete', function(e){
-// 	e.preventDefault();
-// 	var href = $(this).attr("href");
-// 	new_href = href.substring(0, href.lastIndexOf("/")) + '/incomplete';
-// 	var complete = $(this);
-// 	$.get(href, function(data) {
-// 		var new_complete = `<span class="complete glyphicon glyphicon-check margin-right-10" 
-// 		href="` + new_href + `"></span>`;
-// 		complete.replaceWith(new_complete);
-// 		var new_section_progress = `<div class="section-progress c100 p` + data.section_progress + ` ` + `
-// 		font-size-171em green"><div class="slice"><div class="bar"></div><div class="fill"></div></div></div>`
-// 		$(".section-progress").replaceWith(new_section_progress);
-// 	});
-// });
 
-// $(document).on('click','.incomplete',function(e){
-// 	e.preventDefault();
-// 	var href = $(this).attr("href");
-// 	new_href = href.substring(0, href.lastIndexOf("/")) + '/complete';
-// 	var incomplete = $(this);
-// 	$.get(href, function(data) {
-// 		var new_incomplete = `<span class="incomplete glyphicon glyphicon-unchecked margin-right-10" 
-// 		href="` + new_href + `"></span>`;
-// 		incomplete.replaceWith(new_incomplete);
-// 		var new_section_progress = `<div class="section-progress c100 p` + data.section_progress + ` ` + `
-// 		font-size-171em green"><div class="slice"><div class="bar"></div><div class="fill"></div></div></div>`
-// 		$(".section-progress").replaceWith(new_section_progress);
-// 	});
-// });
-
-
-$(".introduction-tab-header").click(function(e) {
-	if ($(this).hasClass("bg-white")) {
-		$(this).removeClass("bg-white");
-		$(this).addClass("bg-primary");	
-	} else {
-		$(this).removeClass("bg-primary");
-		$(this).addClass("bg-white");
-	}
-	$(".introduction-tab-body").toggle();
-});
-
-$(".guidelines-tab-header").click(function(e) {
-	if ($(this).hasClass("bg-white")) {
-		$(this).removeClass("bg-white");
-		$(this).addClass("bg-primary");	
-	} else {
-		$(this).removeClass("bg-primary");
-		$(this).addClass("bg-white");
-	}
-	$(".guidelines-tab-body").toggle();
-});
-
-$(".learning-outcomes-tab-header").click(function(e) {
-	if ($(this).hasClass("bg-white")) {
-		$(this).removeClass("bg-white");
-		$(this).addClass("bg-primary");	
-	} else {
-		$(this).removeClass("bg-primary");
-		$(this).addClass("bg-white");
-	}
-	$(".learning-outcomes-tab-body").toggle();
-});
-
-$(".resources-tab-header").click(function(e) {
-	if ($(this).hasClass("bg-white")) {
-		$(this).removeClass("bg-white");
-		$(this).addClass("bg-primary");	
-	} else {
-		$(this).removeClass("bg-primary");
-		$(this).addClass("bg-white");
-	}
-	$(".resources-tab-body").toggle();
-});
+// Section download and delete
 
 $(".section-download").click(function(e) {
 	e.preventDefault();
