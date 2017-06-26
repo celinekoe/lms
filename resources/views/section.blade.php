@@ -73,7 +73,7 @@
     </div>
     @foreach ($data['subsections'] as $subsection)
         <div class="margin-top-10">
-            <div class="bg-white margin-bottom-2 padding-10">
+            <div class="subsection bg-white margin-bottom-2 padding-10">
                 <div class="bg-white flex-align-center margin-left-10">
                     <div class="subsection-progress c100 {{ 'p' . $subsection->progress }} font-size-171em green">
                       <div class="slice">
@@ -82,62 +82,69 @@
                       </div>
                     </div>
                     <div class="font-size-19 margin-left-10">{{ $subsection->name }}</div>
-                    @if ($subsection->files->count() > 0)
-                        @if ($subsection->downloaded == false)
-                            <span class="margin-left-auto margin-right-10">
-                                <span class="subsection-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/download') }}"></span>
-                                <span class="subsection-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/delete') }}" style="display: none"></span>
-                            </span>
-                        @else
-                            <span class="margin-left-auto margin-right-10">
-                                <span class="subsection-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/download') }}" style="display: none"></span>
-                                <span class="subsection-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/delete') }}"></span>
-                            </span>
+                    <div class="margin-left-auto margin-right-10">
+                        @if ($subsection->files->count() > 0)
+                            @if ($subsection->downloaded == false)
+                                <span class="subsection-download glyphicon glyphicon-download margin-right-10 margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/download') }}"></span>
+                                <span class="subsection-delete glyphicon glyphicon-remove-circle margin-right-10 margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/delete') }}" style="display: none"></span>
+                            @else
+                                <span class="subsection-download glyphicon glyphicon-download margin-right-10 margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/download') }}" style="display: none"></span>
+                                <span class="subsection-delete glyphicon glyphicon-remove-circle margin-right-10 margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/delete') }}"></span>
+                            @endif
                         @endif
-                    @endif
+                        @if ($subsection->files->count() > 0 || $subsection->quizzes->count() > 0)
+                            <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                        @endif
+                    </div>
                 </div>
             </div>
-            @foreach ($subsection->files as $file)
-                <div class="file bg-white margin-top-bottom-2 padding-10 text-dark-grey">
-                    <a href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/file/'.$file->id) }}" target="_blank">
-                        <div>
-                            @if ($file->type == 'video')
-                                <span class="glyphicon glyphicon-facetime-video margin-left-10"></span>
-                            @elseif ($file->type == 'document')
-                                <span class="glyphicon glyphicon-book margin-left-10"></span>
+            <div class="subsection-files">
+                @foreach ($subsection->files as $file)
+                    <div class="subsection_file bg-white margin-top-bottom-2 padding-10 text-dark-grey">
+                        <a href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/file/'.$file->id) }}" target="_blank">
+                            <div>
+                                @if ($file->type == 'video')
+                                    <span class="glyphicon glyphicon-facetime-video margin-left-10"></span>
+                                @elseif ($file->type == 'document')
+                                    <span class="glyphicon glyphicon-book margin-left-10"></span>
+                                @endif
+                                <span class="margin-left-10">{{ $file->name }}</span>
+                                <span class="pull-right margin-right-10">
+                                    @if ($file->completed == false)
+                                        <span class="complete glyphicon glyphicon-unchecked margin-right-10" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/complete') }}"></span>
+                                        <span class="incomplete glyphicon glyphicon-check margin-right-10" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/incomplete') }}" style="display: none;"></span>
+                                    @else
+                                        <span class="complete glyphicon glyphicon-unchecked margin-right-10" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/complete') }}" style="display: none;"></span>
+                                        <span class="incomplete glyphicon glyphicon-check margin-right-10" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/incomplete') }}"></span>
+                                    @endif
+                                    @if ($file->downloaded == false)
+                                        <span class="individual-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/download') }}"></span>
+                                        <span class="individual-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/delete') }}" style="display: none;"></span>
+                                    @else
+                                        <span class="individual-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/download') }}" style="display: none;"></span>
+                                        <span class="individual-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/delete') }}"></span>
+                                    @endif
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
+            </div>
+            <div class="subsection-quizzes">
+                @foreach ($subsection->quizzes as $quiz)
+                    <div class="quiz flex-align-center bg-white margin-top-bottom-2 padding-10">
+                        <span class="glyphicon glyphicon-star margin-left-10"></span>
+                        <a href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/quiz/'.$quiz->id) }}">
+                            <span class="margin-left-10">{{ $quiz->name }}</span>
+                        </a>
+                        <div class="margin-left-auto">
+                            @if ($quiz->completed)
+                                <span class="incomplete glyphicon glyphicon-ok margin-right-10" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/quiz/'.$quiz->id.'/incomplete') }}"></span>
                             @endif
-                            <span class="margin-left-10">{{ $file->name }}</span>
-                            <span class="pull-right margin-right-10">
-                                @if ($file->completed == false)
-                                    <span class="complete glyphicon glyphicon-unchecked margin-right-10" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/complete') }}"></span>
-                                    <span class="incomplete glyphicon glyphicon-check margin-right-10" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/incomplete') }}" style="display: none;"></span>
-                                @else
-                                    <span class="complete glyphicon glyphicon-unchecked margin-right-10" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/complete') }}" style="display: none;"></span>
-                                    <span class="incomplete glyphicon glyphicon-check margin-right-10" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/incomplete') }}"></span>
-                                @endif
-                                @if ($file->downloaded == false)
-                                    <span class="individual-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/download') }}"></span>
-                                    <span class="individual-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/delete') }}" style="display: none;"></span>
-                                @else
-                                    <span class="individual-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/download') }}" style="display: none;"></span>
-                                    <span class="individual-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/delete') }}"></span>
-                                @endif
-                            </span>
                         </div>
-                    </a>
-                </div>
-            @endforeach
-            @foreach ($subsection->quizzes as $quiz)
-                <div class="quiz bg-white margin-top-bottom-2 padding-10">
-                    <span class="glyphicon glyphicon-star margin-left-10"></span>
-                    <a href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/quiz/'.$quiz->id) }}">
-                        <span class="margin-left-10">{{ $quiz->name }}</span>
-                    </a>
-                    <span class="icons pull-right">
-                        <span class="complete glyphicon glyphicon-unchecked margin-right-10" href=""></span>
-                    </span>
-                </div>
-            @endforeach
+                    </div>
+                @endforeach
+            </div>
         </div>
     @endforeach
 </div>

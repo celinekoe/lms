@@ -132,8 +132,8 @@ $(".subsection-download").click(function(e) {
 	$.get(href, function(data) {
 		subsection_download.hide();
 		subsection_download.siblings(".subsection-delete").show();
-		subsection_download.parent().parent().parent().siblings(".file").find(".individual-download").hide();
-		subsection_download.parent().parent().parent().siblings(".file").find(".individual-delete").show();
+		subsection_download.parent().parent().parent().siblings(".subsection_file").find(".individual-download").hide();
+		subsection_download.parent().parent().parent().siblings(".subsection_file").find(".individual-delete").show();
 	});
 });
 
@@ -144,8 +144,8 @@ $(".subsection-delete").click(function(e) {
 	$.get(href, function(data) {
 		subsection_delete.siblings(".subsection-download").show();
 		subsection_delete.hide();
-		subsection_delete.parent().parent().parent().siblings(".file").find(".individual-download").show();
-		subsection_delete.parent().parent().parent().siblings(".file").find(".individual-delete").hide();
+		subsection_delete.parent().parent().parent().siblings(".subsection_file").find(".individual-download").show();
+		subsection_delete.parent().parent().parent().siblings(".subsection_file").find(".individual-delete").hide();
 	});
 });
 
@@ -168,4 +168,12 @@ $(".individual-delete").click(function(e) {
 		individual_delete.siblings(".individual-download").show();
 		individual_delete.hide();
 	});
+});
+
+// Toggle section
+
+$(".glyphicon-chevron-down").click(function(e) {
+	e.preventDefault();
+	$(this).parent().parent().parent().siblings(".subsection-files").toggle();
+	$(this).parent().parent().parent().siblings(".subsection-quizzes").toggle();
 });

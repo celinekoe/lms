@@ -66,12 +66,18 @@ Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/file
 
 Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/file/{file_id}/incomplete', 'SectionController@incomplete');
 
+Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/quiz/{quiz_id}/complete', 'SectionController@quiz_complete');
+
+Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/quiz/{quiz_id}/incomplete', 'SectionController@quiz_incomplete');
+
 // Other section routes
 
 Route::get('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}', 'QuizController@show');
 Route::get('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}/question/{question_no}', 'QuestionController@show');
 Route::post('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}/question/{question_no}/submit', 'QuizController@submit');
 Route::post('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}/question/{question_no}', 'QuizController@next');
+
+// Other routes
 
 Route::get('/grades', 'GradeController@index');
 

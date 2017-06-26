@@ -11,6 +11,7 @@ use App\Subsection;
 use App\File;
 use App\UserFile;
 use App\Quiz;
+use App\UserQuiz;
 
 class SectionController extends Controller
 {
@@ -73,9 +74,23 @@ class SectionController extends Controller
             $total_section_files += $total_subsection_files;
             $completed_section_files += $completed_subsection_files;
             $subsection->files = $files;
-            $quizzes = Quiz::where('subsection_id', $subsection->id)->get();
-            $subsection->quizzes = $quizzes;
-            if ($subsection->downloaded == false)
+
+            $user_quizzes = DB::table('users')
+                ->join('user_quizzes', 'users.id', '=', 'user_quizzes.user_id')
+                ->join('quizzes', 'user_quizzes.quiz_id', '=', 'quizzes.id')
+                ->where('users.id', $user->id)
+                ->where('quizzes.subsection_id', $subsection->id)
+                ->get();
+            foreach ($user_quizzes as $user_quiz)
+            {
+                $user_quiz->completed = false;
+                if ($user_quiz->submitted_at != null)
+                {
+                    $user_quiz->completed = true;
+                }
+            }
+            $subsection->quizzes = $user_quizzes;
+            if (!$subsection->downloaded)
             {
                 $section->downloaded = false;
             }
@@ -297,6 +312,10 @@ class SectionController extends Controller
     {
         $total_section_files = 0;
         $completed_section_files = 0;
+
+        $total_section_quizzes = 0;
+        $completed_section_quizzes = 0;
+        
         foreach ($subsections as $subsection)
         {
             $files = File::where('subsection_id', $subsection->id)->get();
@@ -309,6 +328,7 @@ class SectionController extends Controller
                 ->get();
             $total_subsection_files = 0;
             $completed_subsection_files = 0;
+
             foreach ($files as $file)
             {
                 $total_subsection_files++;
@@ -328,11 +348,26 @@ class SectionController extends Controller
             }
             $total_section_files += $total_subsection_files;
             $completed_section_files += $completed_subsection_files;
-            $subsection->progress = ($total_subsection_files > 0) ? round($completed_subsection_files/$total_subsection_files * 100) : 100;
+            
+            $user_quizzes = DB::table('users')
+                ->join('user_quizzes', 'users.id', '=', 'user_quizzes.user_id')
+                ->join('quizzes', 'user_quizzes.quiz_id', '=', 'quizzes.id')
+                ->where('users.id', $user->id)
+                ->where('quizzes.subsection_id', $subsection->id)
+                ->get();
+            $total_subsection_quizzes = $user_quizzes->count();
+            $total_section_quizzes += $total_subsection_quizzes;
+            $completed_subsection_quizzes = $user_quizzes->where('submitted_at', '!=', null)->count();
+            $completed_section_quizzes += $completed_subsection_quizzes;
+
+            $subsection->progress = (($total_subsection_files + $total_subsection_quizzes) > 0) ? round(($completed_subsection_files + $completed_subsection_quizzes)/($total_subsection_files + $total_subsection_quizzes) * 100) : 100;
         }
-        $section->progress = ($total_section_files > 0) ? round($completed_section_files/$total_section_files * 100) : 100;
+        
+        $section->progress = (($total_section_files + $total_section_quizzes) > 0) ? round(($completed_section_files + $completed_section_quizzes)/($total_section_files + $total_section_quizzes) * 100) : 100;
+
         $data['section_progress'] = $section->progress;
         $data['subsections_progress'] = $subsections;
+
         return $data;
     }
 }
