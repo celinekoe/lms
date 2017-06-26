@@ -25,7 +25,11 @@ Route::get('/unit/{unit_id}/info', 'UnitController@info')->name('unit_info');
 
 Route::get('/unit/{unit_id}/announcement', 'UnitController@announcements')->name('announcements');
 
-Route::get('/unit/{unit_id}/assignment', 'AssignmentController@index')->name('assignments');
+Route::get('/unit/{unit_id}/assignments', 'AssignmentController@index')->name('assignments');
+
+Route::get('/unit/{unit_id}/assignments/{assignment_id}/file/{file_id}', 'AssignmentController@assignments_file');
+
+Route::get('/unit/{unit_id}/assignment/{assignment_id}/file/{file_id}', 'AssignmentController@assignment_file');
 
 Route::get('/unit/{unit_id}/assignment/{assignment_id}', 'AssignmentController@show');
 
@@ -39,17 +43,30 @@ Route::post('/unit/{unit_id}/forum', 'ForumController@threadstore');
 Route::get('/unit/{unit_id}/forum/{thread_id}', 'ForumController@postindex');
 Route::post('/unit/{unit_id}/forum/{thread_id}', 'ForumController@poststore');
 
-Route::get('/unit/{unit_id}/section/{section_id}', 'SectionController@show')->name('section');
+// Section routes
+
+Route::get('/unit/{unit_id}/section/{section_id}', 'SectionController@index');
+
+// Download section routes
+
+Route::get('/unit/{unit_id}/section/{section_id}/download', 'SectionController@section_download');
+Route::get('/unit/{unit_id}/section/{section_id}/delete', 'SectionController@section_delete');
+
+Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/download', 'SectionController@subsection_download');
+Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/delete', 'SectionController@subsection_delete');
+
+Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/file/{file_id}/download', 'SectionController@individual_download');
+Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/file/{file_id}/delete', 'SectionController@individual_delete');
+
+// Complete section routes
 
 Route::get('/unit/{unit_id}/section/{section_id}/file/{file_id}', 'SectionController@file');
 
-Route::get('/unit/{unit_id}/section/{section_id}/file/{file_id}/complete', 'SectionController@complete');
+Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/file/{file_id}/complete', 'SectionController@complete');
 
-Route::get('/unit/{unit_id}/section/{section_id}/file/{file_id}/incomplete', 'SectionController@incomplete');
+Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/file/{file_id}/incomplete', 'SectionController@incomplete');
 
-Route::get('/unit/{unit_id}/section/{section_id}/file/{file_id}/download', 'SectionController@download');
-
-Route::get('/unit/{unit_id}/section/{section_id}/file/{file_id}/delete', 'SectionController@delete');
+// Other section routes
 
 Route::get('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}', 'QuizController@show');
 Route::get('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}/question/{question_no}', 'QuestionController@show');

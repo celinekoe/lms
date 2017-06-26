@@ -280,6 +280,10 @@ a:link, a:hover, a:active, a:visited
 	margin-bottom: 5px;
 }
 
+.margin-bottom-8 {
+	margin-bottom: 8px;
+}
+
 .margin-10 {
 	margin: 10px;
 }

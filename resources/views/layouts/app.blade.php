@@ -76,7 +76,7 @@
                                 <span class="glyphicon glyphicon-chevron-left"></span>
                             </a>
                         @elseif (strpos($url, 'assignment/') == true) <!-- Unit assignment page -->
-                            <a class="navbar-brand" href="{{ url('unit/'.$unit_id.'assignment') }}">
+                            <a class="navbar-brand" href="{{ url('unit/'.$unit_id.'assignments') }}">
                                 <span class="glyphicon glyphicon-chevron-left"></span>
                             </a>
                         @elseif (strpos($url, 'assignment') == true) <!-- Unit assignments page -->

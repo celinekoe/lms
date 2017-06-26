@@ -26,7 +26,7 @@
 	                <span class="icon-bar"></span>
 	            </button>
 	            <!-- Back -->
-	            <a class="navbar-brand" href="{{ url('unit/'.$data['unit']->id.'/section/'.$data['section']->id) }}">
+	            <a class="navbar-brand" href="{{ url('unit/'.$data['unit']->id.'/assignments') }}">
 	                <span class="glyphicon glyphicon-chevron-left"></span>
 	            </a>
 	        </div>
@@ -75,7 +75,6 @@
 	@else
 		<iframe src="{{ $data['file']->url }}" frameborder="0" class="height-100p width-100p"></iframe>
 	@endif
-	<!-- <iframe src="{{ url('storage/'.$data['file']->name.$data['file']->extension) }}" frameborder="0" class="height-100p width-100p"></iframe> -->
 	<!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/script.js') }}"></script>

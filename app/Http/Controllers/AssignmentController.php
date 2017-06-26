@@ -26,6 +26,9 @@ class AssignmentController extends Controller
         foreach ($assignments as $assignment)
         {
             $assignment->submit_by_date_format = Carbon::parse($assignment->submit_by_date)->toDateString();
+            $assignment->files = File::where('user_id', null)
+                                        ->where('assignment_id', $assignment->id)
+                                        ->get();
         }
         $data['unit'] = $unit;
         $data['assignments'] = $assignments;
@@ -98,7 +101,9 @@ class AssignmentController extends Controller
     {
         
         $assignment->time_remaining = Carbon::parse($assignment->submit_by)->diffForHumans();
-        $files = File::where('assignment_id', $assignment->id)->get();
+        $files = File::whereNotNull('user_id')
+                    ->where('assignment_id', $assignment->id)
+                    ->get();
         $assignment->files = $files;
         $user_assignment = UserAssignment::where('student_id', $user->id)
                                             ->where('assignment_id', $assignment->id)
@@ -127,5 +132,37 @@ class AssignmentController extends Controller
         $assignment->user_assignment = $user_assignment;
         $assignment->user_file = $user_file;
         return $assignment;
+    }
+
+    /**
+     * Show the assignments file.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function assignments_file(Request $request)
+    {
+        $unit = Unit::find($request->unit_id);
+        $assignment = Assignment::find($request->assignment_id);
+        $file = File::find($request->file_id);
+        $data['unit'] = $unit;
+        $data['assignment'] = $assignment;
+        $data['file'] = $file;
+        return view('assignments_file', ['data' => $data]);
+    }
+
+    /**
+     * Show the assignment file.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function assignment_file(Request $request)
+    {
+        $unit = Unit::find($request->unit_id);
+        $assignment = Assignment::find($request->assignment_id);
+        $file = File::find($request->file_id);
+        $data['unit'] = $unit;
+        $data['assignment'] = $assignment;
+        $data['file'] = $file;
+        return view('assignment_file', ['data' => $data]);
     }
 }

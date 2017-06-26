@@ -17,6 +17,10 @@ class CreateSectionsTable extends Migration
             $table->increments('id');
             $table->integer('unit_id')->unsigned();
             $table->string('name');
+            $table->text('introduction');
+            $table->text('guidelines');
+            $table->text('learning_outcomes');
+            $table->text('resources');
             $table->foreign('unit_id')->references('id')->on('units');
             $table->timestamps();
         });

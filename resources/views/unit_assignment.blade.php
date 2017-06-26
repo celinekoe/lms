@@ -33,8 +33,7 @@
         </div>
     </div>
 
-    <div>
-        @if ($data['assignment']->user_file == null)
+    @if ($data['assignment']->user_file == null)
         <div class="bg-white margin-top-10 margin-bottom-2 padding-10">
             <form action="">
                 <div>Add Submission</div>
@@ -42,29 +41,21 @@
                 {{ csrf_field() }}   
             </form>
         </div>
-        @else
-            <div class="bg-white margin-top-10 margin-bottom-2 padding-10">
+    @else
+        <div class="flex-align-center bg-white margin-top-10 margin-bottom-2 padding-10">
+            <div>
                 <div>{{ $data['assignment']->user_file->name }}</div>
+                <div class="small">{{ $data['assignment']->user_file->created_at }}</div>     
+            </div>
+            <div class="margin-left-auto">
                 <span class="glyphicon glyphicon-download margin-top-2 margin-right-10"></span>
                 @if ($data['assignment']->user_assignment->graded_at == null)
                     <span class="glyphicon glyphicon-remove margin-top-2 margin-right-10"></span>
                 @endif
-                <div class="small">{{ $data['assignment']->user_file->created_at }}</div> 
-            </div>
-        @endif
-    </div>
-
-    @if ($data['assignment']->user_file == null)
-        <div class="margin-top-20">
-            <form action="{{ url('unit/'.$data['unit']->id.'/assignment/'.$data['assignment']->id ) }}" method="POST">
-                <input type="hidden" name="file_name" value="" class="file_name">
-                <input type="hidden" name="file_type" value="" class="file_type">
-                <input type="hidden" name="file_extension" value="" class="file_extension">
-                <input type="submit" class="btn btn-default pull-right" value="Submit">
-                {{ csrf_field() }}   
-            </form>
+            </div>      
         </div>
     @endif
+
     @if ($data['assignment']->user_assignment->graded_at != null)
         <div>
             <div class="bg-white margin-top-10 margin-bottom-2 padding-10">

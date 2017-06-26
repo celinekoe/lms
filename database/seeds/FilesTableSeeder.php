@@ -43,6 +43,38 @@ class FilesTableSeeder extends Seeder
             'url' => 'https://drive.google.com/file/d/0B4OsqsghY0urMGFpNGMzZE1Gd2c/preview'
         ]);
 
+        DB::table('files')->insert([
+            'subsection_id' => '2',
+            'name' => 'Subsection_file5',
+            'type' => 'video',
+            'extension' => '.mp4',
+            'url' => 'https://www.youtube.com/embed/WQZRb8L5awM?rel=0&modestbranding=1'
+        ]);
+
+        DB::table('files')->insert([
+            'subsection_id' => '2',
+            'name' => 'Subsection_file6',
+            'type' => 'document',
+            'extension' => '.pdf',
+            'url' => 'https://drive.google.com/file/d/0B4OsqsghY0urbVo4b05sc2NIVW8/preview'
+        ]);
+
+        DB::table('files')->insert([
+            'subsection_id' => '2',
+            'name' => 'Subsection_file7',
+            'type' => 'document',
+            'extension' => '.docx',
+            'url' => 'https://drive.google.com/file/d/0B4OsqsghY0urbFlsX1VzLW9INlU/preview'
+        ]);
+
+        DB::table('files')->insert([
+            'subsection_id' => '2',
+            'name' => 'Subsection_file8',
+            'type' => 'document',
+            'extension' => '.pptx',
+            'url' => 'https://drive.google.com/file/d/0B4OsqsghY0urMGFpNGMzZE1Gd2c/preview'
+        ]);
+
     	DB::table('files')->insert([
         	'assignment_id' => '1',
             'name' => 'Assignment_file_1',

@@ -26,7 +26,7 @@
 	                <span class="icon-bar"></span>
 	            </button>
 	            <!-- Back -->
-	            <a class="navbar-brand" href="{{ url('unit/'.$data['unit']->id.'/section/'.$data['section']->id) }}">
+	            <a class="navbar-brand" href="{{ url('unit/'.$data['unit']->id.'/assignments') }}">
 	                <span class="glyphicon glyphicon-chevron-left"></span>
 	            </a>
 	        </div>

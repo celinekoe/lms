@@ -11,8 +11,8 @@ use App\Assignment;
 use App\UserAssignment;
 use App\Section;
 use App\Subsection;
-use App\SubsectionFile;
-use App\UserSubsectionFile;
+use App\File;
+use App\UserFile;
 use Carbon\Carbon;
 
 class UnitController extends Controller
@@ -42,7 +42,7 @@ class UnitController extends Controller
             $section->subsections = Subsection::where('section_id', $section->id)->get();
             foreach ($section->subsections as $subsection)
             {
-                $subsection->files = SubsectionFile::where('subsection_id', $subsection->id)->get();
+                $subsection->files = File::where('subsection_id', $subsection->id)->get();
             }
         }
         $unit = $this->calculateUnitProgress($user, $unit);
@@ -100,8 +100,8 @@ class UnitController extends Controller
                 $completed_subsection_files = 0;
                 foreach ($subsection->files as $file)
                 {
-                    $user_subsection_file = UserSubsectionFile::where('user_id', $user->id)
-                                                                ->where('subsection_file_id', $file->id)
+                    $user_subsection_file = UserFile::where('user_id', $user->id)
+                                                                ->where('file_id', $file->id)
                                                                 ->first();
                     if ($user_subsection_file->completed)
                     {

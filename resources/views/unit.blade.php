@@ -38,7 +38,7 @@
             </a>
         </div>
         <div class="unit-tab bg-white margin-right-2 width-25p" style="height: 86px;">
-            <a href="{{ url('unit/'.$data['unit']->id.'/assignment') }}">
+            <a href="{{ url('unit/'.$data['unit']->id.'/assignments') }}">
                 <div class="glyphicon glyphicon-star" aria-hidden="true"></div>
                 <br>
                 <span class="unit-tab-text">
