@@ -21,7 +21,16 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/unit/{id}', 'UnitController@show')->name('unit');
 
-Route::get('/unit/{unit_id}/info', 'UnitController@info')->name('unit_info');
+// Unit info
+
+Route::get('/unit/{unit_id}/unit_info', 'UnitController@unit_info');
+Route::get('/unit/{unit_id}/unit_info/file/{file_id}', 'UnitController@unit_info_file');
+Route::get('/unit/{unit_id}/unit_info/file/{file_id}/complete', 'UnitController@unit_info_complete');
+Route::get('/unit/{unit_id}/unit_info/file/{file_id}/incomplete', 'UnitController@unit_info_incomplete');
+Route::get('/unit/{unit_id}/unit_info/file/{file_id}/download', 'UnitController@unit_info_download');
+Route::get('/unit/{unit_id}/unit_info/file/{file_id}/delete', 'UnitController@unit_info_delete');
+
+// Announcements
 
 Route::get('/unit/{unit_id}/announcement', 'UnitController@announcements')->name('announcements');
 
@@ -36,6 +45,8 @@ Route::get('/unit/{unit_id}/assignment/{assignment_id}', 'AssignmentController@s
 Route::post('/unit/{unit_id}/assignment/{assignment_id}', 'AssignmentController@submit');
 
 Route::get('/unit/{unit_id}/grade', 'GradeController@show');
+
+// Forum routes
 
 Route::get('/unit/{unit_id}/forum/create', 'ForumController@threadcreate');
 Route::get('/unit/{unit_id}/forum', 'ForumController@threadindex');

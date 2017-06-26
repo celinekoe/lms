@@ -14,19 +14,31 @@ class UserQuestionsTableSeeder extends Seeder
         DB::table('user_questions')->insert([
        		'user_id' => '1',
        		'question_id' => '1',
-          'attempt_no' => 1,
         ]);
 
         DB::table('user_questions')->insert([
        		'user_id' => '1',
        		'question_id' => '2',
-          'attempt_no' => 1,
         ]);
 
         DB::table('user_questions')->insert([
        		'user_id' => '1',
        		'question_id' => '3',
-          'attempt_no' => 1,
+        ]);
+
+        DB::table('user_questions')->insert([
+          'user_id' => '1',
+          'question_id' => '4',
+        ]);
+
+        DB::table('user_questions')->insert([
+          'user_id' => '1',
+          'question_id' => '5',
+        ]);
+
+        DB::table('user_questions')->insert([
+          'user_id' => '1',
+          'question_id' => '6',
         ]);
     }
 }

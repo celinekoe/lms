@@ -24,7 +24,7 @@
         <div class="flex-align-center-justify-around margin-bottom-2">
             <div class="tab-header introduction-tab-header bg-white flex-align-center-justify-center margin-right-2 width-25p" style="height: 86px;">
                 <div>
-                    <div class="flex-justify-center glyphicon glyphicon-exclamation-sign margin-bottom-4" aria-hidden="true"></div>
+                    <div class="flex-justify-center glyphicon glyphicon-exclamation-sign margin-bottom-8" aria-hidden="true"></div>
                     <div>
                         Introduction
                     </div>    
@@ -32,7 +32,7 @@
             </div>
             <div class="tab-header guidelines-tab-header bg-white flex-align-center-justify-center margin-right-2 width-25p" style="height: 86px;">
                 <div>
-                    <div class="flex-justify-center glyphicon glyphicon-tasks margin-bottom-4" aria-hidden="true"></div>
+                    <div class="flex-justify-center glyphicon glyphicon-tasks margin-bottom-8" aria-hidden="true"></div>
                     <div>
                         Guidelines
                     </div>
@@ -40,7 +40,7 @@
             </div>
             <div class="tab-header learning-outcomes-tab-header bg-white flex-align-center-justify-center margin-right-2 width-25p" style="height: 86px;">
                 <div>
-                    <div class="flex-justify-center glyphicon glyphicon-list margin-bottom-4" aria-hidden="true"></div>
+                    <div class="flex-justify-center glyphicon glyphicon-list margin-bottom-8" aria-hidden="true"></div>
                     <div class="flex-justify-center">
                         Learning
                     </div>
@@ -51,7 +51,7 @@
             </div>
             <div class="tab-header resources-tab-header bg-white flex-align-center-justify-center width-25p" style="height: 86px;">
                 <div>
-                    <div class="flex-justify-center glyphicon glyphicon-link margin-bottom-4" aria-hidden="true"></div>
+                    <div class="flex-justify-center glyphicon glyphicon-link margin-bottom-8" aria-hidden="true"></div>
                     <div>
                         Resources
                     </div>
@@ -132,17 +132,19 @@
             </div>
             <div class="subsection-quizzes">
                 @foreach ($subsection->quizzes as $quiz)
-                    <div class="quiz flex-align-center bg-white margin-top-bottom-2 padding-10">
-                        <span class="glyphicon glyphicon-star margin-left-10"></span>
-                        <a href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/quiz/'.$quiz->id) }}">
-                            <span class="margin-left-10">{{ $quiz->name }}</span>
-                        </a>
-                        <div class="margin-left-auto">
-                            @if ($quiz->completed)
-                                <span class="incomplete glyphicon glyphicon-ok margin-right-10" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/quiz/'.$quiz->id.'/incomplete') }}"></span>
-                            @endif
+                    <a href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/quiz/'.$quiz->id) }}">
+                        <div class="subsection-quiz flex-align-center bg-white margin-top-bottom-2 padding-10">
+                            <div class="flex-align-center">
+                                <div class="glyphicon glyphicon-star margin-left-10"></div>
+                                <div class="margin-left-10">{{ $quiz->name }}</div>    
+                            </div>
+                            <div class="margin-left-auto">
+                                @if ($quiz->completed)
+                                    <span class="incomplete glyphicon glyphicon-ok margin-right-10" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/quiz/'.$quiz->id.'/incomplete') }}"></span>
+                                @endif
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 @endforeach
             </div>
         </div>

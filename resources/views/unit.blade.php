@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="margin-left-right-10">
-    <div class="bg-white flex-align-center margin-bottom-10 padding-left-20 padding-right-10 padding-top-bottom-10">
+    <div class="bg-white flex-align-center margin-bottom-2 padding-left-20 padding-right-10 padding-top-bottom-10">
         <div class="section-progress c100 {{ 'p' . $data['unit']->progress }} font-size-228em green">
           <div class="slice">
             <div class="bar"></div>
@@ -14,9 +14,9 @@
             <span class="download glyphicon glyphicon-download margin-top-4" href=""></span>
         </span>
     </div>
-    <div class="flex-align-center-justify-around margin-bottom-10">
+    <div class="flex-align-center-justify-around margin-bottom-2">
         <div class="unit-tab bg-white flex-align-center-justify-center margin-right-2 width-25p" style="height: 86px;">
-            <a href="{{ url('unit/'.$data['unit']->id.'/info') }}">
+            <a href="{{ url('unit/'.$data['unit']->id.'/unit_info') }}">
                 <div class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></div>
                 <br>
                 <span class="unit-tab-text">
@@ -60,7 +60,7 @@
             </a>
         </div>
     </div>    
-    <div class="bg-white flex-align-center-justify-center margin-bottom-10 padding-10" style="height: 46px;">
+    <div class="bg-white flex-align-center-justify-center margin-bottom-10 padding-10" style="height: 61px;">
         <a href="{{ url('unit/'.$data['unit']->id.'/forum') }}" class="flex-justify-center">
             <span class="glyphicon glyphicon glyphicon-comment margin-right-10" aria-hidden="true"></span>
             <span class="unit-tab-text">Forum</span>

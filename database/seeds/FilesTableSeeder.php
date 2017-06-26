@@ -12,6 +12,38 @@ class FilesTableSeeder extends Seeder
     public function run()
     {
         DB::table('files')->insert([
+            'unit_id' => '1',
+            'name' => 'Unit_info_file1',
+            'type' => 'video',
+            'extension' => '.mp4',
+            'url' => 'https://www.youtube.com/embed/WQZRb8L5awM?rel=0&modestbranding=1'
+        ]);
+
+        DB::table('files')->insert([
+            'unit_id' => '1',
+            'name' => 'Unit_info_file2',
+            'type' => 'document',
+            'extension' => '.pdf',
+            'url' => 'https://drive.google.com/file/d/0B4OsqsghY0urbVo4b05sc2NIVW8/preview'
+        ]);
+
+        DB::table('files')->insert([
+            'unit_id' => '1',
+            'name' => 'Unit_info_file3',
+            'type' => 'document',
+            'extension' => '.docx',
+            'url' => 'https://drive.google.com/file/d/0B4OsqsghY0urbFlsX1VzLW9INlU/preview'
+        ]);
+
+        DB::table('files')->insert([
+            'unit_id' => '1',
+            'name' => 'Unit_info_file4',
+            'type' => 'document',
+            'extension' => '.pptx',
+            'url' => 'https://drive.google.com/file/d/0B4OsqsghY0urMGFpNGMzZE1Gd2c/preview'
+        ]);
+
+        DB::table('files')->insert([
             'subsection_id' => '1',
             'name' => 'Subsection_file1',
             'type' => 'video',

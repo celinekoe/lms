@@ -85,8 +85,35 @@ class UserFilesTableSeeder extends Seeder
         ]);
 
         DB::table('user_files')->insert([
-        	'user_id' => '1',
-        	'file_id' => '9',
+            'user_id' => '1',
+            'file_id' => '9',
+            'completed' => false,
+            'downloaded' => false,
+            'uploaded' => false,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('user_files')->insert([
+            'user_id' => '1',
+            'file_id' => '10',
+            'completed' => false,
+            'downloaded' => false,
+            'uploaded' => false,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('user_files')->insert([
+            'user_id' => '1',
+            'file_id' => '11',
+            'completed' => false,
+            'downloaded' => false,
+            'uploaded' => false,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('user_files')->insert([
+            'user_id' => '1',
+            'file_id' => '12',
             'completed' => false,
             'downloaded' => false,
             'uploaded' => false,
@@ -95,7 +122,16 @@ class UserFilesTableSeeder extends Seeder
 
         DB::table('user_files')->insert([
         	'user_id' => '1',
-        	'file_id' => '10',
+        	'file_id' => '13',
+            'completed' => false,
+            'downloaded' => false,
+            'uploaded' => false,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('user_files')->insert([
+        	'user_id' => '1',
+        	'file_id' => '14',
             'completed' => false,
             'downloaded' => false,
             'uploaded' => true,
@@ -104,7 +140,7 @@ class UserFilesTableSeeder extends Seeder
 
         DB::table('user_files')->insert([
             'user_id' => '1',
-            'file_id' => '11',
+            'file_id' => '15',
             'completed' => false,
             'downloaded' => false,
             'uploaded' => true,

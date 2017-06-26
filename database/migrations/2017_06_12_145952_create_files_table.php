@@ -16,12 +16,14 @@ class CreateFilesTable extends Migration
         Schema::create('files', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned()->nullable();
+            $table->integer('unit_id')->unsigned()->nullable();
             $table->integer('subsection_id')->unsigned()->nullable();
             $table->integer('assignment_id')->unsigned()->nullable();
             $table->string('name');
             $table->string('type');
             $table->string('extension');
             $table->string('url');
+            $table->foreign('unit_id')->references('id')->on('units');
             $table->foreign('subsection_id')->references('id')->on('subsections');
             $table->foreign('assignment_id')->references('id')->on('assignments');
             $table->timestamps();

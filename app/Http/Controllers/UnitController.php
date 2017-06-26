@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Auth;
 use App\User;
 use App\Unit;
@@ -55,11 +56,93 @@ class UnitController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function info(Request $request)
+    public function unit_info(Request $request)
     {
+        $user = Auth::user();
         $unit = Unit::find($request->unit_id);
+        $user_unit_info_files = DB::table('users')
+            ->join('user_files', 'users.id', '=', 'user_files.user_id')
+            ->join('files', 'user_files.file_id', '=', 'files.id')
+            ->where('users.id', $user->id)
+            ->where('files.unit_id', $unit->id)
+            ->get();
+        $unit->user_unit_info_files = $user_unit_info_files;
         $data['unit'] = $unit;
         return view('unit_info', ['data' => $data]);
+    }
+
+    /**
+     * Show the unit info file.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function unit_info_file(Request $request)
+    {
+        $unit = Unit::find($request->unit_id);
+        $file = File::find($request->file_id);     
+        $data['unit'] = $unit;
+        $data['file'] = $file;
+        return view('unit_info_file', ['data' => $data]);
+    }
+
+    /**
+     * Mark as complete the unit info file.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function unit_info_complete(Request $request)
+    {
+        $user = Auth::user();
+        $user_unit_info_file = UserFile::where('user_id', $user->id)
+            ->where('file_id', $request->file_id)
+            ->first();
+        $user_unit_info_file->completed = true;
+        $user_unit_info_file->save();
+    }
+
+    /**
+     * Mark as incomplete the unit info file.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function unit_info_incomplete(Request $request)
+    {
+        $user = Auth::user();
+        $user_unit_info_file = UserFile::where('user_id', $user->id)
+            ->where('file_id', $request->file_id)
+            ->first();
+        $user_unit_info_file->completed = false;
+        $user_unit_info_file->save();
+    }
+
+    /**
+     * Download the unit info file.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function unit_info_download(Request $request)
+    {
+        $user = Auth::user();
+        $user_unit_info_file = UserFile::where('user_id', $user->id)
+            ->where('file_id', $request->file_id)
+            ->first();
+        $user_unit_info_file->downloaded = true;
+        $user_unit_info_file->save();
+    }
+
+    /**
+     * Delete the unit info file.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function unit_info_delete(Request $request)
+    {
+        $user = Auth::user();
+        $user_unit_info_file = UserFile::where('user_id', $user->id)
+            ->where('file_id', $request->file_id)
+            ->first();
+        $user_unit_info_file->downloaded = false;
+        $user_unit_info_file->save();
     }
 
     /**
