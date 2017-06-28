@@ -10,7 +10,7 @@
           </div>
         </div>
         <div class="font-size-32 margin-left-10">{{ $data['section']->name }}</div>
-        <span class="icons margin-left-auto margin-right-10">
+        <span class="margin-left-auto margin-right-10">
             @if ($data['section']->downloaded == false)
                 <span class="section-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/download') }}"></span>
                 <span class="section-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/delete') }}" style="display: none;"></span>
@@ -22,7 +22,7 @@
     </div>
     <div class="section-tabs">
         <div class="flex-align-center-justify-around margin-bottom-2">
-            <div class="tab-header introduction-tab-header bg-white flex-align-center-justify-center margin-right-2 width-25p" style="height: 86px;">
+            <div class="section-tab-header introduction-tab-header bg-white flex-align-center-justify-center margin-right-2 width-25p" style="height: 86px;">
                 <div>
                     <div class="flex-justify-center glyphicon glyphicon-exclamation-sign margin-bottom-8" aria-hidden="true"></div>
                     <div>
@@ -30,7 +30,7 @@
                     </div>    
                 </div>
             </div>
-            <div class="tab-header guidelines-tab-header bg-white flex-align-center-justify-center margin-right-2 width-25p" style="height: 86px;">
+            <div class="section-tab-header guidelines-tab-header bg-white flex-align-center-justify-center margin-right-2 width-25p" style="height: 86px;">
                 <div>
                     <div class="flex-justify-center glyphicon glyphicon-tasks margin-bottom-8" aria-hidden="true"></div>
                     <div>
@@ -38,7 +38,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-header learning-outcomes-tab-header bg-white flex-align-center-justify-center margin-right-2 width-25p" style="height: 86px;">
+            <div class="section-tab-header learning-outcomes-tab-header bg-white flex-align-center-justify-center margin-right-2 width-25p" style="height: 86px;">
                 <div>
                     <div class="flex-justify-center glyphicon glyphicon-list margin-bottom-8" aria-hidden="true"></div>
                     <div class="flex-justify-center">
@@ -49,7 +49,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-header resources-tab-header bg-white flex-align-center-justify-center width-25p" style="height: 86px;">
+            <div class="section-tab-header resources-tab-header bg-white flex-align-center-justify-center width-25p" style="height: 86px;">
                 <div>
                     <div class="flex-justify-center glyphicon glyphicon-link margin-bottom-8" aria-hidden="true"></div>
                     <div>
@@ -98,13 +98,16 @@
                     </div>
                 </div>
             </div>
-            <div class="subsection-files">
+            <div class="subsection-files" style="display: none;">
                 @foreach ($subsection->files as $file)
-                    <div class="subsection_file bg-white margin-top-bottom-2 padding-10 text-dark-grey">
-                        <a href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/file/'.$file->id) }}" target="_blank">
+                    <div class="subsection-file bg-white margin-top-bottom-2 padding-10 text-dark-grey">
+                        <a href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/file/'.$file->id) }}">
                             <div>
                                 @if ($file->type == 'video')
-                                    <span class="glyphicon glyphicon-facetime-video margin-left-10"></span>
+                                    <span>
+                                        <span class="glyphicon glyphicon-facetime-video margin-left-10"></span>
+                                        <span class="margin-left-10">[{{ $file->formatted_size}}, {{ $file->length }}]</span>
+                                    </span>
                                 @elseif ($file->type == 'document')
                                     <span class="glyphicon glyphicon-book margin-left-10"></span>
                                 @endif
@@ -130,7 +133,7 @@
                     </div>
                 @endforeach
             </div>
-            <div class="subsection-quizzes">
+            <div class="subsection-quizzes" style="display: none;">
                 @foreach ($subsection->quizzes as $quiz)
                     <a href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/quiz/'.$quiz->id) }}">
                         <div class="subsection-quiz flex-align-center bg-white margin-top-bottom-2 padding-10">

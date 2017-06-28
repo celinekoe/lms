@@ -54,6 +54,8 @@ class SectionController extends Controller
             foreach ($files as $file)
             {
                 $total_subsection_files++;
+                $file->formatted_size = $this->formatSize($file->size, 0);
+
                 foreach ($user_subsection_files as $user_subsection_file)
                 {
                     if ($file->id == $user_subsection_file->file_id)
@@ -370,4 +372,18 @@ class SectionController extends Controller
 
         return $data;
     }
+
+    /**
+     * Format file size
+     *
+     * @return string
+     */
+    private function formatSize($size, $precision = 2)
+    {
+        $base = log($size, 1024);
+        $suffixes = array('', 'K', 'M', 'G', 'T');   
+
+        return round(pow(1024, $base - floor($base)), $precision) .' '. $suffixes[floor($base)];
+    }
+
 }

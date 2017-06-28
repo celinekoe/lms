@@ -17,7 +17,7 @@
     <link href="{{ asset('css/circle.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
+    <div id="app height-100p">
         <nav class="navbar navbar-custom navbar-static-top margin-0">
             <div>
                 <div class="navbar-header width-100p">
@@ -125,7 +125,27 @@
         <div class="sidebar-container">
             @include('sidebar')    
         </div>
-        <div class="content margin-top-bottom-20">
+        <!-- Confirmation -->
+        <div class="confirm-container display-none">
+            <div class="confirm-overlay flex-align-center-justify-center">
+                <div class="confirm confirm-download display-none bg-white padding-10">
+                    <div class="confirm-text flex-justify-center padding-10"></div>
+                    <div class="confirm-options flex-align-center-justify-between">
+                        <div class="btn btn-default confirm-option-cancel width-49p padding-10">Cancel</div>
+                        <div class="btn btn-primary confirm-option-download width-49p padding-10">Download</div>    
+                    </div>
+                </div>
+                <div class="confirm confirm-delete bg-white display-none padding-10">
+                    <div class="confirm-text flex-justify-center padding-10"></div>
+                    <div class="confirm-options flex-align-center-justify-between">
+                        <div class="btn btn-default confirm-option-cancel width-49p padding-10">Cancel</div>
+                        <div class="btn btn-primary confirm-option-delete width-49p padding-10">Delete</div>    
+                    </div>
+                </div>
+            </div>    
+        </div>
+        <!-- Content -->
+        <div class="content">
             @yield('content')    
         </div>
     </div>

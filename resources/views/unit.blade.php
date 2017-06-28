@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="margin-left-right-10">
+<div class="margin-10">
     <div class="bg-white flex-align-center margin-bottom-2 padding-left-20 padding-right-10 padding-top-bottom-10">
         <div class="section-progress c100 {{ 'p' . $data['unit']->progress }} font-size-228em green">
           <div class="slice">
@@ -10,62 +10,62 @@
           </div>
         </div>
         <div class="font-size-32 margin-left-10">{{ $data['unit']->unit_code }} {{ $data['unit']->name }}</div>
-        <span class="icons margin-left-auto margin-right-10">
-            <span class="download glyphicon glyphicon-download margin-top-4" href=""></span>
-        </span>
+        <div class="flex-align-center margin-left-auto">
+            @if ($data['unit']->downloaded == false)
+                <div class="unit-download glyphicon glyphicon-download margin-right-10" href="{{ url('unit/'.$data['unit']->id.'/download') }}"></div>
+                <div class="unit-delete glyphicon glyphicon-remove-circle margin-right-10" href="{{ url('unit/'.$data['unit']->id.'/delete') }}" style="display: none"></div>
+            @else
+                <div class="unit-download glyphicon glyphicon-download margin-right-10" href="{{ url('unit/'.$data['unit']->id.'/download') }}" style="display: none"></div>
+                <div class="unit-delete glyphicon glyphicon-remove-circle margin-right-10" href="{{ url('unit/'.$data['unit']->id.'/delete') }}"></div>
+            @endif
+        </div>
     </div>
-    <div class="flex-align-center-justify-around margin-bottom-2">
-        <div class="unit-tab bg-white flex-align-center-justify-center margin-right-2 width-25p" style="height: 86px;">
-            <a href="{{ url('unit/'.$data['unit']->id.'/unit_info') }}">
-                <div class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></div>
-                <br>
-                <span class="unit-tab-text">
+    <div class="unit-tabs flex-align-center-justify-around margin-bottom-2">
+        <a href="{{ url('unit/'.$data['unit']->id.'/unit_info') }}" class="unit-tab unit-info-tab bg-white flex-align-center-justify-center margin-right-2 width-25p" style="height: 86px;">
+            <div>
+                <div class="glyphicon glyphicon-exclamation-sign flex-justify-center margin-bottom-4" aria-hidden="true"></div>
+                <div>
                     Unit Info
-                </span>
-            </a>
-        </div>
-        <div class="unit-tab bg-white margin-right-2 width-25p" style="height: 86px;">
-            <a href="{{ url('unit/'.$data['unit']->id.'/announcement') }}">
-                <div class="glyphicon glyphicon-bullhorn" aria-hidden="true"></div>
-                <br>
-                <span class="unit-tab-text">
-                    Announce-
-                </span>
-                <br>
-                <span class="unit-tab-text">
-                    ments
-                </span>
-            </a>
-        </div>
-        <div class="unit-tab bg-white margin-right-2 width-25p" style="height: 86px;">
-            <a href="{{ url('unit/'.$data['unit']->id.'/assignments') }}">
-                <div class="glyphicon glyphicon-star" aria-hidden="true"></div>
-                <br>
-                <span class="unit-tab-text">
-                    Assign-
-                </span>
-                <br>
-                <span class="unit-tab-text">
-                    ments
-                </span>
-            </a>
-        </div>
-        <div class="unit-tab bg-white flex-align-center-justify-center width-25p" style="height: 86px;">
-            <a href="{{ url('unit/'.$data['unit']->id.'/grade') }}">
-                <div class="glyphicon glyphicon-signal" aria-hidden="true"></div>
-                <br>
-                <span class="unit-tab-text">
-                    Grades
-                </span>
-            </a>
-        </div>
-    </div>    
-    <div class="bg-white flex-align-center-justify-center margin-bottom-10 padding-10" style="height: 61px;">
-        <a href="{{ url('unit/'.$data['unit']->id.'/forum') }}" class="flex-justify-center">
-            <span class="glyphicon glyphicon glyphicon-comment margin-right-10" aria-hidden="true"></span>
-            <span class="unit-tab-text">Forum</span>
+                </div>
+            </div>
         </a>
-    </div>
+        <a href="{{ url('unit/'.$data['unit']->id.'/announcement') }}" class="unit-tab announcements-tab bg-white flex-align-center-justify-center margin-right-2 width-25p" style="height: 86px;">
+            <div>
+                <div class="glyphicon glyphicon-bullhorn flex-justify-center margin-bottom-4" aria-hidden="true"></div>
+                <div class="flex-justify-center">
+                    Announce-
+                </div>
+                <div class="flex-justify-center">
+                    ments
+                </div>
+            </div>
+        </a>
+        <a href="{{ url('unit/'.$data['unit']->id.'/assignments') }}" class="unit-tab assignments-tab bg-white flex-align-center-justify-center margin-right-2 width-25p" style="height: 86px;">
+            <div>
+                <div class="glyphicon glyphicon-star flex-justify-center margin-bottom-4" aria-hidden="true"></div>
+                <div class="flex-justify-center">
+                    Assign-
+                </div>
+                <div class="flex-justify-center">
+                    ments
+                </div>
+            </div>
+        </a>
+        <a href="{{ url('unit/'.$data['unit']->id.'/grade') }}" class="unit-tab grades-tab bg-white flex-align-center-justify-center width-25p" style="height: 86px;">
+            <div>
+                <div class="glyphicon glyphicon-signal flex-justify-center margin-bottom-4" aria-hidden="true"></div>
+                <div class="flex-justify-center">
+                    Grades
+                </div>
+            </div>
+        </a>
+    </div>    
+    <a href="{{ url('unit/'.$data['unit']->id.'/forum') }}" class="unit-tab forum-tab bg-white flex-align-center-justify-center margin-bottom-10 padding-10" style="height: 71px;">
+        <div class="flex-align-center">
+            <div class="glyphicon glyphicon glyphicon-comment margin-right-4" aria-hidden="true"></div>
+            <div>Forum</div>
+        </div>
+    </a>
     @foreach ($data['unit']->sections as $section)
         <a href="{{ url('unit/'.$data['unit']->id.'/section/'.$section->id) }}">
             <div class="bg-white margin-bottom-2 padding-10">
@@ -77,12 +77,24 @@
                       </div>
                     </div>
                     <div class="margin-left-10">{{ $section->name }}</div>
-                    <span class="icons margin-left-auto margin-right-10">
-                        <span class="download glyphicon glyphicon-download margin-top-4" href=""></span>
-                    </span>
+                    <div class="margin-left-auto">
+                        @if ($section->has_files)
+                            @if ($section->downloaded == false)
+                                <div class="section-download glyphicon glyphicon-download margin-right-10 margin-top-4" href="{{ url('unit/'.$section->unit_id.'/section/'.$section->id.'/download') }}"></div>
+                                <div class="section-delete glyphicon glyphicon-remove-circle margin-right-10 margin-top-4" href="{{ url('unit/'.$section->unit_id.'/section/'.$section->id.'/delete') }}" style="display: none"></div>
+                            @else
+                                <div class="section-download glyphicon glyphicon-download margin-right-10 margin-top-4" href="{{ url('unit/'.$section->unit_id.'/section/'.$section->id.'/download') }}" style="display: none"></div>
+                                <div class="section-delete glyphicon glyphicon-remove-circle margin-right-10 margin-top-4" href="{{ url('unit/'.$section->unit_id.'/section/'.$section->id.'/delete') }}"></div>
+                            @endif
+                        @endif
+                    </div>
                 </div>
             </div>
         </a>
     @endforeach
 </div>
+@endsection
+
+@section('script')
+    <script src="{{ asset('js/unit.js') }}"></script>
 @endsection

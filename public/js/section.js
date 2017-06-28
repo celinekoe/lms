@@ -2,8 +2,9 @@
 
 $(".introduction-tab-header").click(function(e) {
 	if ($(this).hasClass("bg-white")) {
-		$(".tab-header").addClass("bg-white");
-		$(".tab-header").removeClass("bg-primary");
+		$(".section-tab-header").addClass("bg-white");
+		$(".section-tab-header").removeClass("bg-primary");
+		console.log($(".section-tab-header"));
 		$(this).removeClass("bg-white");
 		$(this).addClass("bg-primary");	
 		$(".tab-body").hide();
@@ -17,10 +18,11 @@ $(".introduction-tab-header").click(function(e) {
 
 $(".guidelines-tab-header").click(function(e) {
 	if ($(this).hasClass("bg-white")) {
-		$(".tab-header").addClass("bg-white");
-		$(".tab-header").removeClass("bg-primary");
+		$(".section-tab-header").addClass("bg-white");
+		$(".section-tab-header").removeClass("bg-primary");
 		$(this).removeClass("bg-white");
 		$(this).addClass("bg-primary");	
+		console.log($(".section-tab-header"));
 		$(".tab-body").hide();
 		$(".guidelines-tab-body").show();
 	} else {
@@ -32,8 +34,8 @@ $(".guidelines-tab-header").click(function(e) {
 
 $(".learning-outcomes-tab-header").click(function(e) {
 	if ($(this).hasClass("bg-white")) {
-		$(".tab-header").addClass("bg-white");
-		$(".tab-header").removeClass("bg-primary");
+		$(".section-tab-header").addClass("bg-white");
+		$(".section-tab-header").removeClass("bg-primary");
 		$(this).removeClass("bg-white");
 		$(this).addClass("bg-primary");	
 		$(".tab-body").hide();
@@ -47,8 +49,8 @@ $(".learning-outcomes-tab-header").click(function(e) {
 
 $(".resources-tab-header").click(function(e) {
 	if ($(this).hasClass("bg-white")) {
-		$(".tab-header").addClass("bg-white");
-		$(".tab-header").removeClass("bg-primary");
+		$(".section-tab-header").addClass("bg-white");
+		$(".section-tab-header").removeClass("bg-primary");
 		$(this).removeClass("bg-white");
 		$(this).addClass("bg-primary");	
 		$(".tab-body").hide();
@@ -132,8 +134,8 @@ $(".subsection-download").click(function(e) {
 	$.get(href, function(data) {
 		subsection_download.hide();
 		subsection_download.siblings(".subsection-delete").show();
-		subsection_download.parent().parent().parent().siblings(".subsection_file").find(".individual-download").hide();
-		subsection_download.parent().parent().parent().siblings(".subsection_file").find(".individual-delete").show();
+		subsection_download.parent().parent().parent().siblings(".subsection-files").find(".individual-download").hide();
+		subsection_download.parent().parent().parent().siblings(".subsection-files").find(".individual-delete").show();
 	});
 });
 
@@ -144,8 +146,8 @@ $(".subsection-delete").click(function(e) {
 	$.get(href, function(data) {
 		subsection_delete.siblings(".subsection-download").show();
 		subsection_delete.hide();
-		subsection_delete.parent().parent().parent().siblings(".subsection_file").find(".individual-download").show();
-		subsection_delete.parent().parent().parent().siblings(".subsection_file").find(".individual-delete").hide();
+		subsection_delete.parent().parent().parent().siblings(".subsection-files").find(".individual-download").show();
+		subsection_delete.parent().parent().parent().siblings(".subsection-files").find(".individual-delete").hide();
 	});
 });
 

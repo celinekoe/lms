@@ -6,28 +6,57 @@
         <div class="sidebar-close padding-10">
             <div class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></div>
         </div>
-        <a href="{{ url('grades') }}">
-            <div class="sidebar-nav padding-10">{{ Auth::user()->name }}</div>
+        <a href="#">
+            <div class="flex-align-center padding-10">
+                <div class="glyphicon glyphicon-user margin-bottom-4" aria-hidden="true"></div>
+                <div class="margin-left-10">{{ Auth::user()->name }}</div>  
+            </div>
         </a>
         <a href="{{ url('home') }}">
-            <div class="padding-10">Dashboard</div>
+            <div class="flex-align-center padding-10">
+                <div class="glyphicon glyphicon-home margin-bottom-4" aria-hidden="true"></div>
+                <div class="margin-left-10">Dashboard</div>  
+            </div>
+        </a>
+        <a href="{{ url('grades') }}">
+            <div class="flex-align-center padding-10">
+                <div class="glyphicon glyphicon-stats margin-bottom-4" aria-hidden="true"></div>
+                <div class="margin-left-10">Course Grades</div>  
+            </div>
         </a>
         <a href="{{ url('calendar') }}">
-            <div class="padding-10">Calendar</div>
+            <div class="flex-align-center padding-10">
+                <div class="glyphicon glyphicon-calendar margin-bottom-4" aria-hidden="true"></div>
+                <div class="margin-left-10">Calendar</div>  
+            </div>
         </a>
         <a href="{{ url('messages') }}">
-            <div class="padding-10">Messages</div>
+            <div class="flex-align-center padding-10">
+                <div class="glyphicon glyphicon-comment margin-bottom-4" aria-hidden="true"></div>
+                <div class="margin-left-10">Messages</div>  
+                <div class="margin-left-auto badge">42</div>
+            </div>
         </a>
         <a href="{{ url('notifications') }}">
-            <div class="padding-10">Notifications</div>
+            <div class="flex-align-center padding-10">
+                <div class="glyphicon glyphicon-bell margin-bottom-4" aria-hidden="true"></div>
+                <div class="margin-left-10">Notifications</div>  
+                <div class="margin-left-auto badge">42</div>
+            </div>
         </a>
         <a href="{{ url('downloads') }}">
-            <div class="padding-10">Downloads</div>
+            <div class="flex-align-center padding-10">
+                <div class="glyphicon glyphicon-download margin-bottom-4" aria-hidden="true"></div>
+                <div class="margin-left-10">Downloads</div>  
+            </div>
         </a>
         <a href="{{ route('logout') }}" 
             onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();">
-            <div class="padding-10">Logout</div>
+            <div class="flex-align-center padding-10">
+                <div class="glyphicon glyphicon-log-out margin-bottom-4" aria-hidden="true"></div>
+                <div class="margin-left-10">Log Out</div>  
+            </div>
         </a>
 
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

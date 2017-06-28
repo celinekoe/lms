@@ -14,6 +14,16 @@ use StdClass;
 
 class GradeController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
 	/**
      * Show the course grades page.
      *

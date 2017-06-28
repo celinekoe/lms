@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Auth;
 use App\User;
 use App\Unit;
@@ -21,17 +22,23 @@ class AssignmentController extends Controller
      */
     public function index(Request $request)
     {
+        $user = Auth::user();
         $unit = Unit::find($request->unit_id);
         $assignments = Assignment::where('unit_id', $unit->id)->get();
         foreach ($assignments as $assignment)
         {
             $assignment->submit_by_date_format = Carbon::parse($assignment->submit_by_date)->toDateString();
-            $assignment->files = File::where('user_id', null)
-                                        ->where('assignment_id', $assignment->id)
-                                        ->get();
+            $user_assignment_files = DB::table('users')
+                ->join('user_files', 'users.id', '=', 'user_files.user_id')
+                ->join('files', 'user_files.file_id', '=', 'files.id')
+                ->where('users.id', $user->id)
+                ->where('files.user_id', null)
+                ->where('files.assignment_id', $assignment->id)
+                ->get();
+            $assignment->files = $user_assignment_files;
         }
+        $unit->assignments = $assignments;
         $data['unit'] = $unit;
-        $data['assignments'] = $assignments;
         return view('unit_assignments', ['data' => $data]);
     }
 
@@ -135,22 +142,6 @@ class AssignmentController extends Controller
     }
 
     /**
-     * Show the assignments file.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function assignments_file(Request $request)
-    {
-        $unit = Unit::find($request->unit_id);
-        $assignment = Assignment::find($request->assignment_id);
-        $file = File::find($request->file_id);
-        $data['unit'] = $unit;
-        $data['assignment'] = $assignment;
-        $data['file'] = $file;
-        return view('assignments_file', ['data' => $data]);
-    }
-
-    /**
      * Show the assignment file.
      *
      * @return \Illuminate\Http\Response
@@ -164,5 +155,35 @@ class AssignmentController extends Controller
         $data['assignment'] = $assignment;
         $data['file'] = $file;
         return view('assignment_file', ['data' => $data]);
+    }
+
+    /**
+     * Download the assignment file.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function assignment_download(Request $request)
+    {
+        $user = Auth::user();
+        $user_subsection_file = UserFile::where('user_id', $user->id)
+            ->where('file_id', $request->file_id)
+            ->first();
+        $user_subsection_file->downloaded = true;
+        $user_subsection_file->save();
+    }
+
+    /**
+     * Delete the assignment file.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function assignment_delete(Request $request)
+    {
+        $user = Auth::user();
+        $user_subsection_file = UserFile::where('user_id', $user->id)
+            ->where('file_id', $request->file_id)
+            ->first();
+        $user_subsection_file->downloaded = false;
+        $user_subsection_file->save();
     }
 }

@@ -36,19 +36,80 @@ class UnitController extends Controller
     public function show(Request $request)
     {
         $user = Auth::user();
-        $unit = Unit::find($request->id);
-        $unit->sections = Section::where('unit_id', $unit->id)->get();
+        $unit = Unit::find($request->unit_id);
+
+        $unit->sections = Section::where('unit_id', $unit->id)
+            ->get();
         foreach ($unit->sections as $section)
         {
-            $section->subsections = Subsection::where('section_id', $section->id)->get();
+            $section->subsections = Subsection::where('section_id', $section->id)
+                ->get();
             foreach ($section->subsections as $subsection)
             {
-                $subsection->files = File::where('subsection_id', $subsection->id)->get();
+                $user_subsection_files = DB::table('users')
+                    ->join('user_files', 'users.id', '=', 'user_files.user_id')
+                    ->join('files', 'user_files.id', '=', 'files.id')
+                    ->where('users.id', $user->id)
+                    ->where('files.subsection_id', $subsection->id)
+                    ->get();
+                $subsection->files = $user_subsection_files;
             }
         }
-        $unit = $this->calculateUnitProgress($user, $unit);
+        $unit = $this->unit_progress($user, $unit);
+
+        $unit->has_files = $this->unit_has_files($unit);
+        foreach ($unit->sections as $section)
+        {
+            $section->has_files = $this->section_has_files($section);    
+        }
+
+        $unit->downloaded = $this->unit_downloaded($unit);
+        foreach ($unit->sections as $section)
+        {
+            $section->downloaded = $this->section_downloaded($section);    
+        }
+
         $data['unit'] = $unit;
         return view('unit', ['data' => $data]);
+    }
+
+    /**
+     * Download the unit files.
+     *
+     * @return void
+     */
+    public function unit_download(Request $request)
+    {
+        $user = Auth::user();
+        $user_unit_files = DB::table('users')
+            ->join('user_files', 'users.id', '=', 'user_files.user_id')
+            ->join('files', 'user_files.file_id', '=', 'files.id')
+            ->join('subsections', 'files.subsection_id', '=', 'subsections.id')
+            ->join('sections', 'subsections.section_id', '=', 'sections.id')
+            ->join('units', 'sections.unit_id', '=', 'sections.unit_id')
+            ->where('users.id', $user->id)
+            ->where('units.id', $request->unit_id)
+            ->update(['user_files.downloaded' => true]);
+    }
+
+
+    /**
+     * Delete the unit files.
+     *
+     * @return void
+     */
+    public function unit_delete(Request $request)
+    {
+        $user = Auth::user();
+        $user_unit_files = DB::table('users')
+            ->join('user_files', 'users.id', '=', 'user_files.user_id')
+            ->join('files', 'user_files.file_id', '=', 'files.id')
+            ->join('subsections', 'files.subsection_id', '=', 'subsections.id')
+            ->join('sections', 'subsections.section_id', '=', 'sections.id')
+            ->join('units', 'sections.unit_id', '=', 'sections.unit_id')
+            ->where('users.id', $user->id)
+            ->where('units.id', $request->unit_id)
+            ->update(['user_files.downloaded' => false]);
     }
 
     /**
@@ -83,36 +144,6 @@ class UnitController extends Controller
         $data['unit'] = $unit;
         $data['file'] = $file;
         return view('unit_info_file', ['data' => $data]);
-    }
-
-    /**
-     * Mark as complete the unit info file.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function unit_info_complete(Request $request)
-    {
-        $user = Auth::user();
-        $user_unit_info_file = UserFile::where('user_id', $user->id)
-            ->where('file_id', $request->file_id)
-            ->first();
-        $user_unit_info_file->completed = true;
-        $user_unit_info_file->save();
-    }
-
-    /**
-     * Mark as incomplete the unit info file.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function unit_info_incomplete(Request $request)
-    {
-        $user = Auth::user();
-        $user_unit_info_file = UserFile::where('user_id', $user->id)
-            ->where('file_id', $request->file_id)
-            ->first();
-        $user_unit_info_file->completed = false;
-        $user_unit_info_file->save();
     }
 
     /**
@@ -169,7 +200,7 @@ class UnitController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    private function calculateUnitProgress($user, $unit)
+    private function unit_progress($user, $unit)
     {
         $total_unit_files = 0;
         $completed_unit_files = 0;
@@ -190,6 +221,7 @@ class UnitController extends Controller
                     {
                         $completed_subsection_files++;
                     }
+
                     $total_subsection_files++;
 
                 }
@@ -203,5 +235,53 @@ class UnitController extends Controller
         }
         $unit->progress = ($total_unit_files > 0) ? round($completed_unit_files/$total_unit_files * 100) : 100;
         return $unit;
+    }
+
+    private function unit_has_files($unit)
+    {
+        foreach ($unit->sections as $section)
+        {
+            if (!$this->section_has_files($section))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private function section_has_files($section)
+    {
+        foreach ($section->subsections as $subsection)
+        {
+            if ($subsection->files->count() > 0)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private function unit_downloaded($unit)
+    {
+        foreach ($unit->sections as $section)
+        {
+            if (!$this->section_downloaded($section))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private function section_downloaded($section)
+    {
+        foreach ($section->subsections as $subsection)
+        {
+            if ($subsection->files->contains('downloaded', false))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }

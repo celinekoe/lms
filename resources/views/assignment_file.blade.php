@@ -13,71 +13,129 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css' />
+    <link href="{{ asset('css/circle.css') }}" rel="stylesheet">
 </head>
 <body class="bg-light-grey height-100p margin-0">
-	<nav class="navbar navbar-default navbar-static-top margin-bottom-0">
-	    <div class="container">
-	        <div class="navbar-header">
-	            <!-- Collapsed Hamburger -->
-	            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-	                <span class="sr-only">Toggle Navigation</span>
-	                <span class="icon-bar"></span>
-	                <span class="icon-bar"></span>
-	                <span class="icon-bar"></span>
-	            </button>
-	            <!-- Back -->
-	            <a class="navbar-brand" href="{{ url('unit/'.$data['unit']->id.'/assignments') }}">
-	                <span class="glyphicon glyphicon-chevron-left"></span>
-	            </a>
-	        </div>
-	        <div class="collapse navbar-collapse" id="app-navbar-collapse">
-	            <!-- Left Side Of Navbar -->
-	            <ul class="nav navbar-nav">
-	                &nbsp;
-	            </ul>
-
-	            <!-- Right Side Of Navbar -->
-	            <ul class="nav navbar-nav navbar-right">
-	                <!-- Authentication Links -->
-	                @if (Auth::guest())
-	                    <li><a href="{{ route('login') }}">Login</a></li>
-	                    <li><a href="{{ route('register') }}">Register</a></li>
-	                @else
-	                    <li class="dropdown">
-	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-	                            {{ Auth::user()->name }} <span class="caret"></span>
-	                        </a>
-
-	                        <ul class="dropdown-menu" role="menu">
-	                            <li>
-	                                <a href="{{ route('logout') }}"
-	                                    onclick="event.preventDefault();
-	                                             document.getElementById('logout-form').submit();">
-	                                    Logout
-	                                </a>
-
-	                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-	                                    {{ csrf_field() }}
-	                                </form>
-	                            </li>
-	                        </ul>
-	                    </li>
-	                @endif
-	            </ul>
-	        </div>
-	    </div>
-	</nav>
-	@if ($data['file']->type == 'video')
-		<div class="container">
+    <nav class="navbar navbar-custom navbar-static-top margin-0">
+        <div>
+            <div class="navbar-header width-100p">
+                <!-- Back -->
+                <?php
+                    $url = Request::url(); 
+                    $start = strpos($url, '/unit/') + 6;
+                    $length = strpos(substr($url, $start), '/') + 1;
+                    $unit_id = substr($url, $start, $length);
+                    if (strpos($url, 'section') == true) 
+                    {
+                        $start = strpos($url, '/section/') + 9;
+                        $length = strpos(substr($url, $start), '/') + 1;
+                        $section_id = substr($url, $start, $length);
+                        if (strpos($url, 'quiz') == true) 
+                        {
+                            $start = strpos($url, '/quiz/') + 6;
+                            $length = strpos(substr($url, $start), '/') + 1;
+                            $quiz_id = substr($url, $start, $length);                            }
+                    }
+                ?>
+                @if (strpos($url, 'home') == true) <!-- Dashboard -->
+                @elseif (strpos($url, 'grades') == true) <!-- Messages page -->
+                    <a class="navbar-brand" href="{{ url('home') }}">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                @elseif (strpos($url, 'calendar') == true) <!-- Calendar page -->
+                    @if (strpos($url, 'create') == true)
+                        <a class="navbar-brand" href="{{ url('calendar') }}">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                    @else
+                        <a class="navbar-brand" href="{{ url('home') }}">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                    @endif
+                @elseif (strpos($url, 'messages') == true) <!-- Messages page -->
+                    <a class="navbar-brand" href="{{ url('home') }}">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                @elseif (strpos($url, 'notifications') == true) <!-- Notifications page -->
+                    <a class="navbar-brand" href="{{ url('home') }}">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                @elseif (strpos($url, 'downloads') == true) <!-- Notifications page -->
+                    <a class="navbar-brand" href="{{ url('home') }}">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                @elseif (strpos($url, 'unit') == true)
+                    @if (strpos($url, 'info') == true) <!-- Info page -->
+                        <a class="navbar-brand" href="{{ url('unit/'.$unit_id) }}">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                    @elseif (strpos($url, 'announcement') == true) <!-- Announcement page -->
+                        <a class="navbar-brand" href="{{ url('unit/'.$unit_id) }}">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                    @elseif (strpos($url, 'assignment/') == true) <!-- Unit assignment page -->
+                        <a class="navbar-brand" href="{{ url('unit/'.$unit_id.'assignments') }}">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                    @elseif (strpos($url, 'assignment') == true) <!-- Unit assignments page -->
+                        <a class="navbar-brand" href="{{ url('unit/'.$unit_id) }}">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                    @elseif (strpos($url, 'grade') == true) <!-- Grade page -->
+                        <a class="navbar-brand" href="{{ url('unit/'.$unit_id) }}">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                    @elseif (strpos($url, 'forum/') == true) <!-- Thread page -->
+                        <a class="navbar-brand" href="{{ url('unit/'.$unit_id.'forum') }}">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                    @elseif (strpos($url, 'forum') == true) <!-- Forum page -->
+                        <a class="navbar-brand" href="{{ url('unit/'.$unit_id) }}">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                    @elseif (strpos($url, 'section') == true) 
+                        @if (strpos($url, 'quiz') == true) <!-- Quiz page -->
+                            @if (strpos($url, 'question') == true)
+                                <a class="navbar-brand" href="{{ url('unit/'.$unit_id.'section/'.$section_id.'quiz/'.$quiz_id) }}">
+                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                </a>
+                            @else
+                                <a class="navbar-brand" href="{{ url('unit/'.$unit_id.'section/'.$section_id) }}">
+                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                </a>
+                            @endif
+                        @else <!-- Section page -->
+                        <a class="navbar-brand" href="{{ url('unit/'.$unit_id) }}">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                        @endif
+                    @else <!-- Unit page -->
+                        <a class="navbar-brand" href="{{ url('home') }}">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                    @endif
+                @endif                    
+                <!-- Sidebar open -->
+                <span class="sidebar-open navbar-brand glyphicon glyphicon-menu-hamburger pull-right"></span>
+            </div>
+        </div>
+    </nav>
+    <!-- Sidebar -->
+    <div class="sidebar-container">
+        @include('sidebar')    
+    </div>
+    <!-- Content -->
+    @if ($data['file']->type == 'video')
 		<div class="video-container">
 		    <iframe width="560" height="315" src="{{ $data['file']->url }}" frameborder="0" allowfullscreen></iframe>
 		</div>
 	@else
 		<iframe src="{{ $data['file']->url }}" frameborder="0" class="height-100p width-100p"></iframe>
 	@endif
-	<!-- <iframe src="{{ url('storage/'.$data['file']->name.$data['file']->extension) }}" frameborder="0" class="height-100p width-100p"></iframe> -->
-	<!-- Scripts -->
+    <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/script.js') }}"></script>
+    @yield('script')
 </body>
 </html>

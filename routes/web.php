@@ -17,16 +17,23 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Course dashboard
 
-Route::get('/unit/{id}', 'UnitController@show')->name('unit');
+Route::get('/home', 'HomeController@index');
 
-// Unit info
+// Unit page
+
+Route::get('/unit/{unit_id}', 'UnitController@show');
+Route::get('/unit/{unit_id}/download', 'UnitController@unit_download');
+Route::get('/unit/{unit_id}/delete', 'UnitController@unit_delete');
+Route::get('/unit/{unit_id}/section/{section_id}/download', 'SectionController@section_download');
+Route::get('/unit/{unit_id}/section/{section_id}/delete', 'SectionController@section_delete');
+
+
+// Unit info page
 
 Route::get('/unit/{unit_id}/unit_info', 'UnitController@unit_info');
 Route::get('/unit/{unit_id}/unit_info/file/{file_id}', 'UnitController@unit_info_file');
-Route::get('/unit/{unit_id}/unit_info/file/{file_id}/complete', 'UnitController@unit_info_complete');
-Route::get('/unit/{unit_id}/unit_info/file/{file_id}/incomplete', 'UnitController@unit_info_incomplete');
 Route::get('/unit/{unit_id}/unit_info/file/{file_id}/download', 'UnitController@unit_info_download');
 Route::get('/unit/{unit_id}/unit_info/file/{file_id}/delete', 'UnitController@unit_info_delete');
 
@@ -34,11 +41,12 @@ Route::get('/unit/{unit_id}/unit_info/file/{file_id}/delete', 'UnitController@un
 
 Route::get('/unit/{unit_id}/announcement', 'UnitController@announcements')->name('announcements');
 
+// Assignments
+
 Route::get('/unit/{unit_id}/assignments', 'AssignmentController@index')->name('assignments');
-
-Route::get('/unit/{unit_id}/assignments/{assignment_id}/file/{file_id}', 'AssignmentController@assignments_file');
-
 Route::get('/unit/{unit_id}/assignment/{assignment_id}/file/{file_id}', 'AssignmentController@assignment_file');
+Route::get('/unit/{unit_id}/assignment/{assignment_id}/file/{file_id}/download', 'AssignmentController@assignment_download');
+Route::get('/unit/{unit_id}/assignment/{assignment_id}/file/{file_id}/delete', 'AssignmentController@assignment_delete');
 
 Route::get('/unit/{unit_id}/assignment/{assignment_id}', 'AssignmentController@show');
 
@@ -59,9 +67,6 @@ Route::post('/unit/{unit_id}/forum/{thread_id}', 'ForumController@poststore');
 Route::get('/unit/{unit_id}/section/{section_id}', 'SectionController@index');
 
 // Download section routes
-
-Route::get('/unit/{unit_id}/section/{section_id}/download', 'SectionController@section_download');
-Route::get('/unit/{unit_id}/section/{section_id}/delete', 'SectionController@section_delete');
 
 Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/download', 'SectionController@subsection_download');
 Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/delete', 'SectionController@subsection_delete');
@@ -104,6 +109,11 @@ Route::get('/messages/create', 'MessageController@create');
 
 Route::post('/messages', 'MessageController@store');
 
+// Notifications
+
 Route::get('/notifications', 'NotificationController@index');
+Route::get('/notifications/delete', 'NotificationController@notifications_delete');
+Route::get('/notification/{notification_id}/delete', 'NotificationController@notification_delete');
+
 
 Route::get('/downloads', 'DownloadController@index');

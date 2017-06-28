@@ -75,7 +75,6 @@
 	@else
 		<iframe src="{{ $data['file']->url }}" frameborder="0" class="height-100p width-100p"></iframe>
 	@endif
-	<!-- <iframe src="{{ url('storage/'.$data['file']->name.$data['file']->extension) }}" frameborder="0" class="height-100p width-100p"></iframe> -->
 	<!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/script.js') }}"></script>

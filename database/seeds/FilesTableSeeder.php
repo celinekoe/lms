@@ -16,6 +16,8 @@ class FilesTableSeeder extends Seeder
             'name' => 'Unit_info_file1',
             'type' => 'video',
             'extension' => '.mp4',
+            'size' => 684175,
+            'length' => 16,
             'url' => 'https://www.youtube.com/embed/WQZRb8L5awM?rel=0&modestbranding=1'
         ]);
 
@@ -48,6 +50,8 @@ class FilesTableSeeder extends Seeder
             'name' => 'Subsection_file1',
             'type' => 'video',
             'extension' => '.mp4',
+            'size' => 684175,
+            'length' => 16,
             'url' => 'https://www.youtube.com/embed/WQZRb8L5awM?rel=0&modestbranding=1'
         ]);
 
@@ -80,6 +84,8 @@ class FilesTableSeeder extends Seeder
             'name' => 'Subsection_file5',
             'type' => 'video',
             'extension' => '.mp4',
+            'size' => 684175,
+            'length' => 16,
             'url' => 'https://www.youtube.com/embed/WQZRb8L5awM?rel=0&modestbranding=1'
         ]);
 

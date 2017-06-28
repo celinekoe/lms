@@ -22,6 +22,8 @@ class CreateFilesTable extends Migration
             $table->string('name');
             $table->string('type');
             $table->string('extension');
+            $table->integer('size')->nullable();
+            $table->time('length')->nullable();
             $table->string('url');
             $table->foreign('unit_id')->references('id')->on('units');
             $table->foreign('subsection_id')->references('id')->on('subsections');

@@ -20,7 +20,6 @@ class NotificationsTableSeeder extends Seeder
         DB::table('notifications')->insert([
         	'user_id' => '1',
             'assignment_id' => $assignment->id,
-            'read' => false,
             'created_at' => Carbon::now(),
         ]);
 
@@ -28,7 +27,6 @@ class NotificationsTableSeeder extends Seeder
         DB::table('notifications')->insert([
             'user_id' => '1',
             'quiz_id' => $quiz->id,
-            'read' => false,
             'created_at' => Carbon::now(),
         ]);
 
@@ -36,15 +34,6 @@ class NotificationsTableSeeder extends Seeder
         DB::table('notifications')->insert([
         	'user_id' => '1',
             'event_id' => $event->id,
-            'read' => false,
-            'created_at' => Carbon::now(),
-        ]);
-
-        $message = Message::find(1);
-        DB::table('notifications')->insert([
-        	'user_id' => '1',
-            'message_id' => $message->id,
-            'read' => false,
             'created_at' => Carbon::now(),
         ]);
     }

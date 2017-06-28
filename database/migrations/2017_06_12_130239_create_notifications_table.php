@@ -19,14 +19,12 @@ class CreateNotificationsTable extends Migration
             $table->integer('assignment_id')->unsigned()->nullable();
             $table->integer('quiz_id')->unsigned()->nullable();
             $table->integer('event_id')->unsigned()->nullable();
-            $table->integer('message_id')->unsigned()->nullable();
-            $table->boolean('read');
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('assignment_id')->references('id')->on('assignments');
             $table->foreign('quiz_id')->references('id')->on('quizzes');
             $table->foreign('event_id')->references('id')->on('events');
-            $table->foreign('message_id')->references('id')->on('messages');
         });
     }
 

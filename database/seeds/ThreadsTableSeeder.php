@@ -15,21 +15,21 @@ class ThreadsTableSeeder extends Seeder
         DB::table('threads')->insert([
        		'user_id' => '1',
        		'forum_id' => '1',
-       		'title' => 'title1',
+       		'title' => 'Thread1',
             'created_at' => Carbon::now()
         ]);
 
         DB::table('threads')->insert([
         	'user_id' => '1',
         	'forum_id' => '1',
-        	'title' => 'title2',
+        	'title' => 'Thread2',
             'created_at' => Carbon::now()
         ]);
 
         DB::table('threads')->insert([
         	'user_id' => '1',
         	'forum_id' => '1',
-        	'title' => 'title3',
+        	'title' => 'Thread3',
             'created_at' => Carbon::now()
         ]);
     }
