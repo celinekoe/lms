@@ -101,23 +101,3 @@ $(".section-delete").click(function(e) {
 		});
 	});
 });
-
-function open_confirm_download() {
-	$(".confirm-container").show();
-	$(".confirm-download").show();
-	$(".confirm-delete").hide();
-}
-
-function open_confirm_delete() {
-	$(".confirm-container").show();
-	$(".confirm-download").hide();
-	$(".confirm-delete").show();
-}
-
-function close_confirm_download() {
-	$(".confirm-container").hide();
-}
-
-function close_confirm_delete() {
-	$(".confirm-container").hide();
-}

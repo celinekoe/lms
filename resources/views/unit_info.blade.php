@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="margin-left-right-10">
+<div class="margin-10">
     <div class="bg-white margin-bottom-10 padding-10">
         <div class="font-size-32">{{ $data['unit']->unit_code }} Unit Info</div>
     </div>
@@ -19,11 +19,11 @@
                         <span class="margin-left-10">{{ $user_unit_info_file->name }}</span>
                         <span class="pull-right margin-right-10">
                             @if (!$user_unit_info_file->downloaded)
-                                <span class="individual-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/unit_info/file/'.$user_unit_info_file->id.'/download') }}"></span>
-                                <span class="individual-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/unit_info/file/'.$user_unit_info_file->id.'/delete') }}" style="display: none;"></span>
+                                <span class="file-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/unit_info/file/'.$user_unit_info_file->id.'/download') }}"></span>
+                                <span class="file-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/unit_info/file/'.$user_unit_info_file->id.'/delete') }}" style="display: none;"></span>
                             @else
-                                <span class="individual-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/unit_info/file/'.$user_unit_info_file->id.'/download') }}" style="display: none;"></span>
-                                <span class="individual-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/unit_info/file/'.$user_unit_info_file->id.'/delete') }}"></span>
+                                <span class="file-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/unit_info/file/'.$user_unit_info_file->id.'/download') }}" style="display: none;"></span>
+                                <span class="file-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/unit_info/file/'.$user_unit_info_file->id.'/delete') }}"></span>
                             @endif
                         </span>
                     </div>
@@ -36,4 +36,5 @@
 
 @section('script')
     <script src="{{ asset('js/unit_info.js') }}"></script>
+    <script src="{{ asset('js/confirm.js') }}"></script>
 @endsection

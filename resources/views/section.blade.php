@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="margin-left-right-10">
+<div class="margin-10">
     <div class="section bg-white flex-align-center margin-bottom-2 padding-left-20 padding-right-10 padding-top-bottom-10">
         <div class="section-progress c100 {{ 'p' . $data['section']->progress }} font-size-228em green">
           <div class="slice">
@@ -121,11 +121,11 @@
                                         <span class="incomplete glyphicon glyphicon-check margin-right-10" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/incomplete') }}"></span>
                                     @endif
                                     @if ($file->downloaded == false)
-                                        <span class="individual-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/download') }}"></span>
-                                        <span class="individual-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/delete') }}" style="display: none;"></span>
+                                        <span class="file-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/download') }}"></span>
+                                        <span class="file-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/delete') }}" style="display: none;"></span>
                                     @else
-                                        <span class="individual-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/download') }}" style="display: none;"></span>
-                                        <span class="individual-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/delete') }}"></span>
+                                        <span class="file-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/download') }}" style="display: none;"></span>
+                                        <span class="file-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/delete') }}"></span>
                                     @endif
                                 </span>
                             </div>
@@ -157,4 +157,5 @@
 
 @section('script')
     <script src="{{ asset('js/section.js') }}"></script>
+    <script src="{{ asset('js/confirm.js') }}"></script>
 @endsection

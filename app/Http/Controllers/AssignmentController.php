@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Auth;
 use App\User;
@@ -16,7 +17,7 @@ use Carbon\Carbon;
 class AssignmentController extends Controller
 {
     /**
-     * Show the unit assignments page.
+     * Show the assignments page.
      *
      * @return \Illuminate\Http\Response
      */
@@ -42,6 +43,11 @@ class AssignmentController extends Controller
         return view('unit_assignments', ['data' => $data]);
     }
 
+    /**
+     * Show the assignment page.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function show(Request $request)
     {
         $user = Auth::user();
@@ -55,48 +61,41 @@ class AssignmentController extends Controller
         return view('unit_assignment', ['data' => $data]);
     }
 
+    /**
+     * Submit assignment.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function submit(Request $request)
     {
         $user = Auth::user();
         $unit = Unit::find($request->unit_id);
         $assignment = Assignment::find($request->assignment_id);
-        if ($request->file_type == "document")
-        {
-            $url = "https://drive.google.com/subsection_file/d/0B4OsqsghY0urbFlsX1VzLW9INlU/preview";
-        }
-        else
-        {
-            $url = null;
-        }
-        $file = File::create([
-            'assignment_id' => $assignment->id,
-            'name' => $request->file_name,
-            'type' => $request->file_type,
-            'extension' => $request->file_extension,
-            'url' => $url,
-        ]);
-        $user_file = UserFile::create([
-            'user_id' => $user->id, 
-            'file_id' => $file->id,
-            'completed' => 0,
-            'downloaded' => 0,
-            'uploaded' => 1,
-        ]);
-        $user_assignment = UserAssignment::where('student_id', $user->id)
-                                            ->where('assignment_id', $assignment->id)
-                                            ->update([
-                                                'staff_id' => 2,
-                                                'submitted_at' => Carbon::now(),
-                                                'grade' => rand(0, 100),
-                                                'grade_comment' => $request->file_name . '_comment',
-                                                'graded_at' => Carbon::now(),
-                                            ]);
+        $this->submit_update($request, $user, $assignment);
         $assignment = $this->getAssignment($user, $assignment);
 
         $data['unit'] = $unit;
         $data['assignment'] = $assignment;
         
-        return view('unit_assignment', ['data' => $data]);
+        // return view('unit_assignment', ['data' => $data]);
+    }
+
+    /**
+     * Cancel submit assignment
+     *
+     * @return void
+     */
+    public function cancel_submit(Request $request)
+    {
+        $user = Auth::user();
+        $user_file = UserFile::where('user_id', $user->id)
+            ->where('file_id', $request->file_id)
+            ->delete();
+        $file = File::find($request->file_id)
+            ->delete();
+        $user_assignment = UserAssignment::where('student_id', $user->id)
+            ->where('assignment_id', $request->assignment_id)
+            ->update(['submitted_at' => null]);
     }
 
     /**
@@ -185,5 +184,54 @@ class AssignmentController extends Controller
             ->first();
         $user_subsection_file->downloaded = false;
         $user_subsection_file->save();
+    }
+
+    /**
+     * Get dummy url
+     *
+     * @return string
+     */
+    private function url($file_type)
+    {
+        if ($file_type == "video")
+        {
+            $url = "https://drive.google.com/subsection_file/d/0B4OsqsghY0urbFlsX1VzLW9INlU/preview";
+        }
+        else if ($file_type == "document")
+        {
+            $url = "https://drive.google.com/subsection_file/d/0B4OsqsghY0urbFlsX1VzLW9INlU/preview";
+        }
+        else
+        {
+            $url = null;
+        }
+        return $url;
+    }
+
+    private function submit_update($request, $user, $assignment)
+    {
+        $url = $this->url($request->file_type);
+        
+        $file = File::create([
+            'user_id' => $user->id,
+            'assignment_id' => $assignment->id,
+            'name' => $request->file_name,
+            'extension' => $request->file_extension,
+            'type' => $request->file_type,
+            'size' => $request->file_size,
+            'url' => $url,
+        ]);
+
+        $user_file = UserFile::create([
+            'user_id' => $user->id, 
+            'file_id' => $file->id,
+            'completed' => 0,
+            'downloaded' => 0,
+            'uploaded' => 1,
+        ]);
+
+        $user_assignment = UserAssignment::where('student_id', $user->id)
+            ->where('assignment_id', $assignment->id)
+            ->update(['submitted_at' => Carbon::now()]);
     }
 }

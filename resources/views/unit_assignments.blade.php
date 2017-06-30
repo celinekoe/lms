@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="margin-left-right-10">
+<div class="unit-assignments margin-10">
 	<div class="bg-white margin-bottom-10 padding-10">
         <div class="font-size-32">{{ $data['unit']->unit_code }} Assignments</div>
     </div>
@@ -30,13 +30,13 @@
                                 @endif    
                                 <div>{{ $assignment_file->name }}</div>
                             </div>
-                            <div class="bg-white margin-left-auto margin-right-10">
+                            <div class="download-container bg-white margin-left-auto margin-right-10">
                                 @if (!$assignment_file->downloaded)
-                                    <div class="assignment-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/assignment/'.$assignment->id.'/file/'.$assignment_file->id.'/download') }}"></div>
-                                    <div class="assignment-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/assignment/'.$assignment->id.'/file/'.$assignment_file->id.'/delete') }}" style="display: none;"></div>
+                                    <div class="file-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/assignment/'.$assignment->id.'/file/'.$assignment_file->id.'/download') }}"></div>
+                                    <div class="file-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/assignment/'.$assignment->id.'/file/'.$assignment_file->id.'/delete') }}" style="display: none;"></div>
                                 @else
-                                    <div class="assignment-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/assignment/'.$assignment->id.'/file/'.$assignment_file->id.'/download') }}" style="display: none;"></div>
-                                    <div class="assignment-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/assignment/'.$assignment->id.'/file/'.$assignment_file->id.'/delete') }}"></div>
+                                    <div class="file-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/assignment/'.$assignment->id.'/file/'.$assignment_file->id.'/download') }}" style="display: none;"></div>
+                                    <div class="file-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/assignment/'.$assignment->id.'/file/'.$assignment_file->id.'/delete') }}"></div>
                                 @endif
                             </div>
                         </a>
@@ -50,4 +50,5 @@
 
 @section('script')
     <script src="{{ asset('js/assignments.js') }}"></script>
+    <script src="{{ asset('js/confirm.js') }}"></script>
 @endsection

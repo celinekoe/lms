@@ -103,39 +103,53 @@ $(document).on('click','.incomplete',function(e){
 
 $(".section-download").click(function(e) {
 	e.preventDefault();
-	var href = $(this).attr("href");
-	$.get(href, function(data) {
-		$(".section-download").hide();
-		$(".section-delete").show();
-		$(".subsection-download").hide();
-		$(".subsection-delete").show();
-		$(".individual-download").hide();
-		$(".individual-delete").show();
+	var section_download = $(this);
+	var href = section_download.attr("href");
+	open_confirm_download();
+	$(".confirm-text").text("Confirm section download?");
+	$(".confirm-option-cancel").off().click(function(e) {
+		close_confirm_download();
+	});
+	$(".confirm-option-download").off().click(function(e) {
+		close_confirm_download();
+		$.get(href, function(data) {
+			toggle_section_download(section_download);
+		});
 	});
 });
 
 $(".section-delete").click(function(e) {
 	e.preventDefault();
-	var href = $(this).attr("href");
-	$.get(href, function(data) {
-		$(".section-download").show();
-		$(".section-delete").hide();
-		$(".subsection-download").show();
-		$(".subsection-delete").hide();
-		$(".individual-download").show();
-		$(".individual-delete").hide();
+	var section_delete = $(this);
+	var href = section_delete.attr("href");
+	open_confirm_delete();
+	$(".confirm-text").text("Confirm section delete?");
+	$(".confirm-option-cancel").off().click(function(e) {
+		close_confirm_delete();
+	});
+	$(".confirm-option-delete").off().click(function(e) {
+		close_confirm_delete();
+		$.get(href, function(data) {
+			toggle_section_delete(section_delete);
+		});
 	});
 });
 
 $(".subsection-download").click(function(e) {
 	e.preventDefault();
-	var href = $(this).attr("href");
+	console.log("section-download");
 	var subsection_download = $(this);
-	$.get(href, function(data) {
-		subsection_download.hide();
-		subsection_download.siblings(".subsection-delete").show();
-		subsection_download.parent().parent().parent().siblings(".subsection-files").find(".individual-download").hide();
-		subsection_download.parent().parent().parent().siblings(".subsection-files").find(".individual-delete").show();
+	var href = subsection_download.attr("href");
+	open_confirm_download();
+	$(".confirm-text").text("Confirm subsection download?");
+	$(".confirm-option-cancel").off().click(function(e) {
+		close_confirm_download();
+	});
+	$(".confirm-option-download").off().click(function(e) {
+		close_confirm_download();
+		$.get(href, function(data) {
+			toggle_subsection_download(subsection_download);
+		});
 	});
 });
 
@@ -143,32 +157,50 @@ $(".subsection-delete").click(function(e) {
 	e.preventDefault();
 	var href = $(this).attr("href");
 	var subsection_delete = $(this);
-	$.get(href, function(data) {
-		subsection_delete.siblings(".subsection-download").show();
-		subsection_delete.hide();
-		subsection_delete.parent().parent().parent().siblings(".subsection-files").find(".individual-download").show();
-		subsection_delete.parent().parent().parent().siblings(".subsection-files").find(".individual-delete").hide();
+	open_confirm_delete();
+	$(".confirm-text").text("Confirm subsection delete?");
+	$(".confirm-option-cancel").off().click(function(e) {
+		close_confirm_delete();
+	});
+	$(".confirm-option-delete").off().click(function(e) {
+		close_confirm_delete();
+		$.get(href, function(data) {
+			toggle_subsection_delete(subsection_delete);
+		});
 	});
 });
 
-$(".individual-download").click(function(e) {
+$(".file-download").click(function(e) {
 	e.preventDefault();
-	var href = $(this).attr("href");
-	console.log(href);
-	var individual_download = $(this);
-	$.get(href, function(data) {
-		individual_download.hide();
-		individual_download.siblings(".individual-delete").show();
+	var file_download = $(this);
+	var href = file_download.attr("href");
+	open_confirm_download();
+	$(".confirm-text").text("Confirm file download?");
+	$(".confirm-option-cancel").off().click(function(e) {
+		close_confirm_download();
+	});
+	$(".confirm-option-download").off().click(function(e) {
+		close_confirm_download();
+		$.get(href, function(data) {
+			toggle_file_download(file_download);
+		});
 	});
 });
 
-$(".individual-delete").click(function(e) {
+$(".file-delete").click(function(e) {
 	e.preventDefault();
-	var href = $(this).attr("href");
-	var individual_delete = $(this);
-	$.get(href, function(data) {
-		individual_delete.siblings(".individual-download").show();
-		individual_delete.hide();
+	var file_delete = $(this);
+	var href = file_delete.attr("href");
+	open_confirm_delete();
+	$(".confirm-text").text("Confirm file delete?");
+	$(".confirm-option-cancel").off().click(function(e) {
+		close_confirm_delete();
+	});
+	$(".confirm-option-delete").off().click(function(e) {
+		close_confirm_delete();
+		$.get(href, function(data) {
+			toggle_file_delete(file_delete);
+		});
 	});
 });
 
@@ -179,3 +211,119 @@ $(".glyphicon-chevron-down").click(function(e) {
 	$(this).parent().parent().parent().siblings(".subsection-files").toggle();
 	$(this).parent().parent().parent().siblings(".subsection-quizzes").toggle();
 });
+
+// Toggle section download/delete
+
+function toggle_section_download(section_download) {
+	$(".section-download").hide();
+	$(".section-delete").show();
+	$(".subsection-download").hide();
+	$(".subsection-delete").show();
+	$(".file-download").hide();
+	$(".file-delete").show();
+}
+
+function toggle_section_delete(section_delete) {
+	$(".section-download").show();
+	$(".section-delete").hide();
+	$(".subsection-download").show();
+	$(".subsection-delete").hide();
+	$(".file-download").show();
+	$(".file-delete").hide();
+}
+
+// Toggle subsection download/delete
+
+function toggle_subsection_download(subsection_download) {
+	subsection_download.hide();
+	subsection_download.siblings(".subsection-delete").show();
+	subsection_download.parent().parent().parent().siblings(".subsection-files").find(".file-download").hide();
+	subsection_download.parent().parent().parent().siblings(".subsection-files").find(".file-delete").show();
+	is_section_downloaded = true;
+	$(".subsection-download").each(function() {
+		if ($(this).is(":visible")) {
+			is_section_downloaded = false;
+		}
+	});
+	if (is_section_downloaded) {
+		$(".section-download").hide();
+		$(".section-delete").show();
+	}
+}
+
+function toggle_subsection_delete(subsection_delete) {
+	subsection_delete.siblings(".subsection-download").show();
+	subsection_delete.hide();
+	subsection_delete.parent().parent().parent().siblings(".subsection-files").find(".file-download").show();
+	subsection_delete.parent().parent().parent().siblings(".subsection-files").find(".file-delete").hide();
+	is_section_downloaded = true;
+	$(".subsection-download").each(function() {
+		if ($(this).is(":visible")) {
+			is_section_downloaded = false;
+		}
+	});
+	if (!is_section_downloaded) {
+		$(".section-download").show();
+		$(".section-delete").hide();
+	}
+}
+
+// Toggle file download/delete
+
+function toggle_file_download(file_download) {
+	var subsection_download = file_download.parent().parent().parent().parent().parent().parent().find(".subsection-download");
+	var file_downloads = file_download.parent().parent().parent().parent().parent().find(".file-download");
+	file_download.hide();
+	file_download.siblings(".file-delete").show();
+	var is_subsection_downloaded = true;
+	file_downloads.each(function() {
+		if ($(this).is(":visible")) {
+			is_subsection_downloaded = false;
+		}
+	});
+	if (is_subsection_downloaded) {
+		subsection_download.hide();
+		subsection_download.siblings(".subsection-delete").show();
+	}
+	is_section_downloaded = true;
+	$(".subsection-download").each(function() {
+		if ($(this).is(":visible")) {
+			is_section_downloaded = false;
+		}
+	});
+	if (is_section_downloaded) {
+		$(".section-download").hide();
+		$(".section-delete").show();
+	}
+}
+
+function toggle_file_delete(file_delete) {
+	
+	file_delete.siblings(".file-download").show();
+	file_delete.hide();
+
+	var file_download = file_delete.siblings(".file-download");
+	var subsection_download = file_download.parent().parent().parent().parent().parent().parent().find(".subsection-download");
+	var file_downloads = file_download.parent().parent().parent().parent().parent().find(".file-download");
+	
+	var is_subsection_downloaded = true;
+	file_downloads.each(function() {
+		if ($(this).is(":visible")) {
+			is_subsection_downloaded = false;
+		}
+	});
+	if (!is_subsection_downloaded) {
+		subsection_download.show();
+		subsection_download.siblings(".subsection-delete").hide();
+	}
+	is_section_downloaded = true;
+	$(".subsection-download").each(function() {
+		if ($(this).is(":visible")) {
+			is_section_downloaded = false;
+		}
+	});
+	if (!is_section_downloaded) {
+		$(".section-download").show();
+		$(".section-delete").hide();
+	}
+}

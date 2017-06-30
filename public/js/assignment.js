@@ -1,18 +1,86 @@
-var user_file = document.querySelector(".user_file");
-var hidden_file_name = document.querySelector(".file_name");
-var hidden_file_type = document.querySelector(".file_type");
-var hidden_file_extension = document.querySelector(".file_extension");
-user_file.onchange = function(e) {
-	console.log(user_file.value);
-	var file_url = user_file.value;
-	var file_extension = file_url.substring(file_url.lastIndexOf("."));
-	var file_name = file_url.substring(file_url.lastIndexOf("\\") + 1, file_url.lastIndexOf("."));
-	if (file_extension == ".docx") {
-		var file_type = "document"; 
-	} else {
-		var file_type = "misc";
+var video_extensions = [".mp4"]
+var document_extensions = [".doc", ".docx", ".pdf", ".ppt", ".pptx"];
+
+$(".file-input").change(function(e) {
+	var file_name_and_extension = $(this).prop('files')[0].name;
+	var file_name = file_name_and_extension.substring(0, file_name_and_extension.lastIndexOf("."));
+	var file_extension = file_name_and_extension.substring(file_name_and_extension.lastIndexOf("."))
+	var file_type = fileType(file_extension).value;
+	var file_size = $(this).prop('files')[0].size;
+	$(".file-name").val(file_name);
+	$(".file-extension").val(file_extension); 
+	$(".file-type").val(file_type);
+	$(".file-size").val(file_size);
+	$(".submit-form").show();
+});
+
+$(".submit").click(function(e) {
+	e.preventDefault();
+	var submit = $(this);
+	var href = submit.attr("action");
+	open_confirm_submit();
+	$(".confirm-text").text("Confirm submit?");
+	$(".confirm-option-cancel").click(function(e) {
+		e.preventDefault();
+		close_confirm_submit();
+	});
+	$(".confirm-option-submit").click(function(e) {
+		e.preventDefault();
+		close_confirm_submit();
+		$.post(href, $(".submit-form").serialize(), function(data) {
+			window.location = window.location.href;
+		});
+	});
+});
+
+$(".cancel-submit").click(function(e) {
+	e.preventDefault();
+	var cancel_submit = $(this);
+	var href = cancel_submit.attr("href");
+	open_confirm_cancel_submit();
+	$(".confirm-text").text("Cancel submit?");
+	$(".confirm-option-cancel").click(function(e) {
+		e.preventDefault();
+		close_confirm_cancel_submit();
+	});
+	$(".confirm-option-cancel-submit").click(function(e) {
+		e.preventDefault();
+		close_confirm_cancel_submit();
+		$.get(href, function(data) {
+			window.location.reload();
+		});
+	});
+})
+
+function fileType(file_extension) {
+	var file_type = new Object();
+	if (video_extensions.includes(file_extension)) {
+		file_type.value = "video";
 	}
-	hidden_file_name.value = file_name;
-	hidden_file_extension.value = file_extension;
-	hidden_file_type.value = file_type;
+	if (document_extensions.includes(file_extension)) {
+		file_type.value = "document"; 
+	} else {
+		file_type.value = "misc";
+	}
+	return file_type;
+}
+
+function open_confirm_submit() {
+	$(".confirm-container").show();
+	$(".confirm-submit").show();
+	$(".confirm-cancel-submit").hide();
+}
+
+function open_confirm_cancel_submit() {
+	$(".confirm-container").show();
+	$(".confirm-submit").hide();
+	$(".confirm-cancel-submit").show();
+}
+
+function close_confirm_submit() {
+	$(".confirm-container").hide();
+}
+
+function close_confirm_cancel_submit() {
+	$(".confirm-container").hide();
 }

@@ -97,4 +97,5 @@
 
 @section('script')
     <script src="{{ asset('js/unit.js') }}"></script>
+    <script src="{{ asset('js/confirm.js') }}"></script>
 @endsection

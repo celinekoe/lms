@@ -142,7 +142,21 @@
                         <div class="btn btn-primary confirm-option-delete width-49p padding-10">Delete</div>    
                     </div>
                 </div>
-            </div>    
+                <div class="confirm confirm-submit display-none bg-white padding-10">
+                    <div class="confirm-text flex-justify-center padding-10"></div>
+                    <div class="confirm-options flex-align-center-justify-between">
+                        <div class="btn btn-default confirm-option-cancel width-49p padding-10">Cancel</div>
+                        <div class="btn btn-primary confirm-option-submit width-49p padding-10">Submit</div>    
+                    </div>
+                </div>
+                <div class="confirm confirm-cancel-submit bg-white display-none padding-10">
+                    <div class="confirm-text flex-justify-center padding-10"></div>
+                    <div class="confirm-options flex-align-center-justify-between">
+                        <div class="btn btn-default confirm-option-cancel width-49p padding-10">Cancel</div>
+                        <div class="btn btn-primary confirm-option-cancel-submit width-49p padding-10">Cancel Submit</div>    
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- Content -->
         <div class="content">

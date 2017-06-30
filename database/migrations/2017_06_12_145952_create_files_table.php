@@ -20,8 +20,8 @@ class CreateFilesTable extends Migration
             $table->integer('subsection_id')->unsigned()->nullable();
             $table->integer('assignment_id')->unsigned()->nullable();
             $table->string('name');
-            $table->string('type');
             $table->string('extension');
+            $table->string('type');
             $table->integer('size')->nullable();
             $table->time('length')->nullable();
             $table->string('url');

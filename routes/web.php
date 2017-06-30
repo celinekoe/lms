@@ -47,10 +47,11 @@ Route::get('/unit/{unit_id}/assignments', 'AssignmentController@index')->name('a
 Route::get('/unit/{unit_id}/assignment/{assignment_id}/file/{file_id}', 'AssignmentController@assignment_file');
 Route::get('/unit/{unit_id}/assignment/{assignment_id}/file/{file_id}/download', 'AssignmentController@assignment_download');
 Route::get('/unit/{unit_id}/assignment/{assignment_id}/file/{file_id}/delete', 'AssignmentController@assignment_delete');
-
 Route::get('/unit/{unit_id}/assignment/{assignment_id}', 'AssignmentController@show');
-
 Route::post('/unit/{unit_id}/assignment/{assignment_id}', 'AssignmentController@submit');
+Route::get('/unit/{unit_id}/assignment/{assignment_id}/file/{file_id}/cancel-submit', 'AssignmentController@cancel_submit');
+
+// Grade routes
 
 Route::get('/unit/{unit_id}/grade', 'GradeController@show');
 
