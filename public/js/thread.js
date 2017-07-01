@@ -9,13 +9,9 @@ var edit_form =
         <input type="submit" class="submit btn btn-default pull-right" value="Submit"> 
         <div class="clear"></div>
     </div>
+    <input type="hidden" name="_token" id="csrf-token" value=""ß>
 </form>
 `;
-
-var csrf_token = 
-`
-	<input type="hidden" name="_token" id="csrf-token" value="" />
-`
 
 $(".thread-delete").click(function(e) {
 	var thread_delete = $(this);
@@ -41,9 +37,8 @@ $(".post-edit").click(function(e) {
 	post_body.text("");
 	post_body.append(edit_form);
 	post_body.find("form").attr("action", post_edit.attr("href"));
-	post_body.find("form").append(csrf_token);
-	post_body.find(":input[name=_token]").val($('meta[name="csrf-token"]').attr('content'));
 	post_body.find(":input[name=body]").val(post_body_text);
+	post_body.find(":input[name=_token]").val($('meta[name="csrf-token"]').attr('content'));
 });
 
 $(".post-delete").click(function(e) {

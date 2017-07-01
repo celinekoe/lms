@@ -17,10 +17,12 @@ class QuizzesTableSeeder extends Seeder
             'section_id' => '1',
             'subsection_id' => '1',
             'name' => 'Quiz1',
+            'graded' => true,
             'grading_method' => 'Highest grade',
+            'total_attempts' => 3,
             'weight' => 5,
             'total_questions' => 3,
-            'time_limit' => 30,
+            'time_limit' => 300,
             'submit_by_date' => Carbon::now()->addDay()->format('Y-m-d H:i:s')
         ]);
 
@@ -29,10 +31,12 @@ class QuizzesTableSeeder extends Seeder
             'section_id' => '1',
             'subsection_id' => '1',
             'name' => 'Quiz2',
+            'graded' => true,
             'grading_method' => 'Highest grade',
+            'total_attempts' => 3,
             'weight' => 5,
             'total_questions' => 3,
-            'time_limit' => 30,
+            'time_limit' => 300,
             'submit_by_date' => Carbon::now()->addDays(2)->format('Y-m-d H:i:s')
         ]);
 
@@ -41,10 +45,12 @@ class QuizzesTableSeeder extends Seeder
             'section_id' => '1',
             'subsection_id' => '1',
             'name' => 'Quiz3',
+            'graded' => true,
             'grading_method' => 'Highest grade',
+            'total_attempts' => 3,
             'weight' => 10,
             'total_questions' => 3,
-            'time_limit' => 30,
+            'time_limit' => 300,
             'submit_by_date' => Carbon::now()->addDays(3)->format('Y-m-d H:i:s')
         ]);
     }

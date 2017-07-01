@@ -27,7 +27,10 @@
         $next_url = $url . '/' . $next_question_no;
     }
 ?>
-<div class="margin-left-right-10">
+<div class="margin-10">
+    <div class="timer bg-white margin-bottom-10 padding-10" time-limit="{{ $data['quiz']->time_limit }}">
+        Time Limit {{ $data['quiz']->time_limit_formatted }}
+    </div>
     <div class="margin-bottom-20">
         <div class="bg-white margin-bottom-2 padding-10">
             <div>

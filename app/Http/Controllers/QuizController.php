@@ -24,18 +24,20 @@ class QuizController extends Controller
     public function show(Request $request)
     {
         $quiz = Quiz::find($request->quiz_id);
-        $quiz->time_remaining = Carbon::parse($quiz->submit_by)->diffForHumans();
+        $user_quizzes = UserQuiz::where('quiz_id', $quiz->id)
+            ->get();
+        $quiz->user_quizzes = $user_quizzes;
+        $quiz->time_remaining = Carbon::parse($quiz->submit_by)
+            ->diffForHumans();
+        
         $subsection = Subsection::find($quiz->subsection_id);
         $section = Section::find($subsection->section_id);
         $unit = Unit::find($section->unit_id);
-        $user_quiz = UserQuiz::find($quiz->id);
-        $questions = Question::where('quiz_id', $quiz->id)->get();
-
+        
         $data['unit'] = $unit;
         $data['section'] = $section;
         $data['quiz'] = $quiz;
-        $data['questions'] = $questions;
-        $data['user_quiz'] = $user_quiz;
+
         return view('quiz_start', ['data' => $data]);
     }
 
@@ -94,8 +96,8 @@ class QuizController extends Controller
         $user = Auth::user();
         $quiz = Quiz::find($request->quiz_id);
         $current_question = Question::where('quiz_id', $quiz->id)
-                                ->where('question_no', $request->current_question_no)
-                                ->first();
+            ->where('question_no', $request->current_question_no)
+            ->first();
         $option = Option::find($request->option);
         if ($option != null) 
         {

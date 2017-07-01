@@ -22,6 +22,7 @@ class QuestionController extends Controller
         $user = Auth::user();
     	$section = Section::find($request->section_id);
     	$quiz = Quiz::find($request->quiz_id);
+        $quiz->time_limit_formatted = $this->format_time_limit($quiz->time_limit);
         $question = Question::where('quiz_id', $quiz->id)
             ->where('question_no', $request->question_no)
             ->first();
@@ -35,5 +36,17 @@ class QuestionController extends Controller
         $data['user_question'] = $user_question;
         $data['options'] = $options;
         return view('question', ['data' => $data]);
+    }
+
+    private function format_time_limit($time_limit) 
+    {
+        $hours = floor($time_limit/(60 * 60));
+        $hours = str_pad($hours, 2, '0', STR_PAD_LEFT);
+        $minutes = floor($time_limit % (60 * 60) / 60);
+        $minutes = str_pad($minutes, 2, '0', STR_PAD_LEFT);
+        $seconds = floor($time_limit % 60);
+        $seconds = str_pad($seconds, 2, '0', STR_PAD_LEFT);
+        $time_limit_formatted = $hours . ":" . $minutes . ":" . $seconds;
+        return $time_limit_formatted;
     }
 }

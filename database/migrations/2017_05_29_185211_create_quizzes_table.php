@@ -19,7 +19,9 @@ class CreateQuizzesTable extends Migration
             $table->integer('section_id')->unsigned();
             $table->integer('subsection_id')->unsigned();
             $table->string('name');
+            $table->boolean('graded');
             $table->string('grading_method');
+            $table->integer('total_attempts');
             $table->integer('weight');
             $table->integer('total_questions');
             $table->integer('time_limit');

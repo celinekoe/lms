@@ -24,7 +24,7 @@
                         <div class="margin-left-auto">{{ $thread->created_by_date }}</div>
                     </div>
                     <div class="flex-align-center small">
-                        <div>Replies {{ $thread->posts->count() }}</div>
+                        <div>Replies {{ $thread->posts->count() - 1 }}</div>
                     </div>
                     <div class="flex-align-center small">
                         <div></div>
