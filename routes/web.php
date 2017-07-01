@@ -81,7 +81,7 @@ Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/dele
 Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/file/{file_id}/download', 'SectionController@individual_download');
 Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/file/{file_id}/delete', 'SectionController@individual_delete');
 
-// Complete section routes
+// Quiz routes
 
 Route::get('/unit/{unit_id}/section/{section_id}/file/{file_id}', 'SectionController@file');
 
@@ -93,12 +93,14 @@ Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/quiz
 
 Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/quiz/{quiz_id}/incomplete', 'SectionController@quiz_incomplete');
 
-// Other section routes
+// Question routes
 
 Route::get('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}', 'QuizController@show');
 Route::get('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}/question/{question_no}', 'QuestionController@show');
-Route::post('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}/question/{question_no}/submit', 'QuizController@submit');
-Route::post('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}/question/{question_no}', 'QuizController@next');
+Route::post('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}/submit', 'QuizController@submit');
+Route::post('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}/previous', 'QuestionController@previous');
+Route::post('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}/next', 'QuestionController@next');
+
 
 // Other routes
 

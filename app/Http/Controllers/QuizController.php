@@ -42,48 +42,6 @@ class QuizController extends Controller
     }
 
     /**
-     * Store option and show next/prev question page
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function next(Request $request)
-    {
-        // Store option
-
-        $user = Auth::user();
-        $section = Section::find($request->section_id);
-        $quiz = Quiz::find($request->quiz_id);
-        $current_question = Question::where('quiz_id', $quiz->id)
-                                ->where('question_no', $request->current_question_no)
-                                ->first();
-        $option = Option::find($request->option);
-        if ($option != null) 
-        {
-            $user_question = UserQuestion::updateOrCreate(
-                ['user_id' => $user->id, 'question_id' => $current_question->id],
-                ['option_id' => $option->id]
-            );
-        }
-
-        // Show next question
-        $question = Question::where('quiz_id', $quiz->id)
-                                ->where('question_no', $request->question_no)
-                                ->first();
-        $user_question = UserQuestion::where('user_id', $user->id)
-                                        ->where('question_id', $question->id)
-                                        ->first();
-
-        $options = Option::where('question_id', $question->id)->get();
-        $data['section'] = $section;
-        $data['quiz'] = $quiz;
-        $data['question'] = $question;
-        $data['user_question'] = $user_question;
-        $data['options'] = $options;
-        return view('question', ['data' => $data]);
-    }
-
-    /**
      * Store option, calculate grade, and show quiz end page
      *
      * @param  \Illuminate\Http\Request  $request
