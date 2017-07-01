@@ -57,11 +57,17 @@ Route::get('/unit/{unit_id}/grade', 'GradeController@show');
 
 // Forum routes
 
-Route::get('/unit/{unit_id}/forum/create', 'ForumController@threadcreate');
-Route::get('/unit/{unit_id}/forum', 'ForumController@threadindex');
-Route::post('/unit/{unit_id}/forum', 'ForumController@threadstore');
-Route::get('/unit/{unit_id}/forum/{thread_id}', 'ForumController@postindex');
-Route::post('/unit/{unit_id}/forum/{thread_id}', 'ForumController@poststore');
+Route::get('/unit/{unit_id}/forum', 'ForumController@thread_index');
+Route::get('/unit/{unit_id}/forum/create', 'ForumController@thread_create');
+Route::post('/unit/{unit_id}/forum', 'ForumController@thread_store');
+Route::get('/unit/{unit_id}/forum/{thread_id}/delete', 'ForumController@thread_delete');
+
+// Thread routes
+
+Route::get('/unit/{unit_id}/forum/{thread_id}', 'ForumController@post_index');
+Route::post('/unit/{unit_id}/forum/{thread_id}', 'ForumController@post_store');
+Route::post('/unit/{unit_id}/forum/{thread_id}/post/{post_id}/edit', 'ForumController@post_update');
+Route::get('/unit/{unit_id}/forum/{thread_id}/post/{post_id}/delete', 'ForumController@post_delete');
 
 // Section routes
 

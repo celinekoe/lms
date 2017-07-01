@@ -41,78 +41,78 @@
                     ?>
                     @if (strpos($url, 'home') == true) <!-- Dashboard -->
                     @elseif (strpos($url, 'grades') == true) <!-- Messages page -->
-                        <a class="navbar-brand" href="{{ url('home') }}">
+                        <a class="back navbar-brand" href="{{ url('home') }}">
                             <span class="glyphicon glyphicon-chevron-left"></span>
                         </a>
                     @elseif (strpos($url, 'calendar') == true) <!-- Calendar page -->
                         @if (strpos($url, 'create') == true)
-                            <a class="navbar-brand" href="{{ url('calendar') }}">
+                            <a class="back navbar-brand" href="{{ url('calendar') }}">
                                 <span class="glyphicon glyphicon-chevron-left"></span>
                             </a>
                         @else
-                            <a class="navbar-brand" href="{{ url('home') }}">
+                            <a class="back navbar-brand" href="{{ url('home') }}">
                                 <span class="glyphicon glyphicon-chevron-left"></span>
                             </a>
                         @endif
                     @elseif (strpos($url, 'messages') == true) <!-- Messages page -->
-                        <a class="navbar-brand" href="{{ url('home') }}">
+                        <a class="back navbar-brand" href="{{ url('home') }}">
                             <span class="glyphicon glyphicon-chevron-left"></span>
                         </a>
                     @elseif (strpos($url, 'notifications') == true) <!-- Notifications page -->
-                        <a class="navbar-brand" href="{{ url('home') }}">
+                        <a class="back navbar-brand" href="{{ url('home') }}">
                             <span class="glyphicon glyphicon-chevron-left"></span>
                         </a>
                     @elseif (strpos($url, 'downloads') == true) <!-- Notifications page -->
-                        <a class="navbar-brand" href="{{ url('home') }}">
+                        <a class="back navbar-brand" href="{{ url('home') }}">
                             <span class="glyphicon glyphicon-chevron-left"></span>
                         </a>
                     @elseif (strpos($url, 'unit') == true)
                         @if (strpos($url, 'info') == true) <!-- Info page -->
-                            <a class="navbar-brand" href="{{ url('unit/'.$unit_id) }}">
+                            <a class="back navbar-brand" href="{{ url('unit/'.$unit_id) }}">
                                 <span class="glyphicon glyphicon-chevron-left"></span>
                             </a>
                         @elseif (strpos($url, 'announcement') == true) <!-- Announcement page -->
-                            <a class="navbar-brand" href="{{ url('unit/'.$unit_id) }}">
+                            <a class="back navbar-brand" href="{{ url('unit/'.$unit_id) }}">
                                 <span class="glyphicon glyphicon-chevron-left"></span>
                             </a>
                         @elseif (strpos($url, 'assignment/') == true) <!-- Unit assignment page -->
-                            <a class="navbar-brand" href="{{ url('unit/'.$unit_id.'assignments') }}">
+                            <a class="back navbar-brand" href="{{ url('unit/'.$unit_id.'assignments') }}">
                                 <span class="glyphicon glyphicon-chevron-left"></span>
                             </a>
                         @elseif (strpos($url, 'assignment') == true) <!-- Unit assignments page -->
-                            <a class="navbar-brand" href="{{ url('unit/'.$unit_id) }}">
+                            <a class="back navbar-brand" href="{{ url('unit/'.$unit_id) }}">
                                 <span class="glyphicon glyphicon-chevron-left"></span>
                             </a>
                         @elseif (strpos($url, 'grade') == true) <!-- Grade page -->
-                            <a class="navbar-brand" href="{{ url('unit/'.$unit_id) }}">
+                            <a class="back navbar-brand" href="{{ url('unit/'.$unit_id) }}">
                                 <span class="glyphicon glyphicon-chevron-left"></span>
                             </a>
                         @elseif (strpos($url, 'forum/') == true) <!-- Thread page -->
-                            <a class="navbar-brand" href="{{ url('unit/'.$unit_id.'forum') }}">
+                            <a class="back navbar-brand" href="{{ url('unit/'.$unit_id.'forum') }}">
                                 <span class="glyphicon glyphicon-chevron-left"></span>
                             </a>
                         @elseif (strpos($url, 'forum') == true) <!-- Forum page -->
-                            <a class="navbar-brand" href="{{ url('unit/'.$unit_id) }}">
+                            <a class="back navbar-brand" href="{{ url('unit/'.$unit_id) }}">
                                 <span class="glyphicon glyphicon-chevron-left"></span>
                             </a>
                         @elseif (strpos($url, 'section') == true) 
                             @if (strpos($url, 'quiz') == true) <!-- Quiz page -->
                                 @if (strpos($url, 'question') == true)
-                                    <a class="navbar-brand" href="{{ url('unit/'.$unit_id.'section/'.$section_id.'quiz/'.$quiz_id) }}">
+                                    <a class="back navbar-brand" href="{{ url('unit/'.$unit_id.'section/'.$section_id.'quiz/'.$quiz_id) }}">
                                         <span class="glyphicon glyphicon-chevron-left"></span>
                                     </a>
                                 @else
-                                    <a class="navbar-brand" href="{{ url('unit/'.$unit_id.'section/'.$section_id) }}">
+                                    <a class="back navbar-brand" href="{{ url('unit/'.$unit_id.'section/'.$section_id) }}">
                                         <span class="glyphicon glyphicon-chevron-left"></span>
                                     </a>
                                 @endif
                             @else <!-- Section page -->
-                            <a class="navbar-brand" href="{{ url('unit/'.$unit_id) }}">
+                            <a class="back navbar-brand" href="{{ url('unit/'.$unit_id) }}">
                                 <span class="glyphicon glyphicon-chevron-left"></span>
                             </a>
                             @endif
                         @else <!-- Unit page -->
-                            <a class="navbar-brand" href="{{ url('home') }}">
+                            <a class="back navbar-brand" href="{{ url('home') }}">
                                 <span class="glyphicon glyphicon-chevron-left"></span>
                             </a>
                         @endif

@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="margin-left-right-10">
+<div class="margin-10">
     <div class="bg-white margin-bottom-20 padding-10">
         <div class="font-size-32">Create Thread</div>
     </div>
     <div class="bg-white padding-10">
-    	<form action="{{ url('threads') }}" method="POST">
+    	<form action="{{ url('unit/'.$data['unit']->id.'/forum') }}" method="POST">
 	    	<div class="form-group">
 	    		<label for="title">Title</label>
 	    		<input type="text" class="form-control" name="title">		

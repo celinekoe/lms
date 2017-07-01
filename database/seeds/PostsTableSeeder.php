@@ -16,19 +16,31 @@ class PostsTableSeeder extends Seeder
         DB::table('posts')->insert([
        		'user_id' => '1',
        		'thread_id' => '1',
-       		'body' => $post
+       		'body' => $post,
         ]);
 
         DB::table('posts')->insert([
        		'user_id' => '1',
        		'thread_id' => '1',
-       		'body' => $post
+       		'body' => $post,
         ]);
 
         DB::table('posts')->insert([
        		'user_id' => '1',
        		'thread_id' => '1',
-       		'body' => $post
+       		'body' => $post,
+        ]);
+
+        DB::table('posts')->insert([
+          'user_id' => '1',
+          'thread_id' => '2',
+          'body' => $post,
+        ]);
+
+        DB::table('posts')->insert([
+          'user_id' => '1',
+          'thread_id' => '3',
+          'body' => $post,
         ]);
     }
 }

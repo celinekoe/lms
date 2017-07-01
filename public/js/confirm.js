@@ -57,3 +57,23 @@ function close_confirm_download() {
 function close_confirm_delete() {
 	$(".confirm-container").hide();
 }
+
+function open_confirm_submit() {
+	$(".confirm-container").show();
+	$(".confirm-submit").show();
+	$(".confirm-cancel-submit").hide();
+}
+
+function open_confirm_cancel_submit() {
+	$(".confirm-container").show();
+	$(".confirm-submit").hide();
+	$(".confirm-cancel-submit").show();
+}
+
+function close_confirm_submit() {
+	$(".confirm-container").hide();
+}
+
+function close_confirm_cancel_submit() {
+	$(".confirm-container").hide();
+}

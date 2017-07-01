@@ -4,7 +4,6 @@ $(".introduction-tab-header").click(function(e) {
 	if ($(this).hasClass("bg-white")) {
 		$(".section-tab-header").addClass("bg-white");
 		$(".section-tab-header").removeClass("bg-primary");
-		console.log($(".section-tab-header"));
 		$(this).removeClass("bg-white");
 		$(this).addClass("bg-primary");	
 		$(".tab-body").hide();
@@ -22,7 +21,6 @@ $(".guidelines-tab-header").click(function(e) {
 		$(".section-tab-header").removeClass("bg-primary");
 		$(this).removeClass("bg-white");
 		$(this).addClass("bg-primary");	
-		console.log($(".section-tab-header"));
 		$(".tab-body").hide();
 		$(".guidelines-tab-body").show();
 	} else {

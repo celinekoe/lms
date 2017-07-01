@@ -19,6 +19,7 @@ class CreateThreadsTable extends Migration
             $table->integer('forum_id')->unsigned();
             $table->string('title');
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('forum_id')->references('id')->on('forums');
         });
