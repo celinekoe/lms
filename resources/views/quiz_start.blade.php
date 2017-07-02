@@ -61,13 +61,24 @@
             </div>
         </div>
         <div class="flex margin-bottom-10">
-            @if ($data['quiz']->user_quizzes->count() == 1)
-                <a href="{{ url('unit/'.$data['unit']->id.'/section/'.$data['section']->id.'/quiz/'.$data['quiz']->id.'/question/1') }}" class="btn btn-default margin-left-auto">Start Quiz</a>
+            @if ($data['quiz']->user_quizzes->count() == 0)
+                <form action="{{ url('unit/'.$data['unit']->id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/start') }}" method="POST" class="start-form margin-left-auto" href="{{ url('unit/'.$data['unit']->id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/question/1') }}">
+                    {{ csrf_field() }}
+                    <input type="submit" class="start btn btn-default" value="Start">
+                </form>
             @else 
-                <a href="{{ url('unit/'.$data['unit']->id.'/section/'.$data['section']->id.'/quiz/'.$data['quiz']->id.'/question/1') }}" class="btn btn-default margin-left-auto">Retry Quiz</a>
+                <form action="{{ url('unit/'.$data['unit']->id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/start') }}" method="POST" class="retry-form margin-left-auto" href="{{ url('unit/'.$data['unit']->id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/question/1') }}">
+                    {{ csrf_field() }}
+                    <input type="submit" class="retry btn btn-default" value="Retry">
+                </form>
             @endif
         </div>
     </div>
 </div>
 </div>
+@endsection
+
+@section('script')
+    <script src="{{ asset('js/quiz_start.js') }}"></script>
+    <script src="{{ asset('js/confirm.js') }}"></script>
 @endsection

@@ -107,6 +107,7 @@ class ForumController extends Controller
     {
         $unit = Unit::find($request->unit_id);
         $thread = Thread::find($request->thread_id);
+        dd($thread);
         $thread->posts = $this->posts($thread);
 
         $data['unit'] = $unit;

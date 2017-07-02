@@ -16,9 +16,11 @@ class CreateUserQuestionsTable extends Migration
         Schema::create('user_questions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
+            $table->integer('user_quiz_id')->unsigned();
             $table->integer('question_id')->unsigned();
             $table->integer('option_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_quiz_id')->references('id')->on('user_quizzes');
             $table->foreign('question_id')->references('id')->on('questions');
             $table->foreign('option_id')->references('id')->on('options');
             $table->timestamps();

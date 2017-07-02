@@ -128,6 +128,20 @@
         <!-- Confirmation -->
         <div class="confirm-container display-none">
             <div class="confirm-overlay flex-align-center-justify-center">
+                <div class="confirm confirm-start display-none bg-white padding-10">
+                    <div class="confirm-text flex-justify-center padding-10"></div>
+                    <div class="confirm-options flex-align-center-justify-between">
+                        <div class="btn btn-default confirm-option-cancel width-49p padding-10">Cancel</div>
+                        <div class="btn btn-primary confirm-option-start width-49p padding-10">Start</div>    
+                    </div>
+                </div>
+                <div class="confirm confirm-retry bg-white display-none padding-10">
+                    <div class="confirm-text flex-justify-center padding-10"></div>
+                    <div class="confirm-options flex-align-center-justify-between">
+                        <div class="btn btn-default confirm-option-cancel width-49p padding-10">Cancel</div>
+                        <div class="btn btn-primary confirm-option-retry width-49p padding-10">Retry</div>    
+                    </div>
+                </div>
                 <div class="confirm confirm-download display-none bg-white padding-10">
                     <div class="confirm-text flex-justify-center padding-10"></div>
                     <div class="confirm-options flex-align-center-justify-between">

@@ -13,32 +13,23 @@ class UserQuestionsTableSeeder extends Seeder
     {
         DB::table('user_questions')->insert([
        		'user_id' => '1',
-       		'question_id' => '1',
+          'user_quiz_id' => '1',
+          'question_id' => '1',
+          'option_id' => 1,
         ]);
 
         DB::table('user_questions')->insert([
        		'user_id' => '1',
+          'user_quiz_id' => '1',
        		'question_id' => '2',
+          'option_id' => 4,
         ]);
 
         DB::table('user_questions')->insert([
        		'user_id' => '1',
+          'user_quiz_id' => '1',
        		'question_id' => '3',
-        ]);
-
-        DB::table('user_questions')->insert([
-          'user_id' => '1',
-          'question_id' => '4',
-        ]);
-
-        DB::table('user_questions')->insert([
-          'user_id' => '1',
-          'question_id' => '5',
-        ]);
-
-        DB::table('user_questions')->insert([
-          'user_id' => '1',
-          'question_id' => '6',
+          'option_id' => 7,
         ]);
     }
 }

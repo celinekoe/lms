@@ -29,7 +29,6 @@ Route::get('/unit/{unit_id}/delete', 'UnitController@unit_delete');
 Route::get('/unit/{unit_id}/section/{section_id}/download', 'SectionController@section_download');
 Route::get('/unit/{unit_id}/section/{section_id}/delete', 'SectionController@section_delete');
 
-
 // Unit info page
 
 Route::get('/unit/{unit_id}/unit_info', 'UnitController@unit_info');
@@ -84,22 +83,22 @@ Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/file
 // Quiz routes
 
 Route::get('/unit/{unit_id}/section/{section_id}/file/{file_id}', 'SectionController@file');
-
 Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/file/{file_id}/complete', 'SectionController@complete');
-
 Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/file/{file_id}/incomplete', 'SectionController@incomplete');
-
 Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/quiz/{quiz_id}/complete', 'SectionController@quiz_complete');
-
 Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/quiz/{quiz_id}/incomplete', 'SectionController@quiz_incomplete');
 
 // Question routes
 
-Route::get('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}', 'QuizController@show');
-Route::get('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}/question/{question_no}', 'QuestionController@show');
-Route::post('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}/submit', 'QuizController@submit');
-Route::post('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}/previous', 'QuestionController@previous');
-Route::post('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}/next', 'QuestionController@next');
+Route::get('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}', 'QuizController@quiz_start');
+Route::post('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/quiz/{quiz_id}/start', 'QuizController@start');
+Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/quiz/{quiz_id}/question/{question_no}', 'QuizController@question');
+Route::post('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/quiz/{quiz_id}/previous', 'QuizController@save');
+Route::post('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/quiz/{quiz_id}/next', 'QuizController@save');
+Route::post('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/quiz/{quiz_id}/review', 'QuizController@save');
+Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/quiz/{quiz_id}/review', 'QuizController@quiz_review');
+Route::post('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/quiz/{quiz_id}/submit', 'QuizController@submit');
+Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/quiz/{quiz_id}/summary/{attempt_no}', 'QuizController@quiz_summary');
 
 
 // Other routes

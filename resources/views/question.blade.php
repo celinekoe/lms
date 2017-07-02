@@ -2,9 +2,7 @@
 
 @section('content')
 <div class="margin-10">
-    <div class="timer bg-white margin-bottom-10 padding-10" time-limit="{{ $data['quiz']->time_limit }}">
-        Time Limit {{ $data['quiz']->time_limit_formatted }}
-    </div>
+    <div class="timer bg-white margin-bottom-10 padding-10" time-limit-remaining="{{ $data['quiz']->time_limit_remaining }}">Time Limit Remaining</div>
     <div class="margin-bottom-10">
         <div class="bg-white margin-bottom-2 padding-10">
             <div class="flex">
@@ -16,7 +14,7 @@
             <div class="question-question">{{ $data['question']->question }}</div>
         </div>
         <div class="options">
-            @foreach ($data['options'] as $option)
+            @foreach ($data['question']->options as $option)
                 @if ($data['question']->option_id == $option->id)
                     <div class="option radio bg-white margin-top-0 margin-bottom-7 padding-10">
                         <label class="option-option"><input type="radio" name="option_id" value="{{ $option->id }}" checked class="option-option">{{ $option->option }}</label>
@@ -30,24 +28,29 @@
         </div>
     </div>
     <div class="flex-align-center margin-bottom-10">
-        <form action="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/quiz/'.$data['quiz']->id.'/previous') }}" method="POST" class="previous-form display-none">
-            <input type="hidden" name="current_question_no" value="{{ $data['question']->current_question_no }}">
-            <input type="hidden" name="hidden_option_id">
-            <input type="submit" class="previous btn btn-default" value="Prev">
-            {{ csrf_field() }}
-        </form>
-        <form action="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/quiz/'.$data['quiz']->id.'/next') }}" method="POST" class="next-form margin-left-auto">
-            <input type="hidden" name="current_question_no" value="{{ $data['question']->question_no }}">
-            <input type="hidden" name="hidden_option_id">
-            <input type="submit" class="next btn btn-default pull-right" value="Next">
-            {{ csrf_field() }}   
-        </form>
-        <form action="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section'].'/quiz/'.$data['quiz']->id.'/submit') }}" method="POST" class="submit-form display-none margin-left-auto">
-            <input type="hidden" name="current_question_no" value="{{ $data['question']->question_no }}">
-            <input type="hidden" name="hidden_option_id">
-            <input type="submit" class="submit btn btn-default pull-right" value="Submit">
-            {{ csrf_field() }}   
-        </form>
+        @if ($data['question']->has_previous)
+            <form action="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/previous') }}" method="POST" class="previous-form" href="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/question/'.$data['question']->previous_question_no) }}">
+                <input type="hidden" name="current_question_no" value="{{ $data['question']->question_no }}">
+                <input type="hidden" name="hidden_option_id">
+                <input type="submit" class="previous btn btn-default" value="Prev">
+                {{ csrf_field() }}
+            </form>
+        @endif
+        @if ($data['question']->has_next)
+            <form action="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/next') }}" method="POST" class="next-form margin-left-auto" href="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/question/'.$data['question']->next_question_no) }}">
+                <input type="hidden" name="current_question_no" value="{{ $data['question']->question_no }}">
+                <input type="hidden" name="hidden_option_id">
+                <input type="submit" class="next btn btn-default pull-right" value="Next">
+                {{ csrf_field() }}   
+            </form>
+        @else
+            <form action="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/review') }}" method="POST" class="finish-form margin-left-auto" href="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/review') }}">
+                <input type="hidden" name="current_question_no" value="{{ $data['question']->question_no }}">
+                <input type="hidden" name="hidden_option_id">
+                <input type="submit" class="finish btn btn-default pull-right" value="Review">
+                {{ csrf_field() }}   
+            </form>
+        @endif
     </div>
 </div>
 @endsection

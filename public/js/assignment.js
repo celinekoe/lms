@@ -20,11 +20,11 @@ $(".submit").click(function(e) {
 	var href = submit.attr("action");
 	open_confirm_submit();
 	$(".confirm-text").text("Confirm submit?");
-	$(".confirm-option-cancel").click(function(e) {
+	$(".confirm-option-cancel").off().click(function(e) {
 		e.preventDefault();
 		close_confirm_submit();
 	});
-	$(".confirm-option-submit").click(function(e) {
+	$(".confirm-option-submit").off().click(function(e) {
 		e.preventDefault();
 		close_confirm_submit();
 		$.post(href, $(".submit-form").serialize(), function(data) {
@@ -39,11 +39,11 @@ $(".cancel-submit").click(function(e) {
 	var href = cancel_submit.attr("href");
 	open_confirm_cancel_submit();
 	$(".confirm-text").text("Cancel submit?");
-	$(".confirm-option-cancel").click(function(e) {
+	$(".confirm-option-cancel").off().click(function(e) {
 		e.preventDefault();
 		close_confirm_cancel_submit();
 	});
-	$(".confirm-option-cancel-submit").click(function(e) {
+	$(".confirm-option-cancel-submit").off().click(function(e) {
 		e.preventDefault();
 		close_confirm_cancel_submit();
 		$.get(href, function(data) {
