@@ -143,7 +143,7 @@
                             </div>
                             <div class="margin-left-auto">
                                 @if ($quiz->completed)
-                                    <span class="incomplete glyphicon glyphicon-ok margin-right-10" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/quiz/'.$quiz->id.'/incomplete') }}"></span>
+                                    <span class="glyphicon glyphicon-ok margin-right-10" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/quiz/'.$quiz->id.'/incomplete') }}"></span>
                                 @endif
                             </div>
                         </div>

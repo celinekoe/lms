@@ -101,6 +101,10 @@
                                     <a class="back navbar-brand" href="{{ url('unit/'.$unit_id.'section/'.$section_id.'quiz/'.$quiz_id) }}">
                                         <span class="glyphicon glyphicon-chevron-left"></span>
                                     </a>
+                                @elseif (strpos($url, 'summary') == true)
+                                    <a class="back navbar-brand" href="{{ url('unit/'.$unit_id.'section/'.$section_id.'quiz/'.$quiz_id) }}">
+                                        <span class="glyphicon glyphicon-chevron-left"></span>
+                                    </a>
                                 @else
                                     <a class="back navbar-brand" href="{{ url('unit/'.$unit_id.'section/'.$section_id) }}">
                                         <span class="glyphicon glyphicon-chevron-left"></span>

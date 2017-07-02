@@ -142,11 +142,10 @@ class QuizController extends Controller
     private function create_user_quiz($user, $quiz)
     {
         $latest_attempt_no = $this->get_latest_attempt_no($user, $quiz);
-
         $user_quiz = UserQuiz::create([
             'user_id' => $user->id,
             'quiz_id' => $quiz->id,
-            'attempt_no' => $latest_attempt_no,
+            'attempt_no' => $latest_attempt_no + 1,
             'time_limit_remaining' => $quiz->time_limit,
         ]);
     }

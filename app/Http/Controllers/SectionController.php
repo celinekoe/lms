@@ -77,21 +77,8 @@ class SectionController extends Controller
             $completed_section_files += $completed_subsection_files;
             $subsection->files = $files;
 
-            $user_quizzes = DB::table('users')
-                ->join('user_quizzes', 'users.id', '=', 'user_quizzes.user_id')
-                ->join('quizzes', 'user_quizzes.quiz_id', '=', 'quizzes.id')
-                ->where('users.id', $user->id)
-                ->where('quizzes.subsection_id', $subsection->id)
-                ->get();
-            foreach ($user_quizzes as $user_quiz)
-            {
-                $user_quiz->completed = false;
-                if ($user_quiz->submitted_at != null)
-                {
-                    $user_quiz->completed = true;
-                }
-            }
-            $subsection->quizzes = $user_quizzes;
+            $subsection = $this->set_quizzes($user, $subsection);
+
             if (!$subsection->downloaded)
             {
                 $section->downloaded = false;
@@ -384,6 +371,32 @@ class SectionController extends Controller
         $suffixes = array('', 'K', 'M', 'G', 'T');   
 
         return round(pow(1024, $base - floor($base)), $precision) .' '. $suffixes[floor($base)];
+    }
+
+    private function set_quizzes($user, $subsection)
+    {
+        $quizzes = Quiz::where('subsection_id', $subsection->id)
+            ->get();
+
+        foreach ($quizzes as $quiz)
+        {   
+            $user_quizzes = UserQuiz::where('user_id', $user->id)
+            ->where('quiz_id', $quiz->id)
+            ->get();
+            
+            foreach ($user_quizzes as $user_quiz)
+            {
+                $quiz->completed = false;
+                if ($user_quiz->submitted_at != null)
+                {
+                    $quiz->completed = true;
+                }
+            }
+        }
+
+        $subsection->quizzes = $quizzes;
+
+        return $subsection;
     }
 
 }
