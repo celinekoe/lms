@@ -20,7 +20,7 @@
         </div>
         <div class="bg-white margin-bottom-2 padding-10">
             <div>Current Attempt No.</div>
-            <div class="small">{{ $data['quiz']->user_quiz == null ? 1 : $data['quiz']->user_quiz->last_attempt_no + 1 }}</div>
+            <div class="small">{{ $data['quiz']->user_quizzes == null ? 1 : $data['quiz']->last_attempt_no + 1 }}</div>
         </div>
         <div class="bg-white margin-bottom-2 padding-10">
             <div>Total Attempts</div>
@@ -48,13 +48,17 @@
                 @foreach ($data['quiz']->user_quizzes as $user_quiz)
                     @if ($user_quiz->submitted_at != null)
                         <a href="{{ url('unit/'.$data['unit']->id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/summary/'.$user_quiz->attempt_no) }}">
-                            <div class="bg-white margin-bottom-2 padding-10">
-                                <div class="flex">
-                                    <div class="small">Attempt No. {{ $user_quiz->attempt_no }}</div>    
-                                    <div class="small margin-left-auto">{{ $user_quiz->submitted_at }}</div>
+                            <div class="bg-white flex-align-center margin-bottom-2 padding-10">
+                                <div class="flex-align-start-justify-between width-96p">
+                                    <div class="width-50p">
+                                        <div class="small">Attempt No. {{ $user_quiz->attempt_no }}</div>
+                                        <div class="small">Grade {{ $user_quiz->grade }}</div>      
+                                    </div>
+                                    <div class="small width-50p text-align-right">{{ $user_quiz->submitted_at }}</div>
                                 </div>
-                                <div class="small">Grade {{ $user_quiz->grade }}</div>
+                                <div class="glyphicon glyphicon-chevron-right margin-left-10 margin-bottom-4"></div>    
                             </div>
+                            
                         </a>
                     @endif
                 @endforeach    

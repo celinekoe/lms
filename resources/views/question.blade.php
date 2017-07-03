@@ -30,22 +30,25 @@
     </div>
     <div class="flex-align-center margin-bottom-10">
         @if ($data['question']->has_previous)
-            <form action="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->quiz_id.'/save') }}" method="POST" class="save-form" href="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->quiz_id.'/question/'.$data['question']->previous_question_no) }}">
+            <form action="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->quiz_id.'/save') }}" method="POST" class="previous-form" href="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->quiz_id.'/question/'.$data['question']->previous_question_no) }}">
+                <input type="hidden" name="attempt_no" value="{{ $data['quiz']->attempt_no }}">
                 <input type="hidden" name="current_question_no" value="{{ $data['question']->question_no }}">
                 <input type="hidden" name="hidden_option_id">
-                <input type="submit" class="save btn btn-default" value="Prev">
+                <input type="submit" class="previous btn btn-default" value="Prev">
                 {{ csrf_field() }}
             </form>
         @endif
         @if ($data['question']->has_next)
-            <form action="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->quiz_id.'/save') }}" method="POST" class="save-form margin-left-auto" href="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->quiz_id.'/question/'.$data['question']->next_question_no) }}">
+            <form action="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->quiz_id.'/save') }}" method="POST" class="next-form margin-left-auto" href="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->quiz_id.'/question/'.$data['question']->next_question_no) }}">
+                <input type="hidden" name="attempt_no" value="{{ $data['quiz']->attempt_no }}">
                 <input type="hidden" name="current_question_no" value="{{ $data['question']->question_no }}">
                 <input type="hidden" name="hidden_option_id">
-                <input type="submit" class="save btn btn-default pull-right" value="Next">
+                <input type="submit" class="next btn btn-default pull-right" value="Next">
                 {{ csrf_field() }}   
             </form>
         @else
             <form action="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->quiz_id.'/save') }}" method="POST" class="review-form margin-left-auto" href="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->quiz_id.'/review') }}">
+                <input type="hidden" name="attempt_no" value="{{ $data['quiz']->attempt_no }}">
                 <input type="hidden" name="current_question_no" value="{{ $data['question']->question_no }}">
                 <input type="hidden" name="hidden_option_id">
                 <input type="submit" class="review btn btn-default pull-right" value="Review">

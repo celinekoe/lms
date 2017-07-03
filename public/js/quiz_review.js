@@ -9,7 +9,7 @@ $(".question").click(function(e) {
 	});
 });
 
-$(".submit").click(function(e) {
+$(document).on('click', ".submit-form", function(e) {
 	e.preventDefault();
 	var submit_href = $(".submit-form").attr("action");
 	var summary_href = $(".submit-form").attr("href");

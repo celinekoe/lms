@@ -19,14 +19,26 @@ var timer_html =
 
 // Navigation
 
-$(".save").click(function(e) {
+$(".previous").click(function(e) {
 	e.preventDefault();
-	var save_href = $(".save-form").attr("action");
-	var question_href = $(".save-form").attr("href");
-	$(".save-form").append(timer_html);
+	var previous_href = $(".previous-form").attr("action");
+	var question_href = $(".previous-form").attr("href");
+	$(".previous-form").append(timer_html);
 	$("input[name=time_limit_remaining]").val(difference/1000);
 	$("input[name=hidden_option_id]").val($("input[name=option_id]:checked").val());
-	$.post(save_href, $(".save-form").serialize(), function(data) {		
+	$.post(previous_href, $(".previous-form").serialize(), function(data) {		
+		window.location = question_href;
+	});
+});
+
+$(".next").click(function(e) {
+	e.preventDefault();
+	var next_href = $(".next-form").attr("action");
+	var question_href = $(".next-form").attr("href");
+	$(".next-form").append(timer_html);
+	$("input[name=time_limit_remaining]").val(difference/1000);
+	$("input[name=hidden_option_id]").val($("input[name=option_id]:checked").val());
+	$.post(next_href, $(".next-form").serialize(), function(data) {		
 		window.location = question_href;
 	});
 });

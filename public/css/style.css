@@ -181,6 +181,12 @@ a:link, a:hover, a:active, a:visited
 	align-items: start;
 }
 
+.flex-align-start-justify-between {
+	display: flex;
+	align-items: start;
+	justify-content: space-between;
+}
+
 .flex-justify-center {
 	display: flex;
 	justify-content: center;
@@ -443,9 +449,14 @@ a:link, a:hover, a:active, a:visited
 	padding-bottom: 20px;
 }
 
+.text-align-right {
+	text-align: right;
+}
+
 .width-25p {
 	width: 25%;
 }
+
 
 .width-48p {
 	width: 48%;
@@ -461,6 +472,10 @@ a:link, a:hover, a:active, a:visited
 
 .width-50p {
 	width: 50%;
+}
+
+.width-96p {
+	width: 96%;
 }
 
 .width-100p {
