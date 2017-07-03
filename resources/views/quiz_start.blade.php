@@ -20,7 +20,7 @@
         </div>
         <div class="bg-white margin-bottom-2 padding-10">
             <div>Current Attempt No.</div>
-            <div class="small">{{ $data['quiz']->user_quizzes->last()->attempt_no }}</div>
+            <div class="small">{{ $data['quiz']->user_quiz == null ? 1 : $data['quiz']->user_quiz->last_attempt_no + 1 }}</div>
         </div>
         <div class="bg-white margin-bottom-2 padding-10">
             <div>Total Attempts</div>
@@ -28,7 +28,7 @@
         </div>
         <div class="bg-white margin-bottom-2 padding-10">
             <div>Time Limit</div>
-            <div class="small">{{ $data['quiz']->time_limit }} minutes</div>
+            <div class="small">{{ $data['quiz']->time_limit_string }}</div>
         </div>
         <div class="bg-white margin-bottom-2 padding-10">
             <div>Total Questions</div>
@@ -47,7 +47,7 @@
             <div>
                 @foreach ($data['quiz']->user_quizzes as $user_quiz)
                     @if ($user_quiz->submitted_at != null)
-                        <a href="">
+                        <a href="{{ url('unit/'.$data['unit']->id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/summary/'.$user_quiz->attempt_no) }}">
                             <div class="bg-white margin-bottom-2 padding-10">
                                 <div class="flex">
                                     <div class="small">Attempt No. {{ $user_quiz->attempt_no }}</div>    

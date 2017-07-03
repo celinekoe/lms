@@ -18,6 +18,10 @@
                 <div>Time Taken</div>
                 <div class="small">{{ $data['quiz']->time_taken }}</div>
             </div>
+            <div class="bg-white margin-bottom-2 padding-10">
+                <div>Grade</div>
+                <div class="small">{{ $data['quiz']->grade }}</div>
+            </div>
         </div>
     </div>
     <div>

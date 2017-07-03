@@ -18,25 +18,37 @@ use Carbon\Carbon;
 class QuizController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Show the quiz start page.
      *
      * @return \Illuminate\Http\Response
      */
     public function quiz_start(Request $request)
     {
+        $user = Auth::user();
+        $unit = Unit::find($request->unit_id);
+
         $quiz = Quiz::find($request->quiz_id);
-        $user_quizzes = UserQuiz::where('quiz_id', $quiz->id)
+        $user_quizzes = UserQuiz::where('user_id', $user->id)
+            ->where('quiz_id', $quiz->id)
+            ->orderBy('attempt_no', 'asc')
             ->get();
         $quiz->user_quizzes = $user_quizzes;
-        $quiz->time_remaining = Carbon::parse($quiz->submit_by)
+        $quiz->last_attempt_no = $this->get_last_attempt_no($user, $quiz);
+        $quiz->time_limit_string = $this->seconds_to_time_string($quiz->time_limit);
+        $quiz->time_remaining = Carbon::parse($quiz->submit_by_date)
             ->diffForHumans();
         
-        $subsection = Subsection::find($quiz->subsection_id);
-        $section = Section::find($subsection->section_id);
-        $unit = Unit::find($section->unit_id);
-        
         $data['unit'] = $unit;
-        $data['section'] = $section;
         $data['quiz'] = $quiz;
 
         return view('quiz_start', ['data' => $data]);
@@ -51,13 +63,14 @@ class QuizController extends Controller
     public function question(Request $request)
     {
         $user = Auth::user();
-
+        $unit = Unit::find($request->unit_id);
         $quiz = $this->get_quiz($user, $request);
 
         $question = $this->get_question($user, $quiz, $request);
         $question = $this->set_previous_next_question($quiz, $question);
         $question = $this->set_options($question);
 
+        $data['unit'] = $unit;
         $data['quiz'] = $quiz;
         $data['question'] = $question;
 
@@ -73,9 +86,11 @@ class QuizController extends Controller
     public function quiz_review(Request $request)
     {
         $user = Auth::user();
+        $unit = Unit::find($request->unit_id);
         $quiz = $this->get_quiz($user, $request);
         $quiz = $this->set_questions($user, $quiz);
 
+        $data['unit'] = $unit;
         $data['quiz'] = $quiz;
 
         return view('quiz_review', ['data' => $data]);
@@ -107,7 +122,7 @@ class QuizController extends Controller
         $user = Auth::user();
         $quiz = Quiz::find($request->quiz_id);
         $user_quiz = $this->create_user_quiz($user, $quiz);
-        $this->create_user_questions($user, $quiz, $user_quiz);
+        $this->create_user_questions($user_quiz);
     }
 
     public function save(Request $request)
@@ -139,30 +154,42 @@ class QuizController extends Controller
         $data['quiz'] = $quiz;
     }
 
+    private function seconds_to_time_string($seconds)
+    {
+        $hours = floor($seconds / 3600);
+        $minutes = floor(($seconds % 3600) / 60);
+        $seconds = floor($seconds % 60);    
+        
+        $time_string = sprintf("%02d:%02d:%02d", $hours, $minutes, $seconds);
+        
+        return $time_string;
+    }
+
     private function create_user_quiz($user, $quiz)
     {
-        $latest_attempt_no = $this->get_latest_attempt_no($user, $quiz);
+        $last_attempt_no = $this->get_last_attempt_no($user, $quiz);
         $user_quiz = UserQuiz::create([
             'user_id' => $user->id,
             'quiz_id' => $quiz->id,
-            'attempt_no' => $latest_attempt_no + 1,
+            'attempt_no' => $last_attempt_no + 1,
             'time_limit_remaining' => $quiz->time_limit,
         ]);
+        return $user_quiz;
     }
 
-    private function get_latest_attempt_no($user, $quiz)
+    private function get_last_attempt_no($user, $quiz)
     {
         $latest_user_quiz = $this->latest_user_quiz($user, $quiz);
 
         if ($latest_user_quiz != null)
         {
-            $latest_attempt_no = $latest_user_quiz->attempt_no;
+            $last_attempt_no = $latest_user_quiz->attempt_no;
         }
         else
         {
-            $latest_attempt_no = 1;
+            $last_attempt_no = 0;
         }
-        return $latest_attempt_no;
+        return $last_attempt_no;
     }
 
     private function latest_user_quiz($user, $quiz)
@@ -197,7 +224,7 @@ class QuizController extends Controller
     {
         $quiz = DB::table('quizzes')
             ->join('user_quizzes', 'quizzes.id', '=', 'user_quizzes.id')
-            ->where('user_quizzes.id', $user->id)
+            ->where('user_quizzes.user_id', $user->id)
             ->where('quizzes.id', $request->quiz_id)
             ->orderBy('user_quizzes.attempt_no', 'desc')
             ->first();
@@ -206,10 +233,9 @@ class QuizController extends Controller
 
     private function get_question($user, $quiz, $request)
     {
-        $question = DB::table('users')
-            ->join('user_questions', 'users.id', '=', 'user_questions.user_id')
-            ->join('questions', 'user_questions.question_id', '=', 'questions.id')
-            ->where('users.id', $user->id)
+        $question = DB::table('questions')
+            ->join('user_questions', 'questions.id', '=', 'user_questions.question_id')
+            ->where('user_questions.user_id', $user->id)
             ->where('questions.quiz_id', $quiz->id)
             ->where('questions.question_no', $request->question_no)
             ->first();
@@ -276,7 +302,8 @@ class QuizController extends Controller
 
     private function set_options($question)
     {
-        $options = Option::where('question_id', $question->id)->get();
+        $options = Option::where('question_id', $question->question_id)
+            ->get();
         $question->options = $options;
         return $question;
     }
@@ -291,14 +318,14 @@ class QuizController extends Controller
 
     private function get_questions($user, $quiz)
     {
-        $latest_attempt_no = $this->get_latest_attempt_no($user, $quiz);
+        $last_attempt_no = $this->get_last_attempt_no($user, $quiz);
 
         $questions = DB::table('questions')
             ->join('user_questions', 'questions.id', '=', 'user_questions.question_id')
             ->join('user_quizzes', 'user_questions.user_quiz_id', '=', 'user_quizzes.id')
             ->where('user_questions.user_id', $user->id)
             ->where('user_quizzes.quiz_id', $quiz->id)
-            ->where('user_quizzes.attempt_no', $latest_attempt_no)
+            ->where('user_quizzes.attempt_no', $last_attempt_no)
             ->get();
         return $questions;
     }
@@ -323,11 +350,7 @@ class QuizController extends Controller
     {
         $time_taken = $quiz->time_limit - $quiz->time_limit_remaining;
 
-        $hours = floor($time_taken / 3600);
-        $minutes = floor(($time_taken % 3600) / 60);
-        $seconds = floor($time_taken % 60);
-
-        $quiz->time_taken = sprintf("%02d:%02d:%02d", $hours, $minutes, $seconds);
+        $quiz->time_taken = $this->seconds_to_time_string($time_taken);
 
         return $quiz;
     }

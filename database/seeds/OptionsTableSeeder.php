@@ -15,119 +15,128 @@ class OptionsTableSeeder extends Seeder
 
         DB::table('options')->insert([
        		'question_id' => '1',
-            'option' => 'option1',
+            'option' => 'question1_option1',
             'is_correct' => true,
             'description' => $description,
         ]);
 
         DB::table('options')->insert([
         	'question_id' => '1',
-            'option' => 'option2',
+            'option' => 'question1_option2',
             'is_correct' => false,
             'description' => $description,
         ]);
 
         DB::table('options')->insert([
         	'question_id' => '1',
-            'option' => 'option3',
+            'option' => 'question1_option3',
             'is_correct' => false,
             'description' => $description,
         ]);
 
         DB::table('options')->insert([
             'question_id' => '2',
-            'option' => 'option1',
+            'option' => 'question2_option1',
             'is_correct' => true,
             'description' => $description,
         ]);
 
         DB::table('options')->insert([
             'question_id' => '2',
-            'option' => 'option2',
+            'option' => 'question2_option2',
             'is_correct' => false,
             'description' => $description,
         ]);
 
         DB::table('options')->insert([
             'question_id' => '2',
-            'option' => 'option3',
+            'option' => 'question2_option3',
             'is_correct' => false,
             'description' => $description,
         ]);
 
         DB::table('options')->insert([
             'question_id' => '3',
-            'option' => 'option1',
+            'option' => 'question3_option1',
             'is_correct' => true,
             'description' => $description,
         ]);
 
         DB::table('options')->insert([
             'question_id' => '3',
-            'option' => 'option2',
+            'option' => 'question3_option2',
             'is_correct' => false,
             'description' => $description,
         ]);
 
         DB::table('options')->insert([
             'question_id' => '3',
-            'option' => 'option3',
+            'option' => 'question3_option3',
             'is_correct' => false,
             'description' => $description,
         ]);
 
         DB::table('options')->insert([
             'question_id' => '4',
-            'option' => 'option1',
+            'option' => 'question1_option1',
             'is_correct' => true,
+            'description' => $description,
         ]);
 
         DB::table('options')->insert([
             'question_id' => '4',
-            'option' => 'option2',
-            'is_correct' => false
+            'option' => 'question1_option2',
+            'is_correct' => false,
+            'description' => $description,
         ]);
 
         DB::table('options')->insert([
             'question_id' => '4',
-            'option' => 'option3',
-            'is_correct' => false
+            'option' => 'question1_option3',
+            'is_correct' => false,
+            'description' => $description,
         ]);
 
         DB::table('options')->insert([
             'question_id' => '5',
-            'option' => 'option1',
+            'option' => 'question2_option1',
             'is_correct' => true,
+            'description' => $description,
         ]);
 
         DB::table('options')->insert([
             'question_id' => '5',
-            'option' => 'option2',
-            'is_correct' => false
+            'option' => 'question2_option2',
+            'is_correct' => false,
+            'description' => $description,
         ]);
 
         DB::table('options')->insert([
             'question_id' => '5',
-            'option' => 'option3',
-            'is_correct' => false
+            'option' => 'question2_option3',
+            'is_correct' => false,
+            'description' => $description,
         ]);
 
         DB::table('options')->insert([
             'question_id' => '6',
-            'option' => 'option1',
+            'option' => 'question3_option1',
             'is_correct' => true,
+            'description' => $description,
         ]);
 
         DB::table('options')->insert([
             'question_id' => '6',
-            'option' => 'option2',
-            'is_correct' => false
+            'option' => 'question3_option2',
+            'is_correct' => false,
+            'description' => $description,
         ]);
 
         DB::table('options')->insert([
             'question_id' => '6',
-            'option' => 'option3',
-            'is_correct' => false
+            'option' => 'question3_option3',
+            'is_correct' => false,
+            'description' => $description,
         ]);
     }
 }

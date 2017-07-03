@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="margin-10">
+    <div class="bg-white font-size-32 margin-bottom-10 padding-10">{{ $data['unit']->unit_code }} {{ $data['quiz']->name }}</div>
     <div class="timer bg-white margin-bottom-10 padding-10" time-limit-remaining="{{ $data['quiz']->time_limit_remaining }}">Time Limit Remaining</div>
     <div class="margin-bottom-10">
         <div class="bg-white margin-bottom-2 padding-10">
@@ -29,7 +30,7 @@
     </div>
     <div class="flex-align-center margin-bottom-10">
         @if ($data['question']->has_previous)
-            <form action="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/previous') }}" method="POST" class="previous-form" href="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/question/'.$data['question']->previous_question_no) }}">
+            <form action="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/save') }}" method="POST" class="previous-form" href="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/question/'.$data['question']->previous_question_no) }}">
                 <input type="hidden" name="current_question_no" value="{{ $data['question']->question_no }}">
                 <input type="hidden" name="hidden_option_id">
                 <input type="submit" class="previous btn btn-default" value="Prev">
@@ -37,17 +38,17 @@
             </form>
         @endif
         @if ($data['question']->has_next)
-            <form action="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/next') }}" method="POST" class="next-form margin-left-auto" href="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/question/'.$data['question']->next_question_no) }}">
+            <form action="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/save') }}" method="POST" class="next-form margin-left-auto" href="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/question/'.$data['question']->next_question_no) }}">
                 <input type="hidden" name="current_question_no" value="{{ $data['question']->question_no }}">
                 <input type="hidden" name="hidden_option_id">
                 <input type="submit" class="next btn btn-default pull-right" value="Next">
                 {{ csrf_field() }}   
             </form>
         @else
-            <form action="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/review') }}" method="POST" class="finish-form margin-left-auto" href="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/review') }}">
+            <form action="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/save') }}" method="POST" class="review-form margin-left-auto" href="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/review') }}">
                 <input type="hidden" name="current_question_no" value="{{ $data['question']->question_no }}">
                 <input type="hidden" name="hidden_option_id">
-                <input type="submit" class="finish btn btn-default pull-right" value="Review">
+                <input type="submit" class="review btn btn-default pull-right" value="Review">
                 {{ csrf_field() }}   
             </form>
         @endif

@@ -90,12 +90,10 @@ Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/quiz
 
 // Question routes
 
-Route::get('/unit/{unit_id}/section/{section_id}/quiz/{quiz_id}', 'QuizController@quiz_start');
+Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/quiz/{quiz_id}', 'QuizController@quiz_start');
 Route::post('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/quiz/{quiz_id}/start', 'QuizController@start');
 Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/quiz/{quiz_id}/question/{question_no}', 'QuizController@question');
-Route::post('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/quiz/{quiz_id}/previous', 'QuizController@save');
-Route::post('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/quiz/{quiz_id}/next', 'QuizController@save');
-Route::post('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/quiz/{quiz_id}/review', 'QuizController@save');
+Route::post('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/quiz/{quiz_id}/save', 'QuizController@save');
 Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/quiz/{quiz_id}/review', 'QuizController@quiz_review');
 Route::post('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/quiz/{quiz_id}/submit', 'QuizController@submit');
 Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/quiz/{quiz_id}/summary/{attempt_no}', 'QuizController@quiz_summary');

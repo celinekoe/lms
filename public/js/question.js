@@ -71,14 +71,14 @@ $(".next").click(function(e) {
 	});
 });
 
-$(".finish").click(function(e) {
+$(".review").click(function(e) {
 	e.preventDefault();
-	var finish_href = $(".finish-form").attr("action");
-	var submit_href = $(".finish-form").attr("href");
-	$(".finish-form").append(timer_html);
+	var review_href = $(".review-form").attr("action");
+	var submit_href = $(".review-form").attr("href");
+	$(".review-form").append(timer_html);
 	$("input[name=time_limit_remaining]").val(difference/1000);
 	$("input[name=hidden_option_id]").val($("input[name=option_id]:checked").val());
-	$.post(finish_href, $(".finish-form").serialize(), function(data) {
+	$.post(review_href, $(".review-form").serialize(), function(data) {
 		window.location = submit_href;
 	});
 });

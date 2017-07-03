@@ -32,11 +32,18 @@
                             $start = strpos($url, '/section/') + 9;
                             $length = strpos(substr($url, $start), '/') + 1;
                             $section_id = substr($url, $start, $length);
-                            if (strpos($url, 'quiz') == true) 
+                            if (strpos($url, 'subsection') == true) 
                             {
-                                $start = strpos($url, '/quiz/') + 6;
+                                $start = strpos($url, '/subsection/') + 12;
                                 $length = strpos(substr($url, $start), '/') + 1;
-                                $quiz_id = substr($url, $start, $length);                            }
+                                $subsection_id = substr($url, $start, $length);
+                                if (strpos($url, 'quiz') == true) 
+                                {
+                                    $start = strpos($url, '/quiz/') + 6;
+                                    $length = strpos(substr($url, $start), '/') + 1;
+                                    $quiz_id = substr($url, $start, $length);                         
+                                }              
+                            }
                         }
                     ?>
                     @if (strpos($url, 'home') == true) <!-- Dashboard -->
@@ -98,11 +105,11 @@
                         @elseif (strpos($url, 'section') == true) 
                             @if (strpos($url, 'quiz') == true) <!-- Quiz page -->
                                 @if (strpos($url, 'question') == true)
-                                    <a class="back navbar-brand" href="{{ url('unit/'.$unit_id.'section/'.$section_id.'quiz/'.$quiz_id) }}">
+                                    <a class="back navbar-brand" href="{{ url('unit/'.$unit_id.'section/'.$section_id.'subsection/'.$subsection_id.'quiz/'.$quiz_id) }}">
                                         <span class="glyphicon glyphicon-chevron-left"></span>
                                     </a>
                                 @elseif (strpos($url, 'summary') == true)
-                                    <a class="back navbar-brand" href="{{ url('unit/'.$unit_id.'section/'.$section_id.'quiz/'.$quiz_id) }}">
+                                    <a class="back navbar-brand" href="{{ url('unit/'.$unit_id.'section/'.$section_id.'subsection/'.$subsection_id.'quiz/'.$quiz_id) }}">
                                         <span class="glyphicon glyphicon-chevron-left"></span>
                                     </a>
                                 @else

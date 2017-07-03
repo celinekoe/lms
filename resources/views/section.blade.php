@@ -135,7 +135,7 @@
             </div>
             <div class="subsection-quizzes" style="display: none;">
                 @foreach ($subsection->quizzes as $quiz)
-                    <a href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/quiz/'.$quiz->id) }}">
+                    <a href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$quiz->subsection_id.'/quiz/'.$quiz->id) }}">
                         <div class="subsection-quiz flex-align-center bg-white margin-top-bottom-2 padding-10">
                             <div class="flex-align-center">
                                 <div class="glyphicon glyphicon-star margin-left-10"></div>
