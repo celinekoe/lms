@@ -25,81 +25,14 @@ class SectionController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Show the section page.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $user = Auth::user();
-        $section = Section::find($request->section_id);
-        $subsections = Subsection::where('section_id', $section->id)->get();
-        $total_section_files = 0;
-        $completed_section_files = 0;
-        $section->downloaded = true;
-        foreach ($subsections as $subsection)
-        {
-            $files = File::where('subsection_id', $subsection->id)->get();
-            $user_subsection_files = DB::table('subsections')
-                ->join('files', 'subsections.id', '=', 'files.subsection_id')
-                ->join('user_files', 'files.id', '=', 'user_files.file_id')
-                ->join('users', 'user_files.user_id', '=', 'users.id')
-                ->where('users.id', $user->id)
-                ->where('subsections.id', $subsection->id)
-                ->get();
-            $total_subsection_files = 0;
-            $completed_subsection_files = 0;
-            $subsection->downloaded = true;
-            foreach ($files as $file)
-            {
-                $total_subsection_files++;
-                $file->formatted_size = $this->formatSize($file->size, 0);
 
-                foreach ($user_subsection_files as $user_subsection_file)
-                {
-                    if ($file->id == $user_subsection_file->file_id)
-                    {
-                        if ($user_subsection_file->completed)
-                        {
-                            $completed_subsection_files++;
-                        }
-                        $file->completed = $user_subsection_file->completed;
-                        $file->downloaded = $user_subsection_file->downloaded;
-                        if ($user_subsection_file->downloaded == false)
-                        {
-                            $subsection->downloaded = false;
-                        }
-                    }
-                }
-            }
-            $total_section_files += $total_subsection_files;
-            $completed_section_files += $completed_subsection_files;
-            $subsection->files = $files;
-
-            $subsection = $this->set_quizzes($user, $subsection);
-
-            if (!$subsection->downloaded)
-            {
-                $section->downloaded = false;
-            }
-        }
-        $section->progress = ($total_section_files > 0) ? round($completed_section_files/$total_section_files * 100) : 100;
-
-        $data = $this->calculateProgress($user, $section, $subsections);
-        foreach ($subsections as $subsection)
-        {
-            foreach ($data['subsections_progress'] as $subsection_progress)
-            {
-                if ($subsection->id == $subsection_progress->id)
-                {
-                    $subsection->progress = $subsection_progress->progress;
-                }
-            }
-        }
+        $section = $this->get_section($request);
+        $section = $this->set_section($user, $section);
 
         $data['section'] = $section;
-        $data['subsections'] = $subsections;
 
         return view('section', ['data' => $data]);
     }
@@ -292,72 +225,184 @@ class SectionController extends Controller
             ->update(['downloaded' => false]);
     }
 
-    /**
-     * Calculate section progress.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    private function calculateProgress($user, $section, $subsections)
-    {
-        $total_section_files = 0;
-        $completed_section_files = 0;
+    // Section Page Helper Functions
 
-        $total_section_quizzes = 0;
-        $completed_section_quizzes = 0;
-        
+    private function get_section($request)
+    {
+        $section = Section::find($request->section_id);
+
+        return $section;
+    }
+
+    private function set_section($user, $section)
+    {
+        $section = $this->set_section_progress($user, $section);
+        $section = $this->set_section_is_downloaded($user, $section);
+
+        $subsections = $this->get_subsections($section);
+        $section = $this->set_subsections($user, $section, $subsections);
+
+        return $section;
+    }
+
+    private function set_section_progress($user, $section)
+    {
+        $completed_files_count = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('files.section_id', $section->id)
+            ->where('user_files.user_id', $user->id)
+            ->where('completed', true)
+            ->count();
+        $completed_quizzes_count = DB::table('quizzes')
+            ->join('user_quizzes', 'quizzes.id', '=', 'user_quizzes.quiz_id')
+            ->where('quizzes.section_id', $section->id)
+            ->where('user_quizzes.user_id', $user->id)
+            ->where('user_quizzes.attempt_no', 1) // count only the first attempt 
+            ->whereNotNull('submitted_at') // just in case attempt is not submitted
+            ->count();
+        $completed_files_quizzes_count = $completed_files_count + $completed_quizzes_count;
+
+        $total_files_count = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('user_files.user_id', $user->id)
+            ->where('files.section_id', $section->id)
+            ->count();
+        $total_quizzes_count = Quiz::where('section_id', $section->id)
+            ->count();
+        $total_files_quizzes = $total_files_count + $total_quizzes_count;
+
+        $progress = $total_files_quizzes == 0 ? 100 : round($completed_files_quizzes_count / $total_files_quizzes * 100);
+        $section->progress = $progress;
+
+        return $section;
+    }
+
+    private function set_section_is_downloaded($user, $section)
+    {
+        $downloaded_section_files_count = DB::table('sections')
+            ->join('files', 'sections.id', '=', 'files.section_id')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('user_files.user_id', $user->id)
+            ->where('user_files.downloaded', true)
+            ->count();
+        $total_section_files_count = DB::table('sections')
+            ->join('files', 'sections.id', '=', 'files.section_id')
+            ->count();
+        $section->is_downloaded = ($downloaded_section_files_count == $total_section_files_count) ? true : false;
+        return $section;
+    }
+
+    private function get_subsections($section)
+    {
+        $subsections = Subsection::where('section_id', $section->id)
+            ->get();
+        return $subsections;
+    }
+
+    private function set_subsections($user, $section, $subsections)
+    {
         foreach ($subsections as $subsection)
         {
-            $files = File::where('subsection_id', $subsection->id)->get();
-            $user_subsection_files = DB::table('subsections')
-                ->join('files', 'subsections.id', '=', 'files.subsection_id')
-                ->join('user_files', 'files.id', '=', 'user_files.file_id')
-                ->join('users', 'user_files.user_id', '=', 'users.id')
-                ->where('users.id', $user->id)
-                ->where('subsections.id', $subsection->id)
-                ->get();
-            $total_subsection_files = 0;
-            $completed_subsection_files = 0;
-
-            foreach ($files as $file)
-            {
-                $total_subsection_files++;
-                foreach ($user_subsection_files as $user_subsection_file)
-                {
-                    if ($file->id == $user_subsection_file->id)
-                    {
-                        if ($user_subsection_file->completed)
-                        {
-                            $completed_subsection_files++;
-                        }
-                        $file->completed = $user_subsection_file->completed;
-                        $file->downloaded = $user_subsection_file->downloaded;
-                    }
-                }
-
-            }
-            $total_section_files += $total_subsection_files;
-            $completed_section_files += $completed_subsection_files;
-            
-            $user_quizzes = DB::table('users')
-                ->join('user_quizzes', 'users.id', '=', 'user_quizzes.user_id')
-                ->join('quizzes', 'user_quizzes.quiz_id', '=', 'quizzes.id')
-                ->where('users.id', $user->id)
-                ->where('quizzes.subsection_id', $subsection->id)
-                ->get();
-            $total_subsection_quizzes = $user_quizzes->count();
-            $total_section_quizzes += $total_subsection_quizzes;
-            $completed_subsection_quizzes = $user_quizzes->where('submitted_at', '!=', null)->count();
-            $completed_section_quizzes += $completed_subsection_quizzes;
-
-            $subsection->progress = (($total_subsection_files + $total_subsection_quizzes) > 0) ? round(($completed_subsection_files + $completed_subsection_quizzes)/($total_subsection_files + $total_subsection_quizzes) * 100) : 100;
+            $subsection = $this->set_subsection($user, $subsection);
         }
+        $section->subsections = $subsections;
+
+        return $section;
+    }
+
+    private function set_subsection($user, $subsection)
+    {
+        $subsection = $this->set_subsection_progress($user, $subsection);
+        $subsection = $this->set_subsection_is_downloaded($user, $subsection);
         
-        $section->progress = (($total_section_files + $total_section_quizzes) > 0) ? round(($completed_section_files + $completed_section_quizzes)/($total_section_files + $total_section_quizzes) * 100) : 100;
+        $files = $this->get_subsection_files($subsection);
+        $subsection = $this->set_subsection_files($user, $subsection, $files);
+        $quizzes = $this->get_subsection_quizzes($subsection);
+        $subsection = $this->set_subsection_quizzes($user, $subsection, $quizzes);
 
-        $data['section_progress'] = $section->progress;
-        $data['subsections_progress'] = $subsections;
+        return $subsection;
+    }
 
-        return $data;
+    private function set_subsection_progress($user, $subsection)
+    {
+        $completed_files_count = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('files.subsection_id', $subsection->id)
+            ->where('user_files.user_id', $user->id)
+            ->where('completed', true)
+            ->count();
+        $completed_quizzes_count = DB::table('quizzes')
+            ->join('user_quizzes', 'quizzes.id', '=', 'user_quizzes.quiz_id')
+            ->where('quizzes.subsection_id', $subsection->id)
+            ->where('user_quizzes.user_id', $user->id)
+            ->where('user_quizzes.attempt_no', 1) // count only the first attempt 
+            ->whereNotNull('submitted_at') // just in case attempt is not submitted
+            ->count();
+        $completed_files_quizzes_count = $completed_files_count + $completed_quizzes_count;
+
+        $total_files_count = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('user_files.user_id', $user->id)
+            ->where('files.subsection_id', $subsection->id)
+            ->count();
+        $total_quizzes_count = Quiz::where('subsection_id', $subsection->id)
+            ->count();
+        $total_files_quizzes = $total_files_count + $total_quizzes_count;
+
+        $progress = $total_files_quizzes == 0 ? 100 : round($completed_files_quizzes_count / $total_files_quizzes * 100);
+        $subsection->progress = $progress;
+
+        return $subsection;
+    }
+
+    private function set_subsection_is_downloaded($user, $subsection)
+    {
+        $downloaded_subsection_files_count = DB::table('subsections')
+            ->join('files', 'subsections.id', '=', 'files.subsection_id')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('user_files.user_id', $user->id)
+            ->where('user_files.downloaded', true)
+            ->count();
+        $total_subsection_files_count = DB::table('subsections')
+            ->join('files', 'subsections.id', '=', 'files.subsection_id')
+            ->count();
+        $subsection->is_downloaded = ($downloaded_subsection_files_count == $total_subsection_files_count) ? true : false;
+        return $subsection;
+    }
+
+    private function get_subsection_files($subsection)
+    {
+        $files = File::where('subsection_id', $subsection->id)
+            ->get();
+
+        return $files;
+    }
+
+    private function set_subsection_files($user, $subsection, $files)
+    {
+        foreach ($files as $file)
+        {
+            $file = $this->set_subsection_file($user, $file);
+        }
+        $subsection->files = $files;
+
+        return $subsection;
+    }
+
+    private function set_subsection_file($user, $file)
+    {
+        $file = $this->set_formatted_file_size($file);
+        $file = $this->set_file_is_complete($user, $file);
+        $file = $this->set_file_is_downloaded($user, $file);
+
+        return $file;
+    }
+
+    private function set_formatted_file_size($file)
+    {
+        $file->formatted_file_size = $this->format_file_size($file->size);
+
+        return $file;
     }
 
     /**
@@ -365,38 +410,71 @@ class SectionController extends Controller
      *
      * @return string
      */
-    private function formatSize($size, $precision = 2)
+    private function format_file_size($size, $precision = 2)
     {
         $base = log($size, 1024);
         $suffixes = array('', 'K', 'M', 'G', 'T');   
+        $formatted_file_size = round(pow(1024, $base - floor($base)), $precision) .' '. $suffixes[floor($base)];
 
-        return round(pow(1024, $base - floor($base)), $precision) .' '. $suffixes[floor($base)];
+        return $formatted_file_size;
     }
 
-    private function set_quizzes($user, $subsection)
+    private function set_file_is_complete($user, $file)
+    {
+        $user_file = UserFile::where('user_id', $user->id)
+            ->where('file_id', $file->id)
+            ->first();
+        $file->is_complete = $user_file->complete;
+
+        return $file;
+    }
+
+    private function set_file_is_downloaded($user, $file)
+    {
+        $user_file = UserFile::where('user_id', $user->id)
+            ->where('file_id', $file->id)
+            ->first();
+        $file->is_downloaded = $user_file->downloaded;
+
+        return $file;
+    }
+
+    private function get_subsection_quizzes($subsection)
     {
         $quizzes = Quiz::where('subsection_id', $subsection->id)
             ->get();
 
-        foreach ($quizzes as $quiz)
-        {   
-            $user_quizzes = UserQuiz::where('user_id', $user->id)
-            ->where('quiz_id', $quiz->id)
-            ->get();
-            
-            foreach ($user_quizzes as $user_quiz)
-            {
-                $quiz->completed = false;
-                if ($user_quiz->submitted_at != null)
-                {
-                    $quiz->completed = true;
-                }
-            }
-        }
+        return $quizzes;
+    }
 
+    private function set_subsection_quizzes($user, $subsection, $quizzes)
+    {
+        foreach ($quizzes as $quiz)
+        {
+            $quiz = $this->set_subsection_quiz($user, $quiz);
+        }
         $subsection->quizzes = $quizzes;
 
         return $subsection;
+    }
+
+    private function set_subsection_quiz($user, $quiz)
+    {
+        $quiz = $this->set_quiz_is_complete($user, $quiz);
+
+        return $quiz;
+    }
+
+    private function set_quiz_is_complete($user, $quiz)
+    {
+        $user_quiz = UserQuiz::where('user_id', $user->id)
+            ->where('quiz_id', $quiz->id)
+            ->where('attempt_no', 1)
+            ->whereNotNull('submitted_at')
+            ->first();
+        $quiz->is_complete = ($user_quiz != null) ? true : false;
+
+        return $quiz;
     }
 
 }

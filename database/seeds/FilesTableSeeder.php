@@ -78,6 +78,7 @@ class FilesTableSeeder extends Seeder
         // Subsection files
 
         DB::table('files')->insert([
+            'section_id' => '1',
             'subsection_id' => '1',
             'name' => 'Subsection_file1',
             'extension' => '.mp4',
@@ -88,6 +89,7 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
+            'section_id' => '1',
             'subsection_id' => '1',
             'name' => 'Subsection_file2',
             'extension' => '.pdf',
@@ -96,6 +98,7 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
+            'section_id' => '1',
             'subsection_id' => '1',
             'name' => 'Subsection_file3',
             'extension' => '.docx',
@@ -104,6 +107,7 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
+            'section_id' => '1',
             'subsection_id' => '1',
             'name' => 'Subsection_file4',
             'extension' => '.pptx',
@@ -112,6 +116,7 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
+            'section_id' => '1',
             'subsection_id' => '2',
             'name' => 'Subsection_file5',
             'extension' => '.mp4',
@@ -122,6 +127,7 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
+            'section_id' => '1',
             'subsection_id' => '2',
             'name' => 'Subsection_file6',
             'extension' => '.pdf',
@@ -130,6 +136,7 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
+            'section_id' => '1',
             'subsection_id' => '2',
             'name' => 'Subsection_file7',
             'extension' => '.docx',
@@ -138,6 +145,7 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
+            'section_id' => '1',
             'subsection_id' => '2',
             'name' => 'Subsection_file8',
             'extension' => '.pptx',

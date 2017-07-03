@@ -71,7 +71,7 @@
             {{ $data['section']->resources }}
         </div>
     </div>
-    @foreach ($data['subsections'] as $subsection)
+    @foreach ($data['section']->subsections as $subsection)
         <div class="margin-top-10">
             <div class="subsection bg-white margin-bottom-2 padding-10">
                 <div class="bg-white flex-align-center margin-left-10">
@@ -113,14 +113,14 @@
                                 @endif
                                 <span class="margin-left-10">{{ $file->name }}</span>
                                 <span class="pull-right margin-right-10">
-                                    @if ($file->completed == false)
+                                    @if ($file->is_complete == false)
                                         <span class="complete glyphicon glyphicon-unchecked margin-right-10" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/complete') }}"></span>
                                         <span class="incomplete glyphicon glyphicon-check margin-right-10" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/incomplete') }}" style="display: none;"></span>
                                     @else
                                         <span class="complete glyphicon glyphicon-unchecked margin-right-10" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/complete') }}" style="display: none;"></span>
                                         <span class="incomplete glyphicon glyphicon-check margin-right-10" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/incomplete') }}"></span>
                                     @endif
-                                    @if ($file->downloaded == false)
+                                    @if ($file->is_downloaded == false)
                                         <span class="file-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/download') }}"></span>
                                         <span class="file-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/file/'.$file->id.'/delete') }}" style="display: none;"></span>
                                     @else
@@ -142,7 +142,7 @@
                                 <div class="margin-left-10">{{ $quiz->name }}</div>    
                             </div>
                             <div class="margin-left-auto">
-                                @if ($quiz->completed)
+                                @if ($quiz->is_complete)
                                     <span class="glyphicon glyphicon-ok margin-right-10" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/quiz/'.$quiz->id.'/incomplete') }}"></span>
                                 @endif
                             </div>

@@ -125,6 +125,10 @@ a:link, a:hover, a:active, a:visited
 	color: #FFFFFF;
 }
 
+.text-red {
+	color: #d9534f;
+}
+
 /*
 	
 	Position

@@ -17,6 +17,7 @@ class CreateFilesTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned()->nullable();
             $table->integer('unit_id')->unsigned()->nullable();
+            $table->integer('section_id')->unsigned()->nullable();
             $table->integer('subsection_id')->unsigned()->nullable();
             $table->integer('assignment_id')->unsigned()->nullable();
             $table->string('name');
@@ -26,6 +27,7 @@ class CreateFilesTable extends Migration
             $table->time('length')->nullable();
             $table->string('url');
             $table->foreign('unit_id')->references('id')->on('units');
+            $table->foreign('section_id')->references('id')->on('sections');
             $table->foreign('subsection_id')->references('id')->on('subsections');
             $table->foreign('assignment_id')->references('id')->on('assignments');
             $table->timestamps();

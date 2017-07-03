@@ -227,7 +227,7 @@ class QuizController extends Controller
     private function get_quiz($user, $request)
     {
         $quiz = DB::table('quizzes')
-            ->join('user_quizzes', 'quizzes.id', '=', 'user_quizzes.id')
+            ->join('user_quizzes', 'quizzes.id', '=', 'user_quizzes.quiz_id')
             ->where('user_quizzes.user_id', $user->id)
             ->where('user_quizzes.quiz_id', $request->quiz_id)
             ->orderBy('user_quizzes.attempt_no', 'desc')
@@ -374,7 +374,7 @@ class QuizController extends Controller
     private function get_quiz_where_attempt_no($user, $request)
     {
         $quiz = DB::table('quizzes')
-            ->join('user_quizzes', 'quizzes.id', '=', 'user_quizzes.id')
+            ->join('user_quizzes', 'quizzes.id', '=', 'user_quizzes.quiz_id')
             ->where('user_quizzes.user_id', $user->id)
             ->where('user_quizzes.quiz_id', $request->quiz_id)
             ->where('user_quizzes.attempt_no', $request->attempt_no)
