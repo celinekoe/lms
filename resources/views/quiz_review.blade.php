@@ -37,5 +37,6 @@
 
 @section('script')
     <script src="{{ asset('js/quiz_review.js') }}"></script>
+    <script src="{{ asset('js/quiz_timer.js') }}"></script>
     <script src="{{ asset('js/confirm.js') }}"></script>
 @endsection

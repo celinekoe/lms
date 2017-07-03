@@ -146,12 +146,10 @@ class QuizController extends Controller
         $user = Auth::user();
         $unit = Unit::find($request->unit_id);
         $quiz = $this->get_quiz($user, $request);
+
         $quiz = $this->set_questions($user, $quiz);
 
-        $this->update_user_quiz_submitted_at_grade($user, $quiz);        
-
-        $data['unit'] = $unit;
-        $data['quiz'] = $quiz;
+        $this->update_user_quiz_submitted_at_grade($user, $quiz);
     }
 
     private function seconds_to_time_string($seconds)
@@ -225,7 +223,7 @@ class QuizController extends Controller
         $quiz = DB::table('quizzes')
             ->join('user_quizzes', 'quizzes.id', '=', 'user_quizzes.id')
             ->where('user_quizzes.user_id', $user->id)
-            ->where('quizzes.id', $request->quiz_id)
+            ->where('user_quizzes.quiz_id', $request->quiz_id)
             ->orderBy('user_quizzes.attempt_no', 'desc')
             ->first();
         return $quiz;
@@ -236,7 +234,7 @@ class QuizController extends Controller
         $question = DB::table('questions')
             ->join('user_questions', 'questions.id', '=', 'user_questions.question_id')
             ->where('user_questions.user_id', $user->id)
-            ->where('questions.quiz_id', $quiz->id)
+            ->where('questions.quiz_id', $quiz->quiz_id)
             ->where('questions.question_no', $request->question_no)
             ->first();
         return $question;
@@ -337,8 +335,10 @@ class QuizController extends Controller
             ->where('is_correct', true)
             ->count();
         $user_quiz = UserQuiz::where('user_id', $user->id)
-            ->where('quiz_id', $quiz->id)
+            ->where('quiz_id', $quiz->quiz_id)
+            ->where('attempt_no', $quiz->attempt_no)
             ->first();
+        $user_quiz->time_limit_remaining = 0;
         $user_quiz->grade = $correct_questions/$quiz->total_questions * 100;
         $user_quiz->submitted_at = Carbon::now()->format('Y-m-d H:i:s');
         $user_quiz->save();

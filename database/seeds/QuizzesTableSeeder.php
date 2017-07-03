@@ -22,7 +22,7 @@ class QuizzesTableSeeder extends Seeder
             'total_attempts' => 3,
             'weight' => 5,
             'total_questions' => 3,
-            'time_limit' => 300,
+            'time_limit' => 10,
             'submit_by_date' => Carbon::now()->addDay()->format('Y-m-d H:i:s')
         ]);
 
