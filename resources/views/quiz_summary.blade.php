@@ -5,7 +5,7 @@
     <div class="margin-bottom-10">
         <div class="bg-white font-size-32 margin-bottom-10 padding-10">{{ $data['unit']->unit_code }} {{ $data['quiz']->name }}</div>
         <div>
-            <div class="bg-white margin-bottom-2 padding-10">Summary of Attempt {{ $data['quiz']->attempt_no }}</div>
+            <div class="bg-white margin-bottom-2 padding-10">Summary of Attempt No. {{ $data['quiz']->attempt_no }}</div>
             <div class="bg-white margin-bottom-2 padding-10">
                 <div>Started On</div>
                 <div class="small">{{ $data['quiz']->created_at }}</div>
@@ -34,14 +34,20 @@
                 <div>
                     @if ($question->option_id == $option->id)
                         @if ($option->is_correct)
-                            <div class="bg-success text-white margin-bottom-2 padding-10">
-                                <div>{{ $option->option}}</div>
-                                <div class="small">{{ $option->description}}</div>
+                            <div class="bg-success text-white flex-align-center margin-bottom-2 padding-10">
+                                <div>
+                                    <div>{{ $option->option}}</div>
+                                    <div class="small">{{ $option->description}}</div>
+                                </div>
+                                <div class="glyphicon glyphicon-ok margin-left-auto"></div>
                             </div>
                         @else
-                            <div class="bg-failure text-white margin-bottom-2 padding-10">
-                                <div>{{ $option->option}}</div>
-                                <div class="small">{{ $option->description}}</div>
+                            <div class="bg-failure text-white flex-align-center margin-bottom-2 padding-10">
+                                <div>
+                                    <div>{{ $option->option}}</div>
+                                    <div class="small">{{ $option->description}}</div>
+                                </div>
+                                <div class="glyphicon glyphicon-remove margin-left-auto"></div>
                             </div>
                         @endif
                     @else
