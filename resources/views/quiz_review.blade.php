@@ -23,11 +23,12 @@
         </div>
     </div>
     <form action="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->quiz_id.'/save') }}" method="POST" class="save-form">
+        <input type="hidden" name="attempt_no" value="{{ $data['quiz']->attempt_no }}">
         {{ csrf_field() }}   
     </form>
     <div class="flex-align-center">
         <form action="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->quiz_id.'/submit') }}" method="POST" class="submit-form margin-left-auto" href="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->quiz_id.'/summary/'.$data['quiz']->attempt_no) }}">
-            <input type="hidden" name="current_attempt_no" value="{{ $data['quiz']->attempt_no }}">
+            <input type="hidden" name="attempt_no" value="{{ $data['quiz']->attempt_no }}">
             {{ csrf_field() }}
             <input type="submit" class="submit btn btn-default" value="Submit">
         </form>

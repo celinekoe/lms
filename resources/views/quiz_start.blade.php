@@ -67,11 +67,13 @@
         <div class="flex margin-bottom-10">
             @if ($data['quiz']->user_quizzes->count() == 0)
                 <form action="{{ url('unit/'.$data['unit']->id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/start') }}" method="POST" class="start-form margin-left-auto" href="{{ url('unit/'.$data['unit']->id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/question/1') }}">
+                    <input type="hidden" name="attempt_no" value="{{ $data['quiz']->attempt_no }}">
                     {{ csrf_field() }}
                     <input type="submit" class="start btn btn-default" value="Start">
                 </form>
             @else 
                 <form action="{{ url('unit/'.$data['unit']->id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/start') }}" method="POST" class="retry-form margin-left-auto" href="{{ url('unit/'.$data['unit']->id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/question/1') }}">
+                    <input type="hidden" name="attempt_no" value="{{ $data['quiz']->last_attempt_no + 1 }}">
                     {{ csrf_field() }}
                     <input type="submit" class="retry btn btn-default" value="Retry">
                 </form>
