@@ -106,7 +106,7 @@
                                 @if ($file->type == 'video')
                                     <span>
                                         <span class="glyphicon glyphicon-facetime-video margin-left-10"></span>
-                                        <span class="margin-left-10">[{{ $file->formatted_size}}, {{ $file->length }}]</span>
+                                        <span class="margin-left-10">[{{ $file->formatted_file_size}}, {{ $file->length }}]</span>
                                     </span>
                                 @elseif ($file->type == 'document')
                                     <span class="glyphicon glyphicon-book margin-left-10"></span>
