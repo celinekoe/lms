@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="margin-left-right-10">
+<div class="margin-10">
     <div class="bg-white margin-bottom-20 padding-10">
         <div class="font-size-32">Downloads</div>
     </div>

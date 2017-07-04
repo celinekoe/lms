@@ -39,19 +39,5 @@ class QuizzesTableSeeder extends Seeder
             'time_limit' => 300,
             'submit_by_date' => Carbon::now()->addDays(2)->format('Y-m-d H:i:s')
         ]);
-
-        DB::table('quizzes')->insert([
-            'unit_id' => '1',
-            'section_id' => '1',
-            'subsection_id' => '1',
-            'name' => 'Quiz3',
-            'graded' => true,
-            'grading_method' => 'Highest grade',
-            'total_attempts' => 3,
-            'weight' => 10,
-            'total_questions' => 3,
-            'time_limit' => 300,
-            'submit_by_date' => Carbon::now()->addDays(3)->format('Y-m-d H:i:s')
-        ]);
     }
 }

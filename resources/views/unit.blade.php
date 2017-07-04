@@ -82,6 +82,7 @@
                             @if ($section->downloaded == false)
                                 <div class="section-download glyphicon glyphicon-download margin-right-10 margin-top-4" href="{{ url('unit/'.$section->unit_id.'/section/'.$section->id.'/download') }}"></div>
                                 <div class="section-delete glyphicon glyphicon-remove-circle margin-right-10 margin-top-4" href="{{ url('unit/'.$section->unit_id.'/section/'.$section->id.'/delete') }}" style="display: none"></div>
+                                <div class="glyphicon glyphicon-chevron-right margin-right-10"></div>
                             @else
                                 <div class="section-download glyphicon glyphicon-download margin-right-10 margin-top-4" href="{{ url('unit/'.$section->unit_id.'/section/'.$section->id.'/download') }}" style="display: none"></div>
                                 <div class="section-delete glyphicon glyphicon-remove-circle margin-right-10 margin-top-4" href="{{ url('unit/'.$section->unit_id.'/section/'.$section->id.'/delete') }}"></div>

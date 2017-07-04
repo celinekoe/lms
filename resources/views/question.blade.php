@@ -8,8 +8,7 @@
         <div class="bg-white margin-bottom-2 padding-10">
             <div class="flex">
                 <div class="margin-left-auto">
-                    <span class="current-question-no">{{ $data['question']->question_no }}</span>
-                    <span>/{{ $data['quiz']->total_questions }}</span>
+                    <span class="current-question-no">{{ $data['question']->question_no }}/{{ $data['quiz']->total_questions }}</span>
                 </div>
             </div>
             <div class="question-question">{{ $data['question']->question }}</div>

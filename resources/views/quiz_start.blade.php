@@ -23,7 +23,7 @@
             @if ($data['quiz']->user_quizzes == null)
                 <div class="small">1</div>
             @else
-                @if ($data['quiz']->last_attempt_no + 1 <= $data['quiz']->total_attempts)
+                @if (($data['quiz']->last_attempt_no + 1) <= $data['quiz']->total_attempts)
                     <div class="small">{{ $data['quiz']->last_attempt_no + 1 }}</div>
                 @else
                     <div class="text-red small" style="color: #d9534f">No more attempts allowed</div>
@@ -73,7 +73,7 @@
             </div>
         </div>
         <div class="flex margin-bottom-10">
-            @if ($data['quiz']->last_attempt_no + 1 <= $data['quiz']->total_attempts)
+            @if (($data['quiz']->last_attempt_no + 1) <= $data['quiz']->total_attempts)
                 @if ($data['quiz']->user_quizzes->count() == 0)
                     <form action="{{ url('unit/'.$data['unit']->id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/start') }}" method="POST" class="start-form margin-left-auto" href="{{ url('unit/'.$data['unit']->id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/question/1') }}">
                         <input type="hidden" name="attempt_no" value="{{ $data['quiz']->attempt_no }}">

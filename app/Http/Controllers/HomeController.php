@@ -30,7 +30,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function home()
     {
         $user = Auth::user();
         $course = Course::find($user->course_id);
@@ -60,9 +60,9 @@ class HomeController extends Controller
     }
 
     /**
-     * Calculate unit progress.
+     * Get unit progress.
      *
-     * @return \Illuminate\Http\Response
+     * @return integer $unit_progress
      */
     private function calculateUnitProgress($user, $unit)
     {
@@ -97,6 +97,18 @@ class HomeController extends Controller
             $section->progress = ($total_section_files > 0) ? round($completed_section_files/$total_section_files * 100) : 100;
         }
         $unit->progress = ($total_unit_files > 0) ? round($completed_unit_files/$total_unit_files * 100) : 100;
+        return $unit;
+    }
+
+    /**
+     * Set unit progress.
+     *
+     * @return Unit $unit
+     */
+    private function set_unit_progress($unit, $unit_progress)
+    {
+        $unit->unit_progress = $unit_progress;
+
         return $unit;
     }
 }

@@ -78,6 +78,7 @@ class FilesTableSeeder extends Seeder
         // Subsection files
 
         DB::table('files')->insert([
+            'unit_id' => '1',
             'section_id' => '1',
             'subsection_id' => '1',
             'name' => 'Subsection_file1',
@@ -89,6 +90,7 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
+            'unit_id' => '1',
             'section_id' => '1',
             'subsection_id' => '1',
             'name' => 'Subsection_file2',
@@ -98,6 +100,7 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
+            'unit_id' => '1',
             'section_id' => '1',
             'subsection_id' => '1',
             'name' => 'Subsection_file3',
@@ -107,6 +110,7 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
+            'unit_id' => '1',
             'section_id' => '1',
             'subsection_id' => '1',
             'name' => 'Subsection_file4',
@@ -116,6 +120,7 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
+            'unit_id' => '1',
             'section_id' => '1',
             'subsection_id' => '2',
             'name' => 'Subsection_file5',
@@ -127,6 +132,7 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
+            'unit_id' => '1',
             'section_id' => '1',
             'subsection_id' => '2',
             'name' => 'Subsection_file6',
@@ -136,6 +142,7 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
+            'unit_id' => '1',
             'section_id' => '1',
             'subsection_id' => '2',
             'name' => 'Subsection_file7',
@@ -145,6 +152,7 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
+            'unit_id' => '1',
             'section_id' => '1',
             'subsection_id' => '2',
             'name' => 'Subsection_file8',

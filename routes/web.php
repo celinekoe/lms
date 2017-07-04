@@ -19,11 +19,11 @@ Auth::routes();
 
 // Course dashboard
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'HomeController@home');
 
 // Unit page
 
-Route::get('/unit/{unit_id}', 'UnitController@show');
+Route::get('/unit/{unit_id}', 'UnitController@unit');
 Route::get('/unit/{unit_id}/download', 'UnitController@unit_download');
 Route::get('/unit/{unit_id}/delete', 'UnitController@unit_delete');
 Route::get('/unit/{unit_id}/section/{section_id}/download', 'SectionController@section_download');
@@ -32,9 +32,11 @@ Route::get('/unit/{unit_id}/section/{section_id}/delete', 'SectionController@sec
 // Unit info page
 
 Route::get('/unit/{unit_id}/unit_info', 'UnitController@unit_info');
+Route::get('/unit/{unit_id}/unit_info/download', 'UnitController@unit_info_download');
+Route::get('/unit/{unit_id}/unit_info/delete', 'UnitController@unit_info_delete');
 Route::get('/unit/{unit_id}/unit_info/file/{file_id}', 'UnitController@unit_info_file');
-Route::get('/unit/{unit_id}/unit_info/file/{file_id}/download', 'UnitController@unit_info_download');
-Route::get('/unit/{unit_id}/unit_info/file/{file_id}/delete', 'UnitController@unit_info_delete');
+Route::get('/unit/{unit_id}/unit_info/file/{file_id}/download', 'UnitController@unit_info_file_download');
+Route::get('/unit/{unit_id}/unit_info/file/{file_id}/delete', 'UnitController@unit_info_file_delete');
 
 // Announcements
 

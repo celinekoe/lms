@@ -19,10 +19,13 @@
                         <div>{{ $unit->unit_code }} {{ $unit->name }}</div>
                         <div class="small">Due Date {{ $unit->submit_by_date }}</div>
                     </div>
-                    <div class="glyphicon glyphicon-chevron-down margin-left-auto margin-right-10" aria-hidden="true"></div>
+                    <div class="margin-left-auto">
+                        <div class="glyphicon glyphicon-chevron-down margin-right-10" aria-hidden="true"></div>
+                        <div class="glyphicon glyphicon-chevron-right margin-right-10"></div>
+                    </div>
                 </div>
             </a>
-            <div class="unit-tabs" style="display:none">
+            <div class="unit-tabs display-none">
                 <div class="flex-align-center-justify-around margin-bottom-2">
                     <a href="{{ url('unit/'.$unit->id.'/unit_info') }}" class="unit-tab unit-info-tab bg-white flex-align-center-justify-center margin-right-2 width-25p" style="height: 86px;">
                         <div>

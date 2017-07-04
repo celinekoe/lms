@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="margin-left-right-10">
+<div class="margin-10">
     <div class="bg-white flex-align-center margin-bottom-10 padding-10">
         <div class="font-size-32">{{ $data['unit']->unit_code }} Unit Announcements</div>
     </div>
