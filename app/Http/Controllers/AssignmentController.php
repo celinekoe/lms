@@ -30,26 +30,123 @@ class AssignmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function assignments(Request $request)
     {
         $user = Auth::user();
-        $unit = Unit::find($request->unit_id);
-        $assignments = Assignment::where('unit_id', $unit->id)->get();
-        foreach ($assignments as $assignment)
-        {
-            $assignment->submit_by_date_format = Carbon::parse($assignment->submit_by_date)->toDateString();
-            $user_assignment_files = DB::table('users')
-                ->join('user_files', 'users.id', '=', 'user_files.user_id')
-                ->join('files', 'user_files.file_id', '=', 'files.id')
-                ->where('users.id', $user->id)
-                ->where('files.user_id', null)
-                ->where('files.assignment_id', $assignment->id)
-                ->get();
-            $assignment->files = $user_assignment_files;
-        }
-        $unit->assignments = $assignments;
+        $unit = $this->get_unit($request);
+        $unit = $this->set_unit($unit);
+
         $data['unit'] = $unit;
         return view('unit_assignments', ['data' => $data]);
+    }
+
+    // Assignments Page Helper Function
+
+    private function get_unit($request)
+    {
+        $unit = Unit::find($request->unit_id);
+
+        return $unit;
+    }
+
+    private function set_unit($user, $unit)
+    {
+        $assignments = $this->get_assignments($unit);
+        $assignments = $this->set_assignments($user, $assignments);
+           
+        $unit->assignments = $assignments;
+
+        return $unit;
+    }
+
+    private function get_assignments($unit)
+    {
+        $assignments = Assignment::where('unit_id', $unit->id)->get();
+
+        return $assignments;
+    }
+
+    private function set_assignments($user, $assignments)
+    {
+        foreach ($assignments as $assignment)
+        {
+            $assignment = $this->set_assignment($user, $assignment);
+        }
+
+        return $assignments;
+    }
+
+    private function set_assignment($user, $assignment)
+    {
+        $formatted_submit_by_date = $this->format_date($assignment)
+        $assignment = $this->set_submit_by_date($assignment, $formatted_submit_by_date);
+        
+        $assignment_files = $this->get_assignment_files($assignment);
+        $assignment = $this->set_assignment_files($user, $assignment, $assignment_files);
+
+        return $assignment;
+    }
+
+    private function format_submit_by_date($assignment)
+    {
+        $formatted_submit_by_date = Carbon::parse($assignment->submit_by_date)->toDateString();
+
+        return $formatted_submit_by_date;
+    }
+
+    private function set_submit_by_date($assignment, $formatted_submit_by_date)
+    {
+        $assignment->formatted_submit_by_date = $formatted_submit_by_date;        
+
+        return $assignment;
+    }
+
+    private function get_assignment_files($assignment)
+    {
+        $assignment_files = Files::whereNull('user_id')
+            ->where('files.assignment_id', $assignment->id)
+            ->get();
+
+        return $assignment_files;
+    }
+
+    private function set_assignment_files($user, $assignment, $assignment_files)
+    {
+        foreach ($assignment_files as $assignment_file)
+        {
+            $assignment_file = $this->set_assignment_file($user, $assignment_file);
+        }
+        $assignment->files = $assignment_files;
+
+        return $assignment;
+    }
+
+    private function set_assignment_file($user, $assignment_file)
+    {
+        $assignment_file_is_downloaded = $this->get_assignment_file_is_downloaded($user, $assignment_file);
+        $assignment = $this->set_assignment_file_is_downloaded($assignment, $assignment_file_is_downloaded)
+
+        return $assignment;
+        
+    }
+
+    private function get_assignment_file_is_downloaded($user, $assignment_file)
+    {
+        $user_file = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.user_id')
+            ->where('files.id', $assignment_file->id)
+            ->where('user_files.user_id', $user->id)
+            ->first();
+        $assignment_file_is_downloaded = $user_file->downloaded;
+
+        return $assignment_file_is_downloaded;
+    }
+
+    private function set_assignment_file_is_downloaded($assignment_file, $assignment_file_is_downloaded)
+    {
+        $assignment_file->is_downloaded = $assignment_file_is_downloaded;
+
+        return $assignment_file;
     }
 
     /**

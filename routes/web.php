@@ -44,7 +44,7 @@ Route::get('/unit/{unit_id}/announcement', 'UnitController@announcements')->name
 
 // Assignments
 
-Route::get('/unit/{unit_id}/assignments', 'AssignmentController@index')->name('assignments');
+Route::get('/unit/{unit_id}/assignments', 'AssignmentController@assignments');
 Route::get('/unit/{unit_id}/assignment/{assignment_id}/file/{file_id}', 'AssignmentController@assignment_file');
 Route::get('/unit/{unit_id}/assignment/{assignment_id}/file/{file_id}/download', 'AssignmentController@assignment_download');
 Route::get('/unit/{unit_id}/assignment/{assignment_id}/file/{file_id}/delete', 'AssignmentController@assignment_delete');

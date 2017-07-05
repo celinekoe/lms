@@ -31,7 +31,7 @@
                                 <div>{{ $assignment_file->name }}</div>
                             </div>
                             <div class="download-container bg-white margin-left-auto margin-right-10">
-                                @if (!$assignment_file->downloaded)
+                                @if (!$assignment_file->is_downloaded)
                                     <div class="file-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/assignment/'.$assignment->id.'/file/'.$assignment_file->id.'/download') }}"></div>
                                     <div class="file-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/assignment/'.$assignment->id.'/file/'.$assignment_file->id.'/delete') }}" style="display: none;"></div>
                                 @else
