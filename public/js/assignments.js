@@ -55,6 +55,25 @@ $(".assignment-download").click(function(e) {
 	});
 });
 
+$(".assignment-delete").click(function(e) {
+	e.preventDefault();
+	var assignment_delete = $(this);
+	var href = assignment_delete.attr("href");
+	open_confirm_delete();
+	$(".confirm-text").text("Confirm assignment delete?");
+	$(".confirm-option-cancel").off().click(function(e) {
+		e.preventDefault();
+		close_confirm_delete();
+	});
+	$(".confirm-option-delete").off().click(function(e) {
+		e.preventDefault();
+		close_confirm_delete();
+		$.get(href, function(data) {
+			toggle_assignment_delete(assignment_delete);
+		});
+	});
+});
+
 $(".file-download").click(function(e) {
 	e.preventDefault();
 	var file_download = $(this);
@@ -119,29 +138,9 @@ function toggle_assignment_download(assignment_download) {
 
 	assignment_download.hide();
 	assignment_download.siblings(".assignment-delete").show();
-	assignment_download.parent().parent().parent().find(".file-download").hide();
-	assignment_download.parent().parent().parent().find(".file-delete").show();
+	assignment_download.parent().parent().parent().parent().find(".file-download").hide();
+	assignment_download.parent().parent().parent().parent().find(".file-delete").show();
 	
-	var is_assignments_downloaded = true;
-	$(".file-download").each(function() {
-		if ($(this).is(":visible")) {
-			is_assignments_downloaded = false;
-		}
-	});
-	if (is_assignments_downloaded) {
-		$(".assignments-download").hide();
-		$(".assignments-delete").show();
-	}
-	
-}
-
-// Toggle file download/delete
-
-function toggle_file_download(file_download) {
-
-	file_download.hide();
-	file_download.siblings(".file-delete").show();
-
 	var is_assignments_downloaded = true;
 	$(".assignment-download").each(function() {
 		if ($(this).is(":visible")) {
@@ -152,6 +151,33 @@ function toggle_file_download(file_download) {
 		$(".assignments-download").hide();
 		$(".assignments-delete").show();
 	}
+}
+
+function toggle_assignment_delete(assignment_delete) {
+
+	assignment_delete.siblings(".assignment-download").show();
+	assignment_delete.hide();
+	assignment_delete.parent().parent().parent().parent().find(".file-download").show();
+	assignment_delete.parent().parent().parent().parent().find(".file-delete").hide();
+	
+	var is_assignments_downloaded = true;
+	$(".assignment-download").each(function() {
+		if ($(this).is(":visible")) {
+			is_assignments_downloaded = false;
+		}
+	});
+	if (!is_assignments_downloaded) {
+		$(".assignments-download").show();
+		$(".assignments-delete").hide();
+	}
+}
+
+// Toggle file download/delete
+
+function toggle_file_download(file_download) {
+
+	file_download.hide();
+	file_download.siblings(".file-delete").show();
 
 	var assignment_download = file_download.parent().parent().parent().parent().parent().find(".assignment-download");
 	var file_downloads = file_download.parent().parent().parent().parent().find(".file-download");
@@ -166,23 +192,23 @@ function toggle_file_download(file_download) {
 		assignment_download.hide();
 		assignment_download.siblings(".assignment-delete").show();
 	}
+
+	var is_assignments_downloaded = true;
+	$(".assignment-download").each(function() {
+		if ($(this).is(":visible")) {
+			is_assignments_downloaded = false;
+		}
+	});
+	if (is_assignments_downloaded) {
+		$(".assignments-download").hide();
+		$(".assignments-delete").show();
+	}
 }
 
 function toggle_file_delete(file_delete) {
 	
 	file_delete.siblings(".file-download").show();
 	file_delete.hide();
-	
-	is_assignments_downloaded = true;
-	$(".assignment-download").each(function() {
-		if ($(this).is(":visible")) {
-			is_assignments_downloaded = false;
-		}
-	});
-	if (!is_assignments_downloaded) {
-		$(".assignments-download").show();
-		$(".assignments-delete").hide();
-	}
 
 	var file_download = file_delete.siblings(".file-download");
 	var assignment_download = file_download.parent().parent().parent().parent().parent().find(".assignment-download");
@@ -197,6 +223,17 @@ function toggle_file_delete(file_delete) {
 	if (!is_assignment_downloaded) {
 		assignment_download.show();
 		assignment_download.siblings(".assignment-delete").hide();
+	}
+	
+	is_assignments_downloaded = true;
+	$(".assignment-download").each(function() {
+		if ($(this).is(":visible")) {
+			is_assignments_downloaded = false;
+		}
+	});
+	if (!is_assignments_downloaded) {
+		$(".assignments-download").show();
+		$(".assignments-delete").hide();
 	}
 }
 

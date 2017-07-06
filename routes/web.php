@@ -47,11 +47,11 @@ Route::get('/unit/{unit_id}/announcement', 'UnitController@announcements')->name
 Route::get('/unit/{unit_id}/assignments', 'AssignmentController@assignments');
 Route::get('/unit/{unit_id}/assignments/download', 'AssignmentController@assignments_download');
 Route::get('/unit/{unit_id}/assignments/delete', 'AssignmentController@assignments_delete');
-Route::get('/unit/{unit_id}/assignment/{assignment_id}/download', 'AssignmentController@download');
-Route::get('/unit/{unit_id}/assignment/{assignment_id}/delete', 'AssignmentController@delete');
+Route::get('/unit/{unit_id}/assignment/{assignment_id}', 'AssignmentController@assignment');
+Route::get('/unit/{unit_id}/assignment/{assignment_id}/download', 'AssignmentController@assignment_download');
+Route::get('/unit/{unit_id}/assignment/{assignment_id}/delete', 'AssignmentController@assignment_delete');
 Route::get('/unit/{unit_id}/assignment/{assignment_id}/file/{file_id}/download', 'AssignmentController@assignment_file_download');
 Route::get('/unit/{unit_id}/assignment/{assignment_id}/file/{file_id}/delete', 'AssignmentController@assignment_file_delete');
-Route::get('/unit/{unit_id}/assignment/{assignment_id}', 'AssignmentController@show');
 Route::post('/unit/{unit_id}/assignment/{assignment_id}', 'AssignmentController@submit');
 Route::get('/unit/{unit_id}/assignment/{assignment_id}/file/{file_id}/cancel-submit', 'AssignmentController@cancel_submit');
 

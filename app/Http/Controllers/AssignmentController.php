@@ -65,34 +65,12 @@ class AssignmentController extends Controller
             ->update(['downloaded' => false]);
     }
 
-    public function assignment_download(Request $request)
-    {
-        $user = Auth::user();
-        DB::table('files')
-            ->join('user_files', 'files.id', '=', 'user_files.file_id')
-            ->where('files.assignment_id', $request->assignment_id)
-            ->whereNull('files.user_id')
-            ->where('user_files.user_id', $user->id)
-            ->update(['downloaded' => true]);
-    }
-
-    public function assignment_delete(Request $request)
-    {
-        $user = Auth::user();
-        DB::table('files')
-            ->join('user_files', 'files.id', '=', 'user_files.file_id')
-            ->where('files.assignment_id', $request->assignment_id)
-            ->whereNull('files.user_id')
-            ->where('user_files.user_id', $user->id)
-            ->update(['downloaded' => false]);
-    }
-
     /**
      * Show the assignment page.
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function assignment(Request $request)
     {
         $user = Auth::user();
         $unit = Unit::find($request->unit_id);
@@ -103,6 +81,28 @@ class AssignmentController extends Controller
         $data['assignment'] = $assignment;
 
         return view('unit_assignment', ['data' => $data]);
+    }
+
+    public function assignment_download(Request $request)
+    {
+        $user = Auth::user();
+        $user_files = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('files.assignment_id', $request->assignment_id)
+            ->whereNull('files.user_id')
+            ->where('user_files.user_id', $user->id)
+            ->update(['downloaded' => true]);
+    }
+
+    public function assignment_delete(Request $request)
+    {
+        $user = Auth::user();
+        $user_files = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('files.assignment_id', $request->assignment_id)
+            ->whereNull('files.user_id')
+            ->where('user_files.user_id', $user->id)
+            ->update(['downloaded' => false]);
     }
 
     /**

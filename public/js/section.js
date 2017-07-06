@@ -273,17 +273,6 @@ function toggle_file_download(file_download) {
 	file_download.hide();
 	file_download.siblings(".file-delete").show();
 
-	var is_section_downloaded = true;
-	$(".subsection-download").each(function() {
-		if ($(this).is(":visible")) {
-			is_section_downloaded = false;
-		}
-	});
-	if (is_section_downloaded) {
-		$(".section-download").hide();
-		$(".section-delete").show();
-	}
-
 	var subsection_download = file_download.parent().parent().parent().parent().parent().parent().find(".subsection-download");
 	var file_downloads = file_download.parent().parent().parent().parent().parent().find(".file-download");
 	
@@ -296,6 +285,17 @@ function toggle_file_download(file_download) {
 	if (is_subsection_downloaded) {
 		subsection_download.hide();
 		subsection_download.siblings(".subsection-delete").show();
+	}
+
+	var is_section_downloaded = true;
+	$(".subsection-download").each(function() {
+		if ($(this).is(":visible")) {
+			is_section_downloaded = false;
+		}
+	});
+	if (is_section_downloaded) {
+		$(".section-download").hide();
+		$(".section-delete").show();
 	}
 }
 
