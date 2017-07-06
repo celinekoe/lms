@@ -66,7 +66,7 @@ class UserFilesTableSeeder extends Seeder
             'file_id' => '6',
             'completed' => false,
             'downloaded' => false,
-            'uploaded' => true,
+            'uploaded' => false,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
@@ -75,18 +75,16 @@ class UserFilesTableSeeder extends Seeder
             'file_id' => '7',
             'completed' => false,
             'downloaded' => false,
-            'uploaded' => true,
+            'uploaded' => false,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
-
-        // Subsection files
 
         DB::table('user_files')->insert([
             'user_id' => '1',
             'file_id' => '8',
             'completed' => false,
             'downloaded' => false,
-            'uploaded' => false,
+            'uploaded' => true,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
@@ -95,9 +93,11 @@ class UserFilesTableSeeder extends Seeder
             'file_id' => '9',
             'completed' => false,
             'downloaded' => false,
-            'uploaded' => false,
+            'uploaded' => true,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
+
+        // Subsection files
 
         DB::table('user_files')->insert([
             'user_id' => '1',
@@ -147,6 +147,24 @@ class UserFilesTableSeeder extends Seeder
         DB::table('user_files')->insert([
             'user_id' => '1',
             'file_id' => '15',
+            'completed' => false,
+            'downloaded' => false,
+            'uploaded' => false,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('user_files')->insert([
+            'user_id' => '1',
+            'file_id' => '16',
+            'completed' => false,
+            'downloaded' => false,
+            'uploaded' => false,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('user_files')->insert([
+            'user_id' => '1',
+            'file_id' => '17',
             'completed' => false,
             'downloaded' => false,
             'uploaded' => false,

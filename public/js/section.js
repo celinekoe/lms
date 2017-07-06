@@ -269,10 +269,24 @@ function toggle_subsection_delete(subsection_delete) {
 // Toggle file download/delete
 
 function toggle_file_download(file_download) {
-	var subsection_download = file_download.parent().parent().parent().parent().parent().parent().find(".subsection-download");
-	var file_downloads = file_download.parent().parent().parent().parent().parent().find(".file-download");
+	
 	file_download.hide();
 	file_download.siblings(".file-delete").show();
+
+	var is_section_downloaded = true;
+	$(".subsection-download").each(function() {
+		if ($(this).is(":visible")) {
+			is_section_downloaded = false;
+		}
+	});
+	if (is_section_downloaded) {
+		$(".section-download").hide();
+		$(".section-delete").show();
+	}
+
+	var subsection_download = file_download.parent().parent().parent().parent().parent().parent().find(".subsection-download");
+	var file_downloads = file_download.parent().parent().parent().parent().parent().find(".file-download");
+	
 	var is_subsection_downloaded = true;
 	file_downloads.each(function() {
 		if ($(this).is(":visible")) {
@@ -282,16 +296,6 @@ function toggle_file_download(file_download) {
 	if (is_subsection_downloaded) {
 		subsection_download.hide();
 		subsection_download.siblings(".subsection-delete").show();
-	}
-	is_section_downloaded = true;
-	$(".subsection-download").each(function() {
-		if ($(this).is(":visible")) {
-			is_section_downloaded = false;
-		}
-	});
-	if (is_section_downloaded) {
-		$(".section-download").hide();
-		$(".section-delete").show();
 	}
 }
 
@@ -314,7 +318,8 @@ function toggle_file_delete(file_delete) {
 		subsection_download.show();
 		subsection_download.siblings(".subsection-delete").hide();
 	}
-	is_section_downloaded = true;
+
+	var is_section_downloaded = true;
 	$(".subsection-download").each(function() {
 		if ($(this).is(":visible")) {
 			is_section_downloaded = false;
