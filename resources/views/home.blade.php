@@ -20,7 +20,7 @@
                         <div class="small">Due Date {{ $unit->submit_by_date }}</div>
                     </div>
                     <div class="margin-left-auto">
-                        <div class="glyphicon glyphicon-chevron-down margin-right-10" aria-hidden="true"></div>
+                        <!-- <div class="glyphicon glyphicon-chevron-down margin-right-10" aria-hidden="true"></div> -->
                         <div class="glyphicon glyphicon-chevron-right margin-right-10"></div>
                     </div>
                 </div>

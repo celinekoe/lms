@@ -33,7 +33,7 @@
         </div>
     </div>
 
-    @if ($data['assignment']->user_file == null)
+    @if ($data['assignment']->uploaded_assignment_file == null)
         <div class="bg-white margin-top-10 margin-bottom-10 padding-10">
             <div>Submit Assignment</div>
             <input type="file" class="file-input small">
@@ -41,27 +41,27 @@
     @else
         <div class="flex-align-center bg-white margin-top-10 margin-bottom-10 padding-10">
             <div>
-                <div>{{ $data['assignment']->user_file->name }}</div>
-                <div class="small">{{ $data['assignment']->user_file->created_at }}</div>     
+                <div>{{ $data['assignment']->uploaded_assignment_file->name }}</div>
+                <div class="small">{{ $data['assignment']->uploaded_assignment_file->created_at }}</div>     
             </div>
             <div class="flex-align-center margin-left-auto">
-                @if (!$data['assignment']->user_file->downloaded)
-                    <div class="file-download glyphicon glyphicon-download margin-right-10" href="{{ url('unit/'.$data['unit']->id.'/assignment/'.$data['assignment']->id.'/file/'.$data['assignment']->user_file->id.'/download') }}"></div>
-                    <div class="file-delete glyphicon glyphicon-remove-circle margin-right-10" href="{{ url('unit/'.$data['unit']->id.'/assignment/'.$data['assignment']->id.'/file/'.$data['assignment']->user_file->id.'/delete') }}" style="display: none;"></div>
+                @if (!$data['assignment']->uploaded_assignment_file->downloaded)
+                    <div class="file-download glyphicon glyphicon-download margin-right-10" href="{{ url('unit/'.$data['unit']->id.'/assignment/'.$data['assignment']->id.'/file/'.$data['assignment']->uploaded_assignment_file->id.'/download') }}"></div>
+                    <div class="file-delete glyphicon glyphicon-remove-circle margin-right-10" href="{{ url('unit/'.$data['unit']->id.'/assignment/'.$data['assignment']->id.'/file/'.$data['assignment']->uploaded_assignment_file->id.'/delete') }}" style="display: none;"></div>
                 @else
-                    <div class="file-download glyphicon glyphicon-download margin-right-10" href="{{ url('unit/'.$data['unit']->id.'/assignment/'.$data['assignment']->id.'/file/'.$data['assignment']->user_file->id.'/download') }}" style="display: none;"></div>
-                    <div class="file-delete glyphicon glyphicon-remove-circle margin-right-10" href="{{ url('unit/'.$data['unit']->id.'/assignment/'.$data['assignment']->id.'/file/'.$data['assignment']->user_file->id.'/delete') }}"></div>
+                    <div class="file-download glyphicon glyphicon-download margin-right-10" href="{{ url('unit/'.$data['unit']->id.'/assignment/'.$data['assignment']->id.'/file/'.$data['assignment']->uploaded_assignment_file->id.'/download') }}" style="display: none;"></div>
+                    <div class="file-delete glyphicon glyphicon-remove-circle margin-right-10" href="{{ url('unit/'.$data['unit']->id.'/assignment/'.$data['assignment']->id.'/file/'.$data['assignment']->uploaded_assignment_file->id.'/delete') }}"></div>
                 @endif
                 @if ($data['assignment']->user_assignment->graded_at == null)
-                    <div class="cancel-submit glyphicon glyphicon-remove margin-right-10" href="{{ url('unit/'.$data['unit']->id.'/assignment/'.$data['assignment']->id.'/file/'.$data['assignment']->user_file->id.'/cancel-submit') }}"></div>
+                    <div class="cancel-submit glyphicon glyphicon-remove margin-right-10" href="{{ url('unit/'.$data['unit']->id.'/assignment/'.$data['assignment']->id.'/file/'.$data['assignment']->uploaded_assignment_file->id.'/cancel-submit') }}"></div>
                 @endif
             </div>      
         </div>
     @endif
 
 
-    @if ($data['assignment']->user_file == null)
-        <form action="{{ url('/unit/'.$data['unit']->id.'/assignment/'.$data['assignment']->id) }}" method="POST" class="submit-form display-none">
+    @if ($data['assignment']->uploaded_assignment_file == null)
+        <form action="{{ url('/unit/'.$data['unit']->id.'/assignment/'.$data['assignment']->id) }}" method="POST" class="submit-form">
             <input type="hidden" name="file_name" class="file-name">
             <input type="hidden" name="file_extension" class="file-extension">
             <input type="hidden" name="file_type" class="file-type">
@@ -85,7 +85,7 @@
             </div>
             <div class="bg-white margin-top-2 margin-bottom-10 padding-10">
                 <div>Graded By</div>
-                <div class="small">{{ $data['assignment']->user_assignment->staff->name }}</div>
+                <div class="small">{{ $data['assignment']->graded_by->name }}</div>
             </div>
         </div>
     @endif

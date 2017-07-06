@@ -55,14 +55,11 @@ class UnitController extends Controller
     public function unit_download(Request $request)
     {
         $user = Auth::user();
-        $user_unit_files = DB::table('users')
-            ->join('user_files', 'users.id', '=', 'user_files.user_id')
-            ->join('files', 'user_files.file_id', '=', 'files.id')
-            ->join('subsections', 'files.subsection_id', '=', 'subsections.id')
-            ->join('sections', 'subsections.section_id', '=', 'sections.id')
-            ->join('units', 'sections.unit_id', '=', 'sections.unit_id')
-            ->where('users.id', $user->id)
-            ->where('units.id', $request->unit_id)
+
+        $user_unit_files = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('files.unit_id', $request->unit_id)
+            ->where('user_files.user_id', $user->id)
             ->update(['user_files.downloaded' => true]);
     }
 
@@ -75,14 +72,11 @@ class UnitController extends Controller
     public function unit_delete(Request $request)
     {
         $user = Auth::user();
-        $user_unit_files = DB::table('users')
-            ->join('user_files', 'users.id', '=', 'user_files.user_id')
-            ->join('files', 'user_files.file_id', '=', 'files.id')
-            ->join('subsections', 'files.subsection_id', '=', 'subsections.id')
-            ->join('sections', 'subsections.section_id', '=', 'sections.id')
-            ->join('units', 'sections.unit_id', '=', 'sections.unit_id')
-            ->where('users.id', $user->id)
-            ->where('units.id', $request->unit_id)
+
+        $user_unit_files = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('files.unit_id', $request->unit_id)
+            ->where('user_files.user_id', $user->id)
             ->update(['user_files.downloaded' => false]);
     }
 
@@ -109,6 +103,7 @@ class UnitController extends Controller
             ->join('user_files', 'files.id', '=', 'user_files.file_id')
             ->where('files.unit_id', $request->unit_id)
             ->whereNull('files.subsection_id')
+            ->whereNull('files.assignment_id')
             ->where('user_files.user_id', $user->id)
             ->update(['downloaded' => true]);
     }
@@ -121,6 +116,7 @@ class UnitController extends Controller
             ->join('user_files', 'files.id', '=', 'user_files.file_id')
             ->where('files.unit_id', $request->unit_id)
             ->whereNull('files.subsection_id')
+            ->whereNull('files.assignment_id')
             ->where('user_files.user_id', $user->id)
             ->update(['downloaded' => false]);
     }
@@ -144,6 +140,7 @@ class UnitController extends Controller
             ->join('user_files', 'files.id', '=', 'user_files.file_id')
             ->where('files.unit_id', $unit->id)
             ->whereNull('files.subsection_id')
+            ->whereNull('files.assignment_id')
             ->where('user_files.user_id', $user->id)
             ->where('user_files.downloaded', true)
             ->count();
@@ -151,6 +148,7 @@ class UnitController extends Controller
         $total_unit_info_files_count = DB::table('files')
             ->where('files.unit_id', $unit->id)
             ->whereNull('files.subsection_id')
+            ->whereNull('files.assignment_id')
             ->count();
 
         $unit_info_is_downloaded = ($downloaded_unit_info_files_count == $total_unit_info_files_count) ? true : false;
@@ -169,6 +167,7 @@ class UnitController extends Controller
     {
         $unit_info_files = File::where('unit_id', $unit->id)
             ->whereNull('subsection_id')
+            ->whereNull('assignment_id')
             ->get();
 
         return $unit_info_files;
@@ -337,14 +336,13 @@ class UnitController extends Controller
 
     private function get_unit_is_downloaded($user, $unit)
     {
-        $downloaded_unit_files_count = DB::table('units')
-            ->join('files', 'units.id', '=', 'files.unit_id')
+        $downloaded_unit_files_count = DB::table('files')
             ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('files.unit_id', $unit->id)
             ->where('user_files.user_id', $user->id)
             ->where('user_files.downloaded', true)
             ->count();
-        $total_unit_files_count = DB::table('units')
-            ->join('files', 'units.id', '=', 'files.unit_id')
+        $total_unit_files_count = File::where('unit_id', $unit->id)
             ->count();
         $unit_is_downloaded = ($downloaded_unit_files_count == $total_unit_files_count) ? true : false;
 

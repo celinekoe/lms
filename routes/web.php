@@ -50,6 +50,7 @@ Route::get('/unit/{unit_id}/assignments/delete', 'AssignmentController@assignmen
 Route::get('/unit/{unit_id}/assignment/{assignment_id}', 'AssignmentController@assignment');
 Route::get('/unit/{unit_id}/assignment/{assignment_id}/download', 'AssignmentController@assignment_download');
 Route::get('/unit/{unit_id}/assignment/{assignment_id}/delete', 'AssignmentController@assignment_delete');
+Route::get('/unit/{unit_id}/assignment/{assignment_id}/file/{file_id}', 'AssignmentController@assignment_file');
 Route::get('/unit/{unit_id}/assignment/{assignment_id}/file/{file_id}/download', 'AssignmentController@assignment_file_download');
 Route::get('/unit/{unit_id}/assignment/{assignment_id}/file/{file_id}/delete', 'AssignmentController@assignment_file_delete');
 Route::post('/unit/{unit_id}/assignment/{assignment_id}', 'AssignmentController@submit');

@@ -52,6 +52,44 @@ $(".cancel-submit").click(function(e) {
 	});
 })
 
+$(".file-download").click(function(e) {
+	e.preventDefault();
+	var file_download = $(this);
+	var href = file_download.attr("href");
+	open_confirm_download();
+	$(".confirm-text").text("Confirm file download?");
+	$(".confirm-option-cancel").off().click(function(e) {
+		e.preventDefault();
+		close_confirm_download();
+	});
+	$(".confirm-option-download").off().click(function(e) {
+		e.preventDefault();
+		close_confirm_download();
+		$.get(href, function(data) {
+			toggle_file_download(file_download);
+		});
+	});
+});
+
+$(".file-delete").click(function(e) {
+	e.preventDefault();
+	var file_delete = $(this);
+	var href = file_delete.attr("href");
+	open_confirm_delete();
+	$(".confirm-text").text("Confirm file delete?");
+	$(".confirm-option-cancel").off().click(function(e) {
+		e.preventDefault();
+		close_confirm_download();
+	});
+	$(".confirm-option-delete").off().click(function(e) {
+		e.preventDefault();
+		close_confirm_download();
+		$.get(href, function(data) {
+			toggle_file_delete(file_delete);
+		});
+	});
+});
+
 function fileType(file_extension) {
 	var file_type = new Object();
 	if (video_extensions.includes(file_extension)) {
@@ -63,4 +101,14 @@ function fileType(file_extension) {
 		file_type.value = "misc";
 	}
 	return file_type;
+}
+
+function toggle_file_download(file_download) {
+	file_download.hide();
+	file_download.siblings(".file-delete").show();
+}
+
+function toggle_file_delete(file_delete) {	
+	file_delete.siblings(".file-download").show();
+	file_delete.hide();
 }

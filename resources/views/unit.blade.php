@@ -11,7 +11,7 @@
         </div>
         <div class="font-size-32 margin-left-10">{{ $data['unit']->unit_code }} {{ $data['unit']->name }}</div>
         <div class="flex-align-center margin-left-auto">
-            @if ($data['unit']->downloaded == false)
+            @if ($data['unit']->is_downloaded == false)
                 <div class="unit-download glyphicon glyphicon-download margin-right-10" href="{{ url('unit/'.$data['unit']->id.'/download') }}"></div>
                 <div class="unit-delete glyphicon glyphicon-remove-circle margin-right-10" href="{{ url('unit/'.$data['unit']->id.'/delete') }}" style="display: none"></div>
             @else
@@ -79,13 +79,14 @@
                     <div class="margin-left-10">{{ $section->name }}</div>
                     <div class="margin-left-auto">
                         @if ($section->has_files)
-                            @if ($section->downloaded == false)
+                            @if ($section->is_downloaded == false)
                                 <div class="section-download glyphicon glyphicon-download margin-right-10 margin-top-4" href="{{ url('unit/'.$section->unit_id.'/section/'.$section->id.'/download') }}"></div>
                                 <div class="section-delete glyphicon glyphicon-remove-circle margin-right-10 margin-top-4" href="{{ url('unit/'.$section->unit_id.'/section/'.$section->id.'/delete') }}" style="display: none"></div>
                                 <div class="glyphicon glyphicon-chevron-right margin-right-10"></div>
                             @else
                                 <div class="section-download glyphicon glyphicon-download margin-right-10 margin-top-4" href="{{ url('unit/'.$section->unit_id.'/section/'.$section->id.'/download') }}" style="display: none"></div>
                                 <div class="section-delete glyphicon glyphicon-remove-circle margin-right-10 margin-top-4" href="{{ url('unit/'.$section->unit_id.'/section/'.$section->id.'/delete') }}"></div>
+                                <div class="glyphicon glyphicon-chevron-right margin-right-10"></div>
                             @endif
                         @endif
                     </div>

@@ -30,6 +30,7 @@ $(".unit-info-delete").click(function(e) {
 	$(".confirm-option-delete").off().click(function(e) {
 		e.preventDefault();
 		close_confirm_delete();
+		console.log(href);
 		$.get(href, function(data) {
 			toggle_unit_info_delete(unit_info_delete);
 		});
