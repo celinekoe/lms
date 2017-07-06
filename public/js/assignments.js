@@ -112,6 +112,13 @@ $(".file-delete").click(function(e) {
 	});
 });
 
+
+$(".glyphicon-chevron-down").click(function(e) {
+	e.preventDefault();
+	console.log();
+	$(this).parent().parent().parent().parent().find(".assignment-files").toggle();
+});
+
 // Toggle assignments download/delete
 
 function toggle_assignments_download(assignments_download) {
@@ -236,9 +243,3 @@ function toggle_file_delete(file_delete) {
 		$(".assignments-delete").hide();
 	}
 }
-
-$(".glyphicon-chevron-down").click(function(e) {
-	e.preventDefault();
-	console.log();
-	$(this).parent().parent().parent().parent().find(".assignment-files").toggle();
-});

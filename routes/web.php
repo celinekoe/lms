@@ -127,5 +127,6 @@ Route::get('/notifications', 'NotificationController@index');
 Route::get('/notifications/delete', 'NotificationController@notifications_delete');
 Route::get('/notification/{notification_id}/delete', 'NotificationController@notification_delete');
 
+// Downloads Page
 
-Route::get('/downloads', 'DownloadController@index');
+Route::get('/downloads', 'DownloadController@downloads');
