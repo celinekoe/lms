@@ -61,8 +61,18 @@
                                 <span class="glyphicon glyphicon-chevron-left"></span>
                             </a>
                         @endif
-                    @elseif (strpos($url, 'messages') == true) <!-- Messages page -->
-                        <a class="back navbar-brand" href="{{ url('home') }}">
+                    @elseif (strpos($url, 'message') == true) 
+                        @if (strpos($url, 'messages') == true) <!-- Messages page -->
+                            <a class="back navbar-brand" href="{{ url('home') }}">
+                                <span class="glyphicon glyphicon-chevron-left"></span>
+                            </a>
+                        @else (strpos($url, 'message') == true) <!-- Messages page -->
+                            <a class="back navbar-brand" href="{{ url('messages') }}">
+                                <span class="glyphicon glyphicon-chevron-left"></span>
+                            </a>
+                        @endif
+                    @elseif (strpos($url, 'contacts') == true) <!-- Contacts page -->
+                        <a class="back navbar-brand" href="{{ url('messages') }}">
                             <span class="glyphicon glyphicon-chevron-left"></span>
                         </a>
                     @elseif (strpos($url, 'notifications') == true) <!-- Notifications page -->

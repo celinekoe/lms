@@ -1,27 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="margin-left-right-10">
-    <div class="bg-white flex-align-center margin-bottom-20 padding-10">
+<div class="">
+    <div class="bg-white flex-align-center margin-bottom-2 padding-10">
         <div class="font-size-32">Messages</div>
     </div>
-    <div class="margin-bottom-10">
-        <a href="{{ url('messages/create') }}" class="btn btn-default margin-bottom-10 pull-right">Send Message</a> 
-        <div class="clear"></div>   
-    </div>
-    @foreach ($data['messages'] as $message)
-        <div class="margin-bottom-10">
-            <div class="bg-white margin-bottom-2 padding-10">
-                <div class="bg-white margin-bottom-2">
-                    <span>From: {{ $message->sender->name }}</span>
-                </div>
-                <div class="bg-white margin-bottom-2">
-                    <span>To: {{ $message->receiver->name }}</span>
-                    <span class="pull-right">{{ $message->created_at_date }}</span>
-                </div>
+    <div class="message-threads">
+        @foreach ($data['message_threads'] as $message_thread)
+            <div class="message-thread bg-white margin-bottom-2 padding-10">
+                <a href="{{ url('message/'.$message_thread->id) }}">
+                    <div class="flex-align-center">
+                        <div class="small">{{ $message_thread->other_user->name }}</div>
+                        <div class="margin-left-auto small">{{ $message_thread->updated_at }}</div>
+                    </div>
+                    <div class="small">{{ $message_thread->preview }}</div>
+                </a>
             </div>
-            <div class="bg-white margin-bottom-2 padding-10">{{ $message->body }}</div>
-        </div>
-    @endforeach
+        @endforeach
+    </div>
+    <div class="bg-white flex-align-center messages-footer width-100p" style="height: 50px;">
+        <div class="bg-primary flex-align-center-justify-center height-100p width-50p" href="">Messages</div>
+        <a class="flex-align-center-justify-center height-100p width-50p" href="{{ url('/contacts') }}">Contacts</a>
+    </div>
 </div>
 @endsection

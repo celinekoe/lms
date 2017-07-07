@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMessagesTable extends Migration
+class CreateMessageThreadsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateMessagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('messages', function (Blueprint $table) {
+        Schema::create('message_threads', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('receiver_id')->unsigned();
-            $table->integer('sender_id')->unsigned();
-            $table->text('body');
+            $table->integer('user_id_1')->unsigned();
+            $table->integer('user_id_2')->unsigned();
+            $table->string('preview');
+            $table->foreign('user_id_1')->references('id')->on('users');
+            $table->foreign('user_id_2')->references('id')->on('users');
             $table->timestamps();
-            $table->foreign('receiver_id')->references('id')->on('users');
-            $table->foreign('sender_id')->references('id')->on('users');
         });
     }
 
@@ -32,7 +32,7 @@ class CreateMessagesTable extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('messages');
+        Schema::dropIfExists('message_threads');
         Schema::enableForeignKeyConstraints();
     }
 }

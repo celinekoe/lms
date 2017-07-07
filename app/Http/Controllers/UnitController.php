@@ -290,6 +290,12 @@ class UnitController extends Controller
         $unit_is_downloaded = $this->get_unit_is_downloaded($user, $unit);
         $unit = $this->set_unit_is_downloaded($unit, $unit_is_downloaded);
 
+        $sections_progress = $this->get_sections_progress($user, $unit);
+        $unit = $this->set_sections_progress($unit, $sections_progress);
+
+        $sections_is_downloaded = $this->get_sections_is_downloaded($user, $unit);
+        $unit = $this->set_sections_is_downloaded($unit, $sections_is_downloaded);
+
         $sections = $this->get_sections($unit);
         $unit = $this->set_sections($user, $unit, $sections);
 
@@ -352,6 +358,72 @@ class UnitController extends Controller
     private function set_unit_is_downloaded($unit, $unit_is_downloaded)
     {
         $unit->is_downloaded = $unit_is_downloaded;
+
+        return $unit;
+    }
+
+    private function get_sections_progress($user, $unit)
+    {
+        $completed_files_count = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('files.unit_id', $unit->id)
+            ->whereNotNull('files.section_id')
+            ->where('user_files.user_id', $user->id)
+            ->where('completed', true)
+            ->count();
+        $completed_quizzes_count = DB::table('quizzes')
+            ->join('user_quizzes', 'quizzes.id', '=', 'user_quizzes.quiz_id')
+            ->where('quizzes.unit_id', $unit->id)
+            ->whereNotNull('quizzes.section_id')
+            ->where('user_quizzes.user_id', $user->id)
+            ->where('user_quizzes.attempt_no', 1) // count only the first attempt 
+            ->whereNotNull('submitted_at') // just in case attempt is not submitted
+            ->count();
+        $completed_files_quizzes_count = $completed_files_count + $completed_quizzes_count;
+
+        $total_files_count = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('files.unit_id', $unit->id)
+            ->whereNotNull('files.section_id')
+            ->where('user_files.user_id', $user->id)
+            ->count();
+        $total_quizzes_count = Quiz::where('unit_id', $unit->id)
+            ->whereNotNull('quizzes.section_id')
+            ->count();
+        $total_files_quizzes = $total_files_count + $total_quizzes_count;
+
+        $sections_progress = $total_files_quizzes == 0 ? 100 : round($completed_files_quizzes_count / $total_files_quizzes * 100);
+
+        return $sections_progress;
+    }
+
+    private function set_sections_progress($unit, $sections_progress)
+    {
+        $unit->sections_progress = $sections_progress;
+
+        return $unit;
+    }
+
+    private function get_sections_is_downloaded($user, $unit)
+    {
+        $downloaded_sections_files_count = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('files.unit_id', $unit->id)
+            ->whereNotNull('files.section_id')
+            ->where('user_files.user_id', $user->id)
+            ->where('user_files.downloaded', true)
+            ->count();
+        $total_sections_files_count = File::where('unit_id', $unit->id)
+            ->whereNotNull('files.section_id')
+            ->count();
+        $sections_is_downloaded = ($downloaded_sections_files_count == $total_sections_files_count) ? true : false;
+
+        return $sections_is_downloaded;
+    }
+
+    private function set_sections_is_downloaded($unit, $sections_is_downloaded)
+    {
+        $unit->sections_is_downloaded = $sections_is_downloaded;
 
         return $unit;
     }

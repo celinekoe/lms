@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
         $this->call(OptionsTableSeeder::class);
         $this->call(UserQuestionsTableSeeder::class);
         $this->call(EventsTableSeeder::class);
+        $this->call(MessageThreadsTableSeeder::class);
         $this->call(MessagesTableSeeder::class);
         $this->call(NotificationsTableSeeder::class);
     }

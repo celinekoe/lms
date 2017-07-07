@@ -17,6 +17,7 @@ class MessagesTableSeeder extends Seeder
         DB::table('messages')->insert([
         	'receiver_id' => '1',
             'sender_id' => '2',
+            'message_thread_id' => '1',
             'body' => $message,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
@@ -24,6 +25,7 @@ class MessagesTableSeeder extends Seeder
         DB::table('messages')->insert([
         	'receiver_id' => '2',
             'sender_id' => '1',
+            'message_thread_id' => '1',
             'body' => $message,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);

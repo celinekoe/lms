@@ -66,6 +66,26 @@
             <div>Forum</div>
         </div>
     </a>
+    <div class="bg-white flex-align-center margin-bottom-2 padding-left-20 padding-right-10 padding-top-bottom-10">
+        <div class="section-progress margin-right-10">
+            <div class="c100 {{ 'p' . $data['unit']->sections_progress }} font-size-171em green">
+              <div class="slice">
+                <div class="bar"></div>
+                <div class="fill"></div>
+              </div>
+            </div>
+        </div>
+        <div class="font-size-19">Sections</div>
+        <div class="margin-left-auto">
+            @if ($data['unit']->sections_is_downloaded == false)
+                <div class="sections-download glyphicon glyphicon-download margin-right-10 margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/sections/download') }}"></div>
+                <div class="sections-delete glyphicon glyphicon-remove-circle margin-right-10 margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/sections/delete') }}" style="display: none"></div>
+            @else
+                <div class="sections-download glyphicon glyphicon-download margin-right-10 margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/sections/download') }}" style="display: none"></div>
+                <div class="sections-delete glyphicon glyphicon-remove-circle margin-right-10 margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/sections/delete') }}"></div>
+            @endif
+        </div>
+    </div>
     @foreach ($data['unit']->sections as $section)
         <a href="{{ url('unit/'.$data['unit']->id.'/section/'.$section->id) }}">
             <div class="bg-white margin-bottom-2 padding-10">

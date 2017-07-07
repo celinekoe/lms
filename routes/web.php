@@ -115,11 +115,14 @@ Route::get('/calendar/create', 'CalendarController@create');
 
 Route::post('/calendar', 'CalendarController@store');
 
-Route::get('/messages', 'MessageController@index');
+// Messages
 
-Route::get('/messages/create', 'MessageController@create');
+Route::get('/messages', 'MessageController@messages');
+Route::get('/contacts', 'MessageController@contacts');
+Route::get('/message/{message_thread_id}', 'MessageController@message');
+Route::post('/messages/send', 'MessageController@send');
+Route::post('/messages/delete', 'MessageController@delete');
 
-Route::post('/messages', 'MessageController@store');
 
 // Notifications
 
