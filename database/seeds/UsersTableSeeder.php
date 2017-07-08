@@ -13,23 +13,23 @@ class UsersTableSeeder extends Seeder
     {
         DB::table('users')->insert([
             'course_id' => 1,
-            'name' => 'Test_student1',
-            'email' => 'test_student1@gmail.com',
-            'password' => bcrypt('test_student1'),
+            'name' => 'Test_user1',
+            'email' => 'test_user1@gmail.com',
+            'password' => bcrypt('test_user1'),
         ]);
 
         DB::table('users')->insert([
             'course_id' => 1,
-            'name' => 'Test_student2',
-            'email' => 'test_student2@gmail.com',
-            'password' => bcrypt('test_student2'),
+            'name' => 'Test_user2',
+            'email' => 'test_user2@gmail.com',
+            'password' => bcrypt('test_user2'),
         ]);
 
         DB::table('users')->insert([
             'course_id' => 1,
-            'name' => 'Test_staff1',
-            'email' => 'test_staff1@gmail.com',
-            'password' => bcrypt('test_staff1'),
+            'name' => 'Test_user3',
+            'email' => 'test_user3@gmail.com',
+            'password' => bcrypt('test_user3'),
         ]);
     }
 }

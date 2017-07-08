@@ -11,12 +11,14 @@
         </div>
         <div class="font-size-32 margin-left-10">{{ $data['section']->name }}</div>
         <span class="margin-left-auto margin-right-10">
-            @if ($data['section']->downloaded == false)
-                <span class="section-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/download') }}"></span>
-                <span class="section-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/delete') }}" style="display: none;"></span>
-            @else
-                <span class="section-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/download') }}" style="display: none;"></span>
-                <span class="section-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/delete') }}"></span>
+            @if ($data['section']->has_files)
+                @if ($data['section']->downloaded == false)
+                    <span class="section-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/download') }}"></span>
+                    <span class="section-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/delete') }}" style="display: none;"></span>
+                @else
+                    <span class="section-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/download') }}" style="display: none;"></span>
+                    <span class="section-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/delete') }}"></span>
+                @endif
             @endif
         </span>
     </div>

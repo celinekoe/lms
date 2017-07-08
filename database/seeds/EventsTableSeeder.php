@@ -16,8 +16,10 @@ class EventsTableSeeder extends Seeder
     {
         $description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in tortor semper nisi volutpat eleifend. Vivamus auctor ante sit amet mi rutrum, at tristique ipsum molestie. Nam felis tellus, posuere non tincidunt ac, feugiat nec nisi. Sed ullamcorper nec elit at interdum. Maecenas rutrum nisl elementum, lacinia eros lobortis, imperdiet justo. Curabitur pulvinar neque eu sagittis facilisis. Aenean vitae cursus nisi. Donec interdum sem et mauris scelerisque, sed mollis odio rutrum. Cras id sem quis diam convallis fringilla vitae eu sapien.';
 
+        // Test_user1
+
         DB::table('events')->insert([
-            'user_id' => '1',
+            'user_id' => 1,
             'name' => 'Event1',
             'full_day' => true,
             'date_start' =>  Carbon::now(),
@@ -27,7 +29,7 @@ class EventsTableSeeder extends Seeder
 
         $assignment = Assignment::find(1);
         DB::table('events')->insert([
-        	'user_id' => '1',
+        	'user_id' => 1,
             'assignment_id' => $assignment->id,
             'name' => $assignment->name,
             'full_day' => true,
@@ -38,7 +40,40 @@ class EventsTableSeeder extends Seeder
 
         $quiz = Quiz::find(1);
         DB::table('events')->insert([
-            'user_id' => '1',
+            'user_id' => 1,
+            'quiz_id' => $quiz->id,
+            'name' => $quiz->name,
+            'full_day' => true,
+            'date_start' =>  $quiz->submit_by_date,
+            'date_end' => $quiz->submit_by_date,
+            'description' => $description,
+        ]);
+
+        // Test_user2
+
+        DB::table('events')->insert([
+            'user_id' => 2,
+            'name' => 'Event1',
+            'full_day' => true,
+            'date_start' =>  Carbon::now(),
+            'date_end' => Carbon::now(),
+            'description' => $description,
+        ]);
+
+        $assignment = Assignment::find(1);
+        DB::table('events')->insert([
+            'user_id' => 2,
+            'assignment_id' => $assignment->id,
+            'name' => $assignment->name,
+            'full_day' => true,
+            'date_start' =>  $assignment->submit_by_date,
+            'date_end' => $assignment->submit_by_date,
+            'description' => $description,
+        ]);
+
+        $quiz = Quiz::find(1);
+        DB::table('events')->insert([
+            'user_id' => 2,
             'quiz_id' => $quiz->id,
             'name' => $quiz->name,
             'full_day' => true,

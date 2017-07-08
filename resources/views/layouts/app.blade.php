@@ -118,6 +118,10 @@
                                     <a class="back navbar-brand" href="{{ url('unit/'.$unit_id.'section/'.$section_id.'subsection/'.$subsection_id.'quiz/'.$quiz_id) }}">
                                         <span class="glyphicon glyphicon-chevron-left"></span>
                                     </a>
+                                @elseif (strpos($url, 'review') == true)
+                                    <a class="back navbar-brand" href="{{ url('unit/'.$unit_id.'section/'.$section_id.'subsection/'.$subsection_id.'quiz/'.$quiz_id) }}">
+                                        <span class="glyphicon glyphicon-chevron-left"></span>
+                                    </a>
                                 @elseif (strpos($url, 'summary') == true)
                                     <a class="back navbar-brand" href="{{ url('unit/'.$unit_id.'section/'.$section_id.'subsection/'.$subsection_id.'quiz/'.$quiz_id) }}">
                                         <span class="glyphicon glyphicon-chevron-left"></span>

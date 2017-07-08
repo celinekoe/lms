@@ -11,10 +11,13 @@ class FilesTableSeeder extends Seeder
      */
     public function run()
     {
-        // Unit info files
+
+        //Test_user1
+        
+            // Unit info files
 
         DB::table('files')->insert([
-            'unit_id' => '1',
+            'unit_id' => 1,
             'name' => 'Unit_info_file1',
             'extension' => '.mp4',
             'type' => 'video',
@@ -24,7 +27,7 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
-            'unit_id' => '1',
+            'unit_id' => 1,
             'name' => 'Unit_info_file2',
             'extension' => '.pdf',
             'type' => 'document',
@@ -32,7 +35,7 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
-            'unit_id' => '1',
+            'unit_id' => 1,
             'name' => 'Unit_info_file3',
             'extension' => '.docx',
             'type' => 'document',
@@ -40,18 +43,18 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
-            'unit_id' => '1',
+            'unit_id' => 1,
             'name' => 'Unit_info_file4',
             'extension' => '.pptx',
             'type' => 'document',
             'url' => 'https://drive.google.com/file/d/0B4OsqsghY0urMGFpNGMzZE1Gd2c/preview'
         ]);
 
-        // Assignment files
+            // Assignment files
 
         DB::table('files')->insert([
-            'unit_id' => '1',
-            'assignment_id' => '1',
+            'unit_id' => 1,
+            'assignment_id' => 1,
             'name' => 'Assignment_file_1',
             'extension' => '.pdf',
             'type' => 'document',
@@ -59,7 +62,7 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
-            'unit_id' => '1',
+            'unit_id' => 1,
             'assignment_id' => '2',
             'name' => 'Assignment_file_2',
             'extension' => '.pdf',
@@ -68,7 +71,7 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
-            'unit_id' => '1',
+            'unit_id' => 1,
             'assignment_id' => '3',
             'name' => 'Assignment_file_3',
             'extension' => '.pdf',
@@ -77,9 +80,9 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
-            'user_id' => '1',
-            'unit_id' => '1',
-            'assignment_id' => '1',
+            'user_id' => 1,
+            'unit_id' => 1,
+            'assignment_id' => 1,
             'name' => 'Assignment_file_4',
             'type' => 'document',
             'extension' => '.pdf',
@@ -87,21 +90,21 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
-            'user_id' => '1',
-            'unit_id' => '1',
-            'assignment_id' => '2',
+            'user_id' => 1,
+            'unit_id' => 1,
+            'assignment_id' => 2,
             'name' => 'Assignment_file_5',
             'extension' => '.pdf',
             'type' => 'document',
             'url' => 'https://drive.google.com/file/d/0B4OsqsghY0urbVo4b05sc2NIVW8/preview'
         ]);
 
-        // Subsection files
+            // Subsection files
 
         DB::table('files')->insert([
-            'unit_id' => '1',
-            'section_id' => '1',
-            'subsection_id' => '1',
+            'unit_id' => 1,
+            'section_id' => 1,
+            'subsection_id' => 1,
             'name' => 'Subsection_file1',
             'extension' => '.mp4',
             'type' => 'video',
@@ -111,9 +114,9 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
-            'unit_id' => '1',
-            'section_id' => '1',
-            'subsection_id' => '1',
+            'unit_id' => 1,
+            'section_id' => 1,
+            'subsection_id' => 1,
             'name' => 'Subsection_file2',
             'extension' => '.pdf',
             'type' => 'document',
@@ -121,9 +124,9 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
-            'unit_id' => '1',
-            'section_id' => '1',
-            'subsection_id' => '1',
+            'unit_id' => 1,
+            'section_id' => 1,
+            'subsection_id' => 1,
             'name' => 'Subsection_file3',
             'extension' => '.docx',
             'type' => 'document',
@@ -131,9 +134,9 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
-            'unit_id' => '1',
-            'section_id' => '1',
-            'subsection_id' => '1',
+            'unit_id' => 1,
+            'section_id' => 1,
+            'subsection_id' => 1,
             'name' => 'Subsection_file4',
             'extension' => '.pptx',
             'type' => 'document',
@@ -141,8 +144,8 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
-            'unit_id' => '1',
-            'section_id' => '1',
+            'unit_id' => 1,
+            'section_id' => 1,
             'subsection_id' => '2',
             'name' => 'Subsection_file5',
             'extension' => '.mp4',
@@ -153,8 +156,8 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
-            'unit_id' => '1',
-            'section_id' => '1',
+            'unit_id' => 1,
+            'section_id' => 1,
             'subsection_id' => '2',
             'name' => 'Subsection_file6',
             'extension' => '.pdf',
@@ -163,8 +166,8 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
-            'unit_id' => '1',
-            'section_id' => '1',
+            'unit_id' => 1,
+            'section_id' => 1,
             'subsection_id' => '2',
             'name' => 'Subsection_file7',
             'extension' => '.docx',
@@ -173,8 +176,8 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
-            'unit_id' => '1',
-            'section_id' => '1',
+            'unit_id' => 1,
+            'section_id' => 1,
             'subsection_id' => '2',
             'name' => 'Subsection_file8',
             'extension' => '.pptx',
@@ -222,6 +225,28 @@ class FilesTableSeeder extends Seeder
             'extension' => '.pptx',
             'type' => 'document',
             'url' => 'https://drive.google.com/file/d/0B4OsqsghY0urMGFpNGMzZE1Gd2c/preview'
+        ]);
+
+        // Test_user2
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'unit_id' => 1,
+            'assignment_id' => 1,
+            'name' => 'Assignment_file_6',
+            'extension' => '.pdf',
+            'type' => 'document',
+            'url' => 'https://drive.google.com/file/d/0B4OsqsghY0urbVo4b05sc2NIVW8/preview'
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'unit_id' => 1,
+            'assignment_id' => 2,
+            'name' => 'Assignment_file_7',
+            'type' => 'document',
+            'extension' => '.pdf',
+            'url' => 'https://drive.google.com/file/d/0B4OsqsghY0urbVo4b05sc2NIVW8/preview'
         ]);
     }
 }

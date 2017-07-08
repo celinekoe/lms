@@ -218,7 +218,12 @@ class SectionController extends Controller
     {
         $section_progress = $this->get_section_progress($user, $section);
         $section = $this->set_section_progress($section, $section_progress);
-        $section = $this->set_section_is_downloaded($user, $section);
+
+        $section_has_files = $this->get_section_has_files($user, $section);
+        $section = $this->set_section_has_files($section, $section_has_files);
+
+        $section_is_downloaded = $this->get_section_is_downloaded($user, $section);
+        $section = $this->set_section_is_downloaded($section, $section_is_downloaded);
 
         $subsections = $this->get_subsections($section);
         $section = $this->set_subsections($user, $section, $subsections);
@@ -264,7 +269,26 @@ class SectionController extends Controller
         return $section;
     }
 
-    private function set_section_is_downloaded($user, $section)
+    private function get_section_has_files($user, $section)
+    {
+        $total_files_count = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('user_files.user_id', $user->id)
+            ->where('files.section_id', $section->id)
+            ->count();
+        $section_has_files = ($total_files_count > 0) ? true : false;
+
+        return $section_has_files;
+    }
+
+    private function set_section_has_files($section, $section_has_files)
+    {
+        $section->has_files = $section_has_files;
+
+        return $section;
+    }
+
+    private function get_section_is_downloaded($user, $section)
     {
         $downloaded_section_files_count = DB::table('sections')
             ->join('files', 'sections.id', '=', 'files.section_id')
@@ -275,7 +299,14 @@ class SectionController extends Controller
         $total_section_files_count = DB::table('sections')
             ->join('files', 'sections.id', '=', 'files.section_id')
             ->count();
-        $section->is_downloaded = ($downloaded_section_files_count == $total_section_files_count) ? true : false;
+        $section_is_downloaded = ($downloaded_section_files_count == $total_section_files_count) ? true : false;
+        return $section_is_downloaded;
+    }
+
+    private function set_section_is_downloaded($section, $section_is_downloaded)
+    {
+        $section->is_downloaded = $section_is_downloaded;
+
         return $section;
     }
 

@@ -5,14 +5,14 @@
     <div class="margin-bottom-10">
         <div class="bg-white font-size-32 margin-bottom-10 padding-10">{{ $data['unit']->unit_code }} {{ $data['quiz']->name }}</div>
         <div>
-            <div class="bg-white margin-bottom-2 padding-10">Summary of Attempt No. {{ $data['quiz']->attempt_no }}</div>
+            <div class="bg-white margin-bottom-2 padding-10">Summary of Attempt No. {{ $data['quiz']->user_quiz->attempt_no }}</div>
             <div class="bg-white margin-bottom-2 padding-10">
                 <div>Started On</div>
-                <div class="small">{{ $data['quiz']->created_at }}</div>
+                <div class="small">{{ $data['quiz']->user_quiz->created_at }}</div>
             </div>
             <div class="bg-white margin-bottom-2 padding-10">
                 <div>Submitted At</div>
-                <div class="small">{{ $data['quiz']->submitted_at }}</div>
+                <div class="small">{{ $data['quiz']->user_quiz->submitted_at }}</div>
             </div>
             <div class="bg-white margin-bottom-2 padding-10">
                 <div>Time Taken</div>
@@ -20,7 +20,7 @@
             </div>
             <div class="bg-white margin-bottom-2 padding-10">
                 <div>Grade</div>
-                <div class="small">{{ $data['quiz']->grade }}</div>
+                <div class="small">{{ $data['quiz']->user_quiz->grade }}</div>
             </div>
         </div>
     </div>
@@ -32,7 +32,7 @@
             </div>
             @foreach ($question->options as $option)
                 <div>
-                    @if ($question->option_id == $option->id)
+                    @if ($question->user_question->option_id == $option->id)
                         @if ($option->is_correct)
                             <div class="bg-success text-white flex-align-center margin-bottom-2 padding-10">
                                 <div>

@@ -416,12 +416,14 @@ class AssignmentController extends Controller
             ->join('user_files', 'files.id', '=', 'user_files.file_id')
             ->where('files.unit_id', $assignment->unit_id)
             ->where('files.assignment_id', $assignment->id)
+            ->whereNull('files.user_id')
             ->where('user_files.user_id', $user->id)
             ->where('user_files.downloaded', true)
             ->count();
         $total_assignment_files_count = DB::table('files')
             ->where('files.unit_id', $assignment->unit_id)
             ->where('files.assignment_id', $assignment->id)
+            ->whereNull('files.user_id')
             ->count();
 
         $assignment_is_downloaded = ($downloaded_assignment_files_count == $total_assignment_files_count) ? true : false;
