@@ -26,6 +26,8 @@ Route::get('/home', 'HomeController@home');
 Route::get('/unit/{unit_id}', 'UnitController@unit');
 Route::get('/unit/{unit_id}/download', 'UnitController@unit_download');
 Route::get('/unit/{unit_id}/delete', 'UnitController@unit_delete');
+Route::get('/unit/{unit_id}/sections/download', 'UnitController@sections_download');
+Route::get('/unit/{unit_id}/sections/delete', 'UnitController@sections_delete');
 Route::get('/unit/{unit_id}/section/{section_id}/download', 'SectionController@section_download');
 Route::get('/unit/{unit_id}/section/{section_id}/delete', 'SectionController@section_delete');
 

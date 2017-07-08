@@ -75,6 +75,12 @@
               </div>
             </div>
         </div>
+        @if ($data['unit']->unit_info_is_downloaded)
+            <div class="unit-info-is-downloaded"></div>
+        @endif
+        @if ($data['unit']->assignments_is_downloaded)
+            <div class="assignments-is-downloaded"></div>
+        @endif
         <div class="font-size-19">Sections</div>
         <div class="margin-left-auto">
             @if ($data['unit']->sections_is_downloaded == false)
