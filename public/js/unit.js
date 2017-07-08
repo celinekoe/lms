@@ -171,16 +171,25 @@ function toggle_section_download(section_download) {
 	section_download.hide();
 	section_download.siblings(".section-delete").show();
 
-	var is_unit_downloaded = true;
+	var is_sections_downloaded = true;
 	$(".section_download").each(function() {
 		if ($(this).is(":visible")) {
-			is_unit_downloaded = false;
+			is_sections_downloaded = false;
 		}
 	})
+	if (is_sections_downloaded) {
+		$(".sections-download").hide();
+		$(".sections-delete").show();
+	}
+
+	var is_unit_downloaded = $(".unit-info-is-downloaded").length && 
+		$(".assignments-is-downloaded").length && is_sections_downloaded;
+
 	if (is_unit_downloaded) {
 		$(".unit-download").hide();
 		$(".unit-delete").show();
 	}
+
 }
 
 function toggle_section_delete(section_delete) {
@@ -188,15 +197,10 @@ function toggle_section_delete(section_delete) {
 	section_delete.siblings(".section-download").show();
 	section_delete.hide();
 
-	var is_unit_deleted = true;
-	$(".section-delete").each(function() {
-		if ($(this).is(":visible")) {
-			is_unit_deleted = false;
-		}
-	})
-	if (is_unit_deleted) {
-		$(".unit-download").show();
-		$(".unit-delete").hide();
-	}
+	$(".sections-download").show();
+	$(".sections-delete").hide();
+
+	$(".unit-download").show();
+	$(".unit-delete").hide();
 
 }

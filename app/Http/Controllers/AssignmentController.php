@@ -50,6 +50,7 @@ class AssignmentController extends Controller
             ->whereNotNull('files.assignment_id')
             ->where('user_files.user_id', $user->id)
             ->update(['downloaded' => true]);
+        dd($user_files);
     }
 
     public function assignments_delete(Request $request)

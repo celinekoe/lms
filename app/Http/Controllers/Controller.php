@@ -41,8 +41,10 @@ class Controller extends BaseController
     	File::where('user_id', $user->id)
     		->delete();
 
-    	DB::table('files')->insert([
-            'user_id' => '1',
+            // reset assignment uploaded files
+
+    	$file1 = File::create([
+            'user_id' => $user->id,
             'unit_id' => '1',
             'assignment_id' => '1',
             'name' => 'Assignment_file_4',
@@ -51,8 +53,17 @@ class Controller extends BaseController
             'url' => 'https://drive.google.com/file/d/0B4OsqsghY0urbVo4b05sc2NIVW8/preview'
         ]);
 
-        DB::table('files')->insert([
-            'user_id' => '1',
+        $user_file1 = UserFile::create([
+            'user_id' => $user->id,
+            'file_id' => $file1->id,
+            'completed' => false,
+            'downloaded' => false,
+            'uploaded' => true,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+
+        $file2 = File::create([
+            'user_id' => $user->id,
             'unit_id' => '1',
             'assignment_id' => '2',
             'name' => 'Assignment_file_5',
@@ -61,8 +72,20 @@ class Controller extends BaseController
             'url' => 'https://drive.google.com/file/d/0B4OsqsghY0urbVo4b05sc2NIVW8/preview'
         ]);
 
+        $user_file2 = UserFile::create([
+            'user_id' => $user->id,
+            'file_id' => $file2->id,
+            'completed' => false,
+            'downloaded' => false,
+            'uploaded' => true,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+
+            // reset other files
+
         UserFile::where('user_id', $user->id)
-    		->update([
+    		->whereNotIn('file_id', [$user_file1->id, $user_file2->id])
+            ->update([
     			'completed' => false,
     			'downloaded' => false,
     			'uploaded' => false,
