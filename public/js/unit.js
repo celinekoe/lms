@@ -8,7 +8,7 @@ $(".unit-download").off().click(function(e) {
 		e.preventDefault();
 		close_confirm_download();
 	});
-	$(".confirm-option-reset").off().click(function(e) {
+	$(".confirm-option-download").off().click(function(e) {
 		e.preventDefault();
 		close_confirm_download();
 		$.get(href, function(data) {
@@ -172,7 +172,7 @@ function toggle_section_download(section_download) {
 	section_download.siblings(".section-delete").show();
 
 	var is_sections_downloaded = true;
-	$(".section_download").each(function() {
+	$(".section-download").each(function() {
 		if ($(this).is(":visible")) {
 			is_sections_downloaded = false;
 		}

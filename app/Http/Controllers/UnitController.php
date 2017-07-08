@@ -547,9 +547,10 @@ class UnitController extends Controller
 
         $total_files_count = DB::table('files')
             ->join('user_files', 'files.id', '=', 'user_files.file_id')
-            ->where('user_files.user_id', $user->id)
             ->where('files.section_id', $section->id)
+            ->where('user_files.user_id', $user->id)
             ->count();
+
         $total_quizzes_count = Quiz::where('section_id', $section->id)
             ->count();
         $total_files_quizzes = $total_files_count + $total_quizzes_count;

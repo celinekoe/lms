@@ -83,7 +83,7 @@ class Controller extends BaseController
 
             // reset other files
 
-        UserFile::where('user_id', $user->id)
+        $user_files = UserFile::where('user_id', $user->id)
     		->whereNotIn('file_id', [$user_file1->id, $user_file2->id])
             ->update([
     			'completed' => false,

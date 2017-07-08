@@ -3,7 +3,7 @@
 @section('content')
 <div class="margin-10">
     <div class="bg-white flex-align-center margin-bottom-2 padding-left-20 padding-right-10 padding-top-bottom-10">
-        <div class="section-progress c100 {{ 'p' . $data['unit']->progress }} font-size-228em green">
+        <div class="unit-progress c100 {{ 'p' . $data['unit']->progress }} font-size-228em green">
           <div class="slice">
             <div class="bar"></div>
             <div class="fill"></div>
@@ -67,7 +67,7 @@
         </div>
     </a>
     <div class="bg-white flex-align-center margin-bottom-2 padding-left-20 padding-right-10 padding-top-bottom-10">
-        <div class="section-progress margin-right-10">
+        <div class="sections-progress margin-right-10">
             <div class="c100 {{ 'p' . $data['unit']->sections_progress }} font-size-171em green">
               <div class="slice">
                 <div class="bar"></div>

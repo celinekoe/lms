@@ -25,5 +25,10 @@ class SubsectionsTableSeeder extends Seeder
         	'section_id' => '1',
             'name' => 'Subsection3'
         ]);
+
+        DB::table('subsections')->insert([
+            'section_id' => '2',
+            'name' => 'Subsection4'
+        ]);
     }
 }

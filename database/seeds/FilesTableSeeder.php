@@ -181,5 +181,47 @@ class FilesTableSeeder extends Seeder
             'type' => 'document',
             'url' => 'https://drive.google.com/file/d/0B4OsqsghY0urMGFpNGMzZE1Gd2c/preview'
         ]);
+
+        DB::table('files')->insert([
+            'unit_id' => 1,
+            'section_id' => 2,
+            'subsection_id' => 4,
+            'name' => 'Subsection_file9',
+            'extension' => '.mp4',
+            'type' => 'video',
+            'size' => 684175,
+            'length' => '00:00:16',
+            'url' => 'https://www.youtube.com/embed/WQZRb8L5awM?rel=0&modestbranding=1'
+        ]);
+
+        DB::table('files')->insert([
+            'unit_id' => 1,
+            'section_id' => 2,
+            'subsection_id' => 4,
+            'name' => 'Subsection_file10',
+            'extension' => '.pdf',
+            'type' => 'document',
+            'url' => 'https://drive.google.com/file/d/0B4OsqsghY0urbVo4b05sc2NIVW8/preview'
+        ]);
+
+        DB::table('files')->insert([
+            'unit_id' => 1,
+            'section_id' => 2,
+            'subsection_id' => 4,
+            'name' => 'Subsection_file11',
+            'extension' => '.docx',
+            'type' => 'document',
+            'url' => 'https://drive.google.com/file/d/0B4OsqsghY0urbFlsX1VzLW9INlU/preview'
+        ]);
+
+        DB::table('files')->insert([
+            'unit_id' => 1,
+            'section_id' => 2,
+            'subsection_id' => 4,
+            'name' => 'Subsection_file12',
+            'extension' => '.pptx',
+            'type' => 'document',
+            'url' => 'https://drive.google.com/file/d/0B4OsqsghY0urMGFpNGMzZE1Gd2c/preview'
+        ]);
     }
 }
