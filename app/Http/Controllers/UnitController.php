@@ -125,7 +125,7 @@ class UnitController extends Controller
         $user = Auth::user();
         $unit = $this->get_unit($request);
         $unit = $this->set_unit_info($user, $unit);
-        
+
         $data['unit'] = $unit;
         return view('unit_info', ['data' => $data]);
     }
@@ -160,13 +160,34 @@ class UnitController extends Controller
 
     private function set_unit_info($user, $unit)
     {
-        $unit_info_is_downloaded = $this->get_unit_info_is_downloaded($user, $user);
+        $unit_info_has_files = $this->get_unit_info_has_files($unit);
+        $unit = $this->set_unit_info_has_files($unit, $unit_info_has_files);
+
+        $unit_info_is_downloaded = $this->get_unit_info_is_downloaded($user, $unit);
         $unit = $this->set_unit_info_is_downloaded($unit, $unit_info_is_downloaded);
 
-        $unit_info_files = $this->get_unit_info_files($user, $unit);
+        $unit_info_files = $this->get_unit_info_files($unit);
         $unit = $this->set_unit_info_files($user, $unit, $unit_info_files);
 
         return $unit;   
+    }
+
+    private function get_unit_info_has_files($unit)
+    {
+        $total_files_count = File::where('files.unit_id', $unit->id)
+            ->whereNull('subsection_id')
+            ->whereNull('assignment_id')
+            ->count();
+        $unit_info_has_files = ($total_files_count > 0) ? true : false;
+
+        return $unit_info_has_files;
+    }
+
+    private function set_unit_info_has_files($unit, $unit_info_has_files)
+    {
+        $unit->unit_info_has_files = $unit_info_has_files;
+
+        return $unit;
     }
 
     private function get_unit_info_files($unit)
@@ -293,6 +314,9 @@ class UnitController extends Controller
         $unit_progress = $this->get_unit_progress($user, $unit);
         $unit = $this->set_unit_progress($unit, $unit_progress);
 
+        $unit_has_files = $this->get_unit_has_files($unit);
+        $unit = $this->set_unit_has_files($unit, $unit_has_files);
+
         $unit_is_downloaded = $this->get_unit_is_downloaded($user, $unit);
         $unit = $this->set_unit_is_downloaded($unit, $unit_is_downloaded);
 
@@ -301,6 +325,9 @@ class UnitController extends Controller
 
         $assignments_is_downloaded = $this->get_assignments_is_downloaded($user, $unit);
         $unit = $this->set_assignments_is_downloaded($unit, $assignments_is_downloaded);
+
+        $sections_has_files = $this->get_sections_has_files($unit);
+        $unit = $this->set_sections_has_files($unit, $sections_has_files);
 
         $sections_progress = $this->get_sections_progress($user, $unit);
         $unit = $this->set_sections_progress($unit, $sections_progress);
@@ -348,6 +375,23 @@ class UnitController extends Controller
     private function set_unit_progress($unit, $unit_progress)
     {
         $unit->progress = $unit_progress;
+
+        return $unit;
+    }
+
+    private function get_unit_has_files($unit)
+    {
+        $total_files_count = DB::table('files')
+            ->where('files.unit_id', $unit->id)
+            ->count();
+        $unit_has_files = ($total_files_count > 0) ? true : false;
+
+        return $unit_has_files;
+    }
+
+    private function set_unit_has_files($unit, $unit_has_files)
+    {
+        $unit->has_files = $unit_has_files;
 
         return $unit;
     }
@@ -486,6 +530,24 @@ class UnitController extends Controller
         $sections_is_downloaded = ($downloaded_sections_files_count == $total_sections_files_count) ? true : false;
 
         return $sections_is_downloaded;
+    }
+
+    private function get_sections_has_files($unit)
+    {
+        $total_files_count = DB::table('files')
+            ->where('files.unit_id', $unit->id)
+            ->whereNotNull('section_id')
+            ->count();
+        $sections_has_files = ($total_files_count > 0) ? true : false;
+
+        return $sections_has_files;
+    }
+
+    private function set_sections_has_files($unit, $sections_has_files)
+    {
+        $unit->sections_has_files = $sections_has_files;
+
+        return $unit;
     }
 
     private function set_sections_is_downloaded($unit, $sections_is_downloaded)

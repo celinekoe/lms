@@ -1,4 +1,4 @@
-$(".unit-info-download").click(function(e) {
+$(".unit-info-download").off().click(function(e) {
 	e.preventDefault();
 	var unit_info_download = $(this);
 	var href = unit_info_download.attr("href");
@@ -17,7 +17,7 @@ $(".unit-info-download").click(function(e) {
 	});
 });
 
-$(".unit-info-delete").click(function(e) {
+$(".unit-info-delete").off().click(function(e) {
 	e.preventDefault();
 	var unit_info_delete = $(this);
 	var href = unit_info_delete.attr("href");
@@ -30,14 +30,13 @@ $(".unit-info-delete").click(function(e) {
 	$(".confirm-option-delete").off().click(function(e) {
 		e.preventDefault();
 		close_confirm_delete();
-		console.log(href);
 		$.get(href, function(data) {
 			toggle_unit_info_delete(unit_info_delete);
 		});
 	});
 });
 
-$(".file-download").click(function(e) {
+$(".file-download").off().click(function(e) {
 	e.preventDefault();
 	var file_download = $(this);
 	var href = file_download.attr("href");
@@ -56,7 +55,7 @@ $(".file-download").click(function(e) {
 	});
 });
 
-$(".file-delete").click(function(e) {
+$(".file-delete").off().click(function(e) {
 	e.preventDefault();
 	var file_delete = $(this);
 	var href = file_delete.attr("href");
@@ -64,11 +63,11 @@ $(".file-delete").click(function(e) {
 	$(".confirm-text").text("Confirm file delete?");
 	$(".confirm-option-cancel").off().click(function(e) {
 		e.preventDefault();
-		close_confirm_download();
+		close_confirm_delete();
 	});
 	$(".confirm-option-delete").off().click(function(e) {
 		e.preventDefault();
-		close_confirm_download();
+		close_confirm_delete();
 		$.get(href, function(data) {
 			toggle_file_delete(file_delete);
 		});

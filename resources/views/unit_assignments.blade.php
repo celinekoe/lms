@@ -5,12 +5,14 @@
 	<div class="bg-white flex-align-center margin-bottom-10 padding-10">
         <div class="font-size-32">{{ $data['unit']->unit_code }} Assignments</div>
         <div class="margin-left-auto margin-right-10">
-            @if (!$data['unit']->assignments_is_downloaded)
-                <div class="assignments-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/assignments/download') }}"></div>
-                <div class="assignments-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/assignments/delete') }}" style="display: none;"></div>
-            @else
-                <div class="assignments-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/assignments/download') }}" style="display: none;"></div>
-                <div class="assignments-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/assignments/delete') }}"></div>
+            @if ($data['unit']->assignments_has_files)
+                @if (!$data['unit']->assignments_is_downloaded)
+                    <div class="assignments-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/assignments/download') }}"></div>
+                    <div class="assignments-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/assignments/delete') }}" style="display: none;"></div>
+                @else
+                    <div class="assignments-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/assignments/download') }}" style="display: none;"></div>
+                    <div class="assignments-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/assignments/delete') }}"></div>
+                @endif
             @endif
         </div>
     </div>

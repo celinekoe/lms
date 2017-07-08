@@ -6,12 +6,14 @@
         <div class="flex-align-center">
             <div class="font-size-32">{{ $data['unit']->unit_code }} Unit Info</div>
             <div class="margin-left-auto margin-right-10">
-                @if (!$data['unit']->unit_info_is_downloaded)
-                    <div class="unit-info-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/unit_info/download') }}"></div>
-                    <div class="unit-info-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/unit_info/delete') }}" style="display: none;"></div>
-                @else
-                    <div class="unit-info-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/unit_info/download') }}" style="display: none;"></div>
-                    <div class="unit-info-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/unit_info/delete') }}"></div>
+                @if ($data['unit']->unit_info_has_files)
+                    @if (!$data['unit']->unit_info_is_downloaded)
+                        <div class="unit-info-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/unit_info/download') }}"></div>
+                        <div class="unit-info-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/unit_info/delete') }}" style="display: none;"></div>
+                    @else
+                        <div class="unit-info-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/unit_info/download') }}" style="display: none;"></div>
+                        <div class="unit-info-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['unit']->id.'/unit_info/delete') }}"></div>
+                    @endif
                 @endif
             </div>
         </div>

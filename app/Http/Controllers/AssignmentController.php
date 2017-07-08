@@ -307,6 +307,9 @@ class AssignmentController extends Controller
         $assignments = $this->get_assignments($unit);
         $assignments = $this->set_assignments($user, $assignments);
 
+        $assignments_has_files = $this->get_assignments_has_files($user, $unit, $assignments);
+        $assignment = $this->set_assignments_has_files($unit, $assignments_has_files);
+
         $assignments_is_downloaded = $this->get_assignments_is_downloaded($user, $unit);
         $unit = $this->set_assignments_is_downloaded($unit, $assignments_is_downloaded);
            
@@ -341,6 +344,27 @@ class AssignmentController extends Controller
         return $unit;
     }
 
+    private function get_assignments_has_files($user, $unit, $assignments)
+    {
+        $total_files_count = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('files.unit_id', $unit->id)
+            ->whereNotNull('files.assignment_id')
+            ->where('user_files.user_id', $user->id)
+            ->count();
+        $assignments_has_files = ($total_files_count > 0) ? true : false;
+
+        return $assignments_has_files;
+    }
+
+    private function set_assignments_has_files($unit, $assignments_has_files)
+    {
+        $unit->assignments_has_files = $assignments_has_files;
+
+        return $unit;
+    }
+
+
     private function get_assignments($unit)
     {
         $assignments = Assignment::where('unit_id', $unit->id)->get();
@@ -362,7 +386,7 @@ class AssignmentController extends Controller
     {
         $formatted_submit_by_date = $this->format_submit_by_date($assignment);
         $assignment = $this->set_submit_by_date($assignment, $formatted_submit_by_date);
-        
+
         $assignment_is_downloaded = $this->get_assignment_is_downloaded($user, $assignment);
         $assignment = $this->set_assignment_is_downloaded($assignment, $assignment_is_downloaded);
 
