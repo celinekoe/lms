@@ -20,7 +20,7 @@
     <div id="app height-100p">
         <nav class="navbar navbar-custom navbar-static-top margin-0">
             <div>
-                <div class="navbar-header width-100p">
+                <div class="navbar-header flex width-100p">
                     <!-- Back -->
                     <?php
                         $url = Request::url(); 
@@ -137,8 +137,11 @@
                                 <span class="glyphicon glyphicon-chevron-left"></span>
                             </a>
                         @endif
-                    @endif                    <!-- Sidebar open -->
-                    <span class="sidebar-open navbar-brand glyphicon glyphicon-menu-hamburger pull-right"></span>
+                    @endif                    
+                    <div class="margin-left-auto">
+                        <span class="reset navbar-brand glyphicon glyphicon-refresh" href="/reset"></span> <!-- Reset test user -->
+                        <span class="sidebar-open navbar-brand glyphicon glyphicon-menu-hamburger"></span> <!-- Sidebar open -->
+                    </div>
                 </div>
             </div>
         </nav>
@@ -149,6 +152,13 @@
         <!-- Confirmation -->
         <div class="confirm-container display-none">
             <div class="confirm-overlay flex-align-center-justify-center">
+                <div class="confirm confirm-reset display-none bg-white padding-10">
+                    <div class="confirm-text flex-justify-center padding-10"></div>
+                    <div class="confirm-options flex-align-center-justify-between">
+                        <div class="btn btn-default confirm-option-cancel width-49p padding-10">Cancel</div>
+                        <div class="btn btn-primary confirm-option-reset width-49p padding-10">Reset</div>    
+                    </div>
+                </div>
                 <div class="confirm confirm-start display-none bg-white padding-10">
                     <div class="confirm-text flex-justify-center padding-10"></div>
                     <div class="confirm-options flex-align-center-justify-between">
@@ -201,6 +211,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/script.js') }}"></script>
+    <script src="{{ asset('js/confirm.js') }}"></script>
     @yield('script')
 </body>
 </html>

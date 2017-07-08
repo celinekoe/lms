@@ -1,62 +1,52 @@
-$(".unit-download").click(function(e) {
+$(".unit-download").off().click(function(e) {
 	e.preventDefault();
 	var unit_download = $(this);
 	var href = unit_download.attr("href");
 	open_confirm_download();
 	$(".confirm-text").text("Confirm unit download?");
-	$(".confirm-option-cancel").click(function(e) {
+	$(".confirm-option-cancel").off().click(function(e) {
 		e.preventDefault();
 		close_confirm_download();
 	});
-	$(".confirm-option-download").click(function(e) {
+	$(".confirm-option-reset").off().click(function(e) {
 		e.preventDefault();
 		close_confirm_download();
 		$.get(href, function(data) {
-			unit_download.hide();
-			unit_download.siblings(".unit-delete").show();
-			$(".sections-download").hide();
-			$(".sections-delete").show();
-			$(".section-download").hide();
-			$(".section-delete").show();
+			toggle_unit_download(unit_download);
 		});
 	});
 });
 
-$(".unit-delete").click(function(e) {
+$(".unit-delete").off().click(function(e) {
 	e.preventDefault();
 	var unit_delete = $(this);
 	var href = unit_delete.attr("href");
 	open_confirm_delete();
 	$(".confirm-text").text("Confirm unit delete?");
-	$(".confirm-option-cancel").click(function(e) {
+	$(".confirm-option-cancel").off().click(function(e) {
 		e.preventDefault();
 		close_confirm_delete();
 	});
-	$(".confirm-option-delete").click(function(e) {
+	$(".confirm-option-delete").off().click(function(e) {
 		e.preventDefault();
 		close_confirm_delete();
 		$.get(href, function(data) {
-			unit_delete.siblings(".unit-download").show();
-			unit_delete.hide();
-			$(".sections-download").hide();
-			$(".sections-delete").show();
-			$(".section-download").show();
-			$(".section-delete").hide();
+			toggle_unit_delete(unit_delete);
 		});
 	});
 });
 
-$(".sections-download").click(function(e) {
+$(".sections-download").off().click(function(e) {
 	e.preventDefault();
 	var sections_download = $(this);
 	var href = sections_download.attr("href");
 	open_confirm_download();
 	$(".confirm-text").text("Confirm sections download?");
-	$(".confirm-option-cancel").click(function(e) {
+	$(".confirm-option-cancel").off().click(function(e) {
 		e.preventDefault();
 		close_confirm_download();
 	});
-	$(".confirm-option-download").click(function(e) {
+	$(".confirm-option-download").off().click(function(e) {
 		e.preventDefault();
 		close_confirm_download();
 		$.get(href, function(data) {
@@ -65,17 +55,17 @@ $(".sections-download").click(function(e) {
 	});
 });
 
-$(".sections-delete").click(function(e) {
+$(".sections-delete").off().click(function(e) {
 	e.preventDefault();
 	var sections_delete = $(this);
 	var href = sections_delete.attr("href");
 	open_confirm_delete();
 	$(".confirm-text").text("Confirm sections delete?");
-	$(".confirm-option-cancel").click(function(e) {
+	$(".confirm-option-cancel").off().click(function(e) {
 		e.preventDefault();
 		close_confirm_delete();
 	});
-	$(".confirm-option-delete").click(function(e) {
+	$(".confirm-option-delete").off().click(function(e) {
 		e.preventDefault();
 		close_confirm_delete();
 		$.get(href, function(data) {
@@ -84,105 +74,67 @@ $(".sections-delete").click(function(e) {
 	});
 });
 
-$(".section-download").click(function(e) {
+$(".section-download").off().click(function(e) {
 	e.preventDefault();
 	var section_download = $(this);
 	var href = section_download.attr("href");
 	open_confirm_download();
 	$(".confirm-text").text("Confirm section download?");
-	$(".confirm-option-cancel").click(function(e) {
+	$(".confirm-option-cancel").off().click(function(e) {
 		e.preventDefault();
 		close_confirm_download();
 	});
-	$(".confirm-option-download").click(function(e) {
+	$(".confirm-option-download").off().click(function(e) {
 		e.preventDefault();
 		close_confirm_download();
 		$.get(href, function(data) {
-			section_download.hide();
-			section_download.siblings(".section-delete").show();
-			var is_unit_downloaded = true;
-			$(".section_download").each(function() {
-				if ($(this).is(":visible")) {
-					is_unit_downloaded = false;
-				}
-			})
-			if (is_unit_downloaded) {
-				$(".unit-download").hide();
-				$(".unit-delete").show();
-			}
+			toggle_section_download(section_download);
 		});
 	});
 });
 
-$(".section-delete").click(function(e) {
+$(".section-delete").off().click(function(e) {
 	e.preventDefault();
 	var section_delete = $(this);
 	var href = section_delete.attr("href");
 	open_confirm_delete();
 	$(".confirm-text").text("Confirm section delete?");
-	$(".confirm-option-cancel").click(function(e) {
+	$(".confirm-option-cancel").off().click(function(e) {
 		e.preventDefault();
 		close_confirm_delete();
 	});
-	$(".confirm-option-delete").click(function(e) {
+	$(".confirm-option-delete").off().click(function(e) {
 		e.preventDefault();
 		close_confirm_delete();
 		$.get(href, function(data) {
-			section_delete.siblings(".section-download").show();
-			section_delete.hide();
-			var is_unit_deleted = true;
-			$(".section-delete").each(function() {
-				if ($(this).is(":visible")) {
-					is_unit_deleted = false;
-				}
-			})
-			if (is_unit_deleted) {
-				$(".unit-download").show();
-				$(".unit-delete").hide();
-			}
+			toggle_section_delete(section_delete);
 		});
 	});
 });
 
-// $(".file-download").click(function(e) {
-// 	e.preventDefault();
-// 	var file_download = $(this);
-// 	var href = file_download.attr("href");
-// 	open_confirm_download();
-// 	$(".confirm-text").text("Confirm file download?");
-// 	$(".confirm-option-cancel").click(function(e) {
-// 		e.preventDefault();
-// 		close_confirm_download();
-// 	});
-// 	$(".confirm-option-download").click(function(e) {
-// 		e.preventDefault();
-// 		close_confirm_download();
-// 		$.get(href, function(data) {
-// 			file_download.hide();
-// 			file_download.siblings(".file-delete").show();
-// 		});
-// 	});
-// });
+function toggle_unit_download(unit_download) {
 
-// $(".file-delete").click(function(e) {
-// 	e.preventDefault();
-// 	var file_delete = $(this);
-// 	var href = file_delete.attr("href");
-// 	open_confirm_delete();
-// 	$(".confirm-text").text("Confirm file delete?");
-// 	$(".confirm-option-cancel").click(function(e) {
-// 		e.preventDefault();
-// 		close_confirm_download();
-// 	});
-// 	$(".confirm-option-delete").click(function(e) {
-// 		e.preventDefault();
-// 		close_confirm_download();
-// 		$.get(href, function(data) {
-// 			file_delete.siblings(".file-download").show();
-// 			file_delete.hide();
-// 		});
-// 	});
-// });
+	unit_download.hide();
+	unit_download.siblings(".unit-delete").show();
+
+	$(".sections-download").hide();
+	$(".sections-delete").show();
+	$(".section-download").hide();
+	$(".section-delete").show();
+
+}
+
+function toggle_unit_delete(unit_delete) {
+
+	unit_delete.siblings(".unit-download").show();
+	unit_delete.hide();
+
+	$(".sections-download").show();
+	$(".sections-delete").hide();
+	$(".section-download").show();
+	$(".section-delete").hide();
+
+}
 
 function toggle_sections_download(sections_download) {
 
@@ -211,5 +163,40 @@ function toggle_sections_delete(sections_delete) {
 
 	$(".section-download").show();
 	$(".section-delete").hide();
+
+}
+
+function toggle_section_download(section_download) {
+
+	section_download.hide();
+	section_download.siblings(".section-delete").show();
+
+	var is_unit_downloaded = true;
+	$(".section_download").each(function() {
+		if ($(this).is(":visible")) {
+			is_unit_downloaded = false;
+		}
+	})
+	if (is_unit_downloaded) {
+		$(".unit-download").hide();
+		$(".unit-delete").show();
+	}
+}
+
+function toggle_section_delete(section_delete) {
+	
+	section_delete.siblings(".section-download").show();
+	section_delete.hide();
+
+	var is_unit_deleted = true;
+	$(".section-delete").each(function() {
+		if ($(this).is(":visible")) {
+			is_unit_deleted = false;
+		}
+	})
+	if (is_unit_deleted) {
+		$(".unit-download").show();
+		$(".unit-delete").hide();
+	}
 
 }

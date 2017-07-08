@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/reset', 'Controller@reset');
+
 // Course dashboard
 
 Route::get('/home', 'HomeController@home');

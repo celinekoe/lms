@@ -20,16 +20,9 @@ class ThreadsTableSeeder extends Seeder
         ]);
 
         DB::table('threads')->insert([
-        	'user_id' => '1',
+        	'user_id' => '2',
         	'forum_id' => '1',
         	'title' => 'Thread2',
-            'created_at' => Carbon::now()
-        ]);
-
-        DB::table('threads')->insert([
-        	'user_id' => '1',
-        	'forum_id' => '1',
-        	'title' => 'Thread3',
             'created_at' => Carbon::now()
         ]);
     }
