@@ -180,7 +180,7 @@ class FilesTableSeeder extends Seeder
             'unit_id' => 1,
             'section_id' => 1,
             'subsection_id' => 2,
-            'name' => 'Subsection_file7',
+            'name' => 'Subsection_file5',
             'extension' => '.docx',
             'type' => 'document',
             'url' => 'https://drive.google.com/file/d/0B4OsqsghY0urbFlsX1VzLW9INlU/preview'
@@ -190,7 +190,7 @@ class FilesTableSeeder extends Seeder
             'unit_id' => 1,
             'section_id' => 1,
             'subsection_id' => 2,
-            'name' => 'Subsection_file8',
+            'name' => 'Subsection_file6',
             'extension' => '.pptx',
             'type' => 'document',
             'url' => 'https://drive.google.com/file/d/0B4OsqsghY0urMGFpNGMzZE1Gd2c/preview'

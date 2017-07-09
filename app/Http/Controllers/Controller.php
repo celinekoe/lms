@@ -47,7 +47,7 @@ class Controller extends BaseController
             'user_id' => $user->id,
             'unit_id' => '1',
             'assignment_id' => '1',
-            'name' => 'Assignment_file_4',
+            'name' => 'Assignment_file_5',
             'type' => 'document',
             'extension' => '.pdf',
             'url' => 'https://drive.google.com/file/d/0B4OsqsghY0urbVo4b05sc2NIVW8/preview'
@@ -66,7 +66,7 @@ class Controller extends BaseController
             'user_id' => $user->id,
             'unit_id' => '1',
             'assignment_id' => '2',
-            'name' => 'Assignment_file_5',
+            'name' => 'Assignment_file_6',
             'extension' => '.pdf',
             'type' => 'document',
             'url' => 'https://drive.google.com/file/d/0B4OsqsghY0urbVo4b05sc2NIVW8/preview'

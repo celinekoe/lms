@@ -481,8 +481,6 @@ function toggle_sections_downloaded(section_download)
 
 function toggle_sections_deleted(section_delete)
 {
-	console.log(section_delete);
 	section_delete.parent().parent().parent().parent().find(".sections-download").show();
-	console.log(section_delete.parent().parent().parent().parent().find(".sections-download"));
 	section_delete.parent().parent().parent().parent().find(".sections-delete").hide();
 }
