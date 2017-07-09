@@ -3,7 +3,7 @@
 @section('content')
 <div class="margin-10">
     <div class="bg-white font-size-32 margin-bottom-10 padding-10">{{ $data['unit']->unit_code }} {{ $data['quiz']->name }}</div>
-    <div class="timer bg-white margin-bottom-10 padding-10" time-limit-remaining="{{ $data['quiz']->time_limit_remaining }}">Time Limit Remaining</div>
+    <div class="timer bg-white margin-bottom-10 padding-10" time-limit-remaining="{{ $data['quiz']->user_quiz->time_limit_remaining }}">Time Limit Remaining</div>
     <div class="margin-bottom-10">
         <div class="bg-white margin-bottom-2 padding-10">
             <div class="flex">
@@ -29,7 +29,13 @@
     </div>
     <div class="flex-align-center margin-bottom-10">
         @foreach ($data['quiz']->questions as $question)
-            <div class="bg-white flex-align-center-justify-center height-20 width-20 margin-right-10">{{ $question->question_no }}</div>
+            <form action="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/save') }}" method="POST" class="link-form margin-right-10" href="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/question/'.$question->question_no) }}">
+                <input type="hidden" name="attempt_no" value="{{ $data['quiz']->attempt_no }}">
+                <input type="hidden" name="question_no" value="{{ $data['question']->question_no }}">
+                <input type="hidden" name="hidden_option_id">
+                <input type="submit" class="link btn btn-default" value="{{ $question->question_no }}">
+                {{ csrf_field() }}
+            </form>
         @endforeach
     </div>
     <div class="flex-align-center margin-bottom-10">

@@ -19,7 +19,20 @@ var timer_html =
 
 // Navigation
 
-$(".previous").click(function(e) {
+$(".link").off().click(function(e) {
+	e.preventDefault();
+	var link_form = $(this).parent();
+	var link_href = link_form.attr("action");
+	var question_href = link_form.attr("href");
+	link_form.append(timer_html);
+	$("input[name=time_limit_remaining]").val(difference/1000);
+	$("input[name=hidden_option_id]").val($("input[name=option_id]:checked").val());
+	$.post(link_href, link_form.serialize(), function(data) {		
+		window.location = question_href;
+	});
+});
+
+$(".previous").off().click(function(e) {
 	e.preventDefault();
 	var previous_href = $(".previous-form").attr("action");
 	var question_href = $(".previous-form").attr("href");
@@ -31,7 +44,7 @@ $(".previous").click(function(e) {
 	});
 });
 
-$(".next").click(function(e) {
+$(".next").off().click(function(e) {
 	e.preventDefault();
 	var next_href = $(".next-form").attr("action");
 	var question_href = $(".next-form").attr("href");
@@ -43,7 +56,7 @@ $(".next").click(function(e) {
 	});
 });
 
-$(".review").click(function(e) {
+$(".review").off().click(function(e) {
 	e.preventDefault();
 	var review_href = $(".review-form").attr("action");
 	var submit_href = $(".review-form").attr("href");
@@ -55,7 +68,7 @@ $(".review").click(function(e) {
 	});
 });
 
-$(".submit").click(function(e) {
+$(".submit").off().click(function(e) {
 	e.preventDefault();
 	var submit_href = $(".submit-form").attr("action");
 	var summary_href = $(".submit-form").attr("href");

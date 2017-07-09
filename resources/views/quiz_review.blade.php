@@ -4,7 +4,7 @@
 <div class="margin-10">
     <div class="margin-bottom-10">
         <div class="bg-white font-size-32 margin-bottom-10 padding-10">{{ $data['unit']->unit_code }} {{ $data['quiz']->name }}</div>
-        <div class="timer bg-white margin-bottom-10 padding-10" time-limit-remaining="{{ $data['quiz']->time_limit_remaining }}">Time Limit Remaining</div>
+        <div class="timer bg-white margin-bottom-10 padding-10" time-limit-remaining="{{ $data['quiz']->user_quiz->time_limit_remaining }}">Time Limit Remaining</div>
         <div class="bg-white margin-bottom-2 padding-10">Review of Attempt</div>
         <div class="bg-white flex-align-center margin-bottom-2 padding-10">
             <div class="width-50p">Question No.</div>
