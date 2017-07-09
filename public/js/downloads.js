@@ -128,6 +128,44 @@ $(".assignments-delete").click(function(e) {
 	});
 });
 
+$(".assignment-download").click(function(e) {
+	e.preventDefault();
+	var assignment_download = $(this);
+	var href = assignment_download.attr("href");
+	open_confirm_download();
+	$(".confirm-text").text("Confirm assignment download?");
+	$(".confirm-option-cancel").off().click(function(e) {
+		e.preventDefault();
+		close_confirm_download();
+	});
+	$(".confirm-option-download").off().click(function(e) {
+		e.preventDefault();
+		close_confirm_download();
+		$.get(href, function(data) {
+			toggle_assignment_download(assignment_download);
+		});
+	});
+});
+
+$(".assignment-delete").click(function(e) {
+	e.preventDefault();
+	var assignment_delete = $(this);
+	var href = assignment_delete.attr("href");
+	open_confirm_delete();
+	$(".confirm-text").text("Confirm assignment delete?");
+	$(".confirm-option-cancel").off().click(function(e) {
+		e.preventDefault();
+		close_confirm_delete();
+	});
+	$(".confirm-option-delete").off().click(function(e) {
+		e.preventDefault();
+		close_confirm_delete();
+		$.get(href, function(data) {
+			toggle_assignment_delete(assignment_delete);
+		});
+	});
+});
+
 $(".sections-download").off().click(function(e) {
 	e.preventDefault();
 	var sections_download = $(this);
@@ -180,18 +218,7 @@ $(".section-download").click(function(e) {
 		e.preventDefault();
 		close_confirm_download();
 		$.get(href, function(data) {
-			section_download.hide();
-			section_download.siblings(".section-delete").show();
-			var is_unit_downloaded = true;
-			$(".section_download").each(function() {
-				if ($(this).is(":visible")) {
-					is_unit_downloaded = false;
-				}
-			})
-			if (is_unit_downloaded) {
-				$(".unit-download").hide();
-				$(".unit-delete").show();
-			}
+			toggle_section_download(section_download);
 		});
 	});
 });
@@ -210,18 +237,7 @@ $(".section-delete").click(function(e) {
 		e.preventDefault();
 		close_confirm_delete();
 		$.get(href, function(data) {
-			section_delete.siblings(".section-download").show();
-			section_delete.hide();
-			var is_unit_deleted = true;
-			$(".section-delete").each(function() {
-				if ($(this).is(":visible")) {
-					is_unit_deleted = false;
-				}
-			})
-			if (is_unit_deleted) {
-				$(".unit-download").show();
-				$(".unit-delete").hide();
-			}
+			toggle_section_delete(section_delete);
 		});
 	});
 });
@@ -268,7 +284,8 @@ function toggle_unit_info_download(unit_info_download) {
 	unit_info_download.hide();
 	unit_info_download.siblings(".unit-info-delete").show();
 
-	toggle_unit_downloaded();
+	var unit_download = unit_info_download.parent().parent().parent().parent().find(".unit-download");
+	toggle_unit_downloaded(unit_download);
 
 }
 
@@ -277,20 +294,113 @@ function toggle_unit_info_delete(unit_info_delete) {
 	unit_info_delete.siblings(".unit-info-download").show();
 	unit_info_delete.hide();
 
-	toggle_unit_deleted();
+	var unit_delete = unit_info_delete.parent().parent().parent().parent().find(".unit-delete");
+	toggle_unit_deleted(unit_delete);
 
 }
+
+function toggle_unit_downloaded(unit_download)
+{
+	var unit_info_delete = unit_download.parent().parent().parent().find(".unit-info-delete");
+	var assignments_delete = unit_download.parent().parent().parent().find(".assignments-delete");
+	var sections_delete = unit_download.parent().parent().parent().find(".sections-delete");
+
+	var is_unit_downloaded = unit_info_delete.is(":visible") && 
+		assignments_delete.is(":visible") && sections_delete.is(":visible");
+
+	if (is_unit_downloaded) {
+		unit_download.hide();
+		unit_download.siblings(".unit-delete").show();
+	}
+}
+
+function toggle_unit_deleted(unit_delete)
+{
+	unit_delete.siblings(".unit-download").show();
+	unit_delete.hide();
+}
+
 
 // Toggle assignments download/delete
 
 function toggle_assignments_download(assignments_download) {
+
 	assignments_download.hide();
 	assignments_download.siblings(".assignments-delete").show();
+
+	var unit_download = assignments_download.parent().parent().parent().parent().parent().find(".unit-download");
+	toggle_unit_downloaded(unit_download);
+
+	var assignment_downloads = assignments_download.parent().parent().parent().find(".assignment-download");
+	var assignment_deletes = assignments_download.parent().parent().parent().find(".assignment-delete");
+	assignment_downloads.hide();
+	assignment_deletes.show();
+
 }
 
 function toggle_assignments_delete(assignments_delete) {
+
 	assignments_delete.siblings(".assignments-download").show();
 	assignments_delete.hide();
+
+	var unit_delete = assignments_delete.parent().parent().parent().parent().parent().find(".unit-delete");
+	toggle_unit_deleted(unit_delete);
+
+	var assignment_downloads = assignments_delete.parent().parent().parent().find(".assignment-download");
+	var assignment_deletes = assignments_delete.parent().parent().parent().find(".assignment-delete");
+	assignment_downloads.show();
+	assignment_deletes.hide();
+
+}
+
+// Toggle assignment download/delete
+
+function toggle_assignment_download(assignment_download) {
+
+	assignment_download.hide();
+	assignment_download.siblings(".assignment-delete").show();
+
+	toggle_assignments_downloaded(assignment_download);
+
+	var unit_download = assignment_download.parent().parent().parent().parent().parent().parent().find(".unit-download");	
+	toggle_unit_downloaded(unit_download);
+
+}
+
+function toggle_assignment_delete(assignment_delete) {
+
+	assignment_delete.siblings(".assignment-download").show();
+	assignment_delete.hide();
+
+	toggle_assignments_deleted(assignment_delete);
+
+	var unit_delete = assignment_delete.parent().parent().parent().parent().parent().parent().find(".unit-delete");
+	toggle_unit_deleted(unit_delete);
+}
+
+
+function toggle_assignments_downloaded(assignment_download)
+{
+	var assignments_download = assignment_download.parent().parent().parent().parent().find(".assignments-download");
+	var assignment_downloads = assignment_download.parent().parent().parent().find(".assignment-download");
+
+	var is_assignments_downloaded = true;
+	assignment_downloads.each(function() {
+		if ($(this).is(":visible")) {
+			is_assignments_downloaded = false;
+		}
+	});
+
+	if (is_assignments_downloaded) {
+		assignments_download.hide();
+		assignments_download.siblings(".assignments-delete").show();
+	}
+}
+
+function toggle_assignments_deleted(assignment_delete)
+{
+	assignment_delete.parent().parent().parent().parent().find(".assignments-download").show();
+	assignment_delete.parent().parent().parent().parent().find(".assignments-delete").hide();
 }
 
 // Toggle sections download/delete
@@ -300,15 +410,13 @@ function toggle_sections_download(sections_download) {
 	sections_download.hide();
 	sections_download.siblings(".sections-delete").show();
 
-	var is_unit_downloaded = $(".unit-info-is-downloaded").length && 
-		$(".assignments-is-downloaded").length;
-	if (is_unit_downloaded) {
-		$(".unit-download").hide();
-		$(".unit-delete").show();
-	}
+	var unit_download = sections_download.parent().parent().parent().parent().parent().find(".unit-download");
+	toggle_unit_downloaded(unit_download);
 
-	$(".section-download").hide();
-	$(".section-delete").show();
+	var section_downloads = sections_download.parent().parent().parent().find(".section-download");
+	var section_deletes = sections_download.parent().parent().parent().find(".section-delete");
+	section_downloads.hide();
+	section_deletes.show();
 
 }
 
@@ -317,29 +425,64 @@ function toggle_sections_delete(sections_delete) {
 	sections_delete.siblings(".sections-download").show();
 	sections_delete.hide();
 
-	$(".unit-download").show();
-	$(".unit-delete").hide();
+	var unit_delete = sections_delete.parent().parent().parent().parent().parent().find(".unit-delete");
+	toggle_unit_deleted(unit_delete);
 
-	$(".section-download").show();
-	$(".section-delete").hide();
+	var section_downloads = sections_delete.parent().parent().parent().find(".section-download");
+	var section_deletes = sections_delete.parent().parent().parent().find(".section-delete");
+	section_downloads.show();
+	section_deletes.hide();
 
 }
 
-// Other helper functions
+// Toggle section download/delete
 
-function toggle_unit_downloaded()
+function toggle_section_download(section_download) {
+
+	section_download.hide();
+	section_download.siblings(".section-delete").show();
+
+	toggle_sections_downloaded(section_download);
+
+	var unit_download = section_download.parent().parent().parent().parent().parent().parent().find(".unit-download");
+	toggle_unit_downloaded(unit_download);
+
+}
+
+function toggle_section_delete(section_delete) {
+
+	section_delete.siblings(".section-download").show();
+	section_delete.hide();
+
+	toggle_sections_deleted(section_delete);
+
+	var unit_delete = section_delete.parent().parent().parent().parent().parent().parent().find(".unit-delete");
+	toggle_unit_deleted(unit_delete);
+
+}
+
+function toggle_sections_downloaded(section_download)
 {
-	var is_unit_downloaded = $(".unit-info-delete").length && 
-		$(".assignments-delete").length && $(".sections-delete").length;
+	var sections_download = section_download.parent().parent().parent().parent().find(".sections-download");
+	var section_downloads = section_download.parent().parent().parent().find(".section-download");
 
-	if (is_unit_downloaded) {
-		$(".unit-download").hide();
-		$(".unit-delete").show();
+	var is_sections_downloaded = true;
+	section_downloads.each(function() {
+		if ($(this).is(":visible")) {
+			is_sections_downloaded = false;
+		}
+	});
+
+	if (is_sections_downloaded) {
+		sections_download.hide();
+		sections_download.siblings(".sections-delete").show();
 	}
 }
 
-function toggle_unit_deleted()
+function toggle_sections_deleted(section_delete)
 {
-	$(".unit-download").show();
-	$(".unit-delete").hide();
+	console.log(section_delete);
+	section_delete.parent().parent().parent().parent().find(".sections-download").show();
+	console.log(section_delete.parent().parent().parent().parent().find(".sections-download"));
+	section_delete.parent().parent().parent().parent().find(".sections-delete").hide();
 }

@@ -12,7 +12,7 @@
         <div class="font-size-32 margin-left-10">{{ $data['section']->name }}</div>
         <span class="margin-left-auto margin-right-10">
             @if ($data['section']->has_files)
-                @if ($data['section']->downloaded == false)
+                @if ($data['section']->is_downloaded == false)
                     <span class="section-download glyphicon glyphicon-download margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/download') }}"></span>
                     <span class="section-delete glyphicon glyphicon-remove-circle margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/delete') }}" style="display: none;"></span>
                 @else
@@ -86,7 +86,7 @@
                     <div class="font-size-19 margin-left-10">{{ $subsection->name }}</div>
                     <div class="margin-left-auto margin-right-10">
                         @if ($subsection->files->count() > 0)
-                            @if ($subsection->downloaded == false)
+                            @if ($subsection->is_downloaded == false)
                                 <span class="subsection-download glyphicon glyphicon-download margin-right-10 margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/download') }}"></span>
                                 <span class="subsection-delete glyphicon glyphicon-remove-circle margin-right-10 margin-top-4" href="{{ url('unit/'.$data['section']->unit_id.'/section/'.$data['section']->id.'/subsection/'.$subsection->id.'/delete') }}" style="display: none"></span>
                             @else

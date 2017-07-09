@@ -522,12 +522,15 @@ class UnitController extends Controller
         $downloaded_sections_files_count = DB::table('files')
             ->join('user_files', 'files.id', '=', 'user_files.file_id')
             ->where('files.unit_id', $unit->id)
-            ->whereNotNull('files.section_id')
+            ->whereNotNull('files.subsection_id')
             ->where('user_files.user_id', $user->id)
             ->where('user_files.downloaded', true)
             ->count();
-        $total_sections_files_count = File::where('unit_id', $unit->id)
-            ->whereNotNull('files.section_id')
+        $total_sections_files_count = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('files.unit_id', $unit->id)
+            ->whereNotNull('files.subsection_id')
+            ->where('user_files.user_id', $user->id)
             ->count();
         $sections_is_downloaded = ($downloaded_sections_files_count == $total_sections_files_count) ? true : false;
 
@@ -633,14 +636,16 @@ class UnitController extends Controller
 
     private function get_section_is_downloaded($user, $section)
     {
-        $downloaded_section_files_count = DB::table('sections')
-            ->join('files', 'sections.id', '=', 'files.section_id')
+        $downloaded_section_files_count = DB::table('files')
             ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('files.section_id', $section->id)
             ->where('user_files.user_id', $user->id)
             ->where('user_files.downloaded', true)
             ->count();
-        $total_section_files_count = DB::table('sections')
-            ->join('files', 'sections.id', '=', 'files.section_id')
+        $total_section_files_count = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('files.section_id', $section->id)
+            ->where('user_files.user_id', $user->id)
             ->count();
         $section_is_downloaded = ($downloaded_section_files_count == $total_section_files_count) ? true : false;
 

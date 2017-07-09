@@ -290,14 +290,16 @@ class SectionController extends Controller
 
     private function get_section_is_downloaded($user, $section)
     {
-        $downloaded_section_files_count = DB::table('sections')
-            ->join('files', 'sections.id', '=', 'files.section_id')
+        $downloaded_section_files_count = DB::table('files')
             ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('files.section_id', $section->id)
             ->where('user_files.user_id', $user->id)
             ->where('user_files.downloaded', true)
             ->count();
-        $total_section_files_count = DB::table('sections')
-            ->join('files', 'sections.id', '=', 'files.section_id')
+        $total_section_files_count = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('files.section_id', $section->id)
+            ->where('user_files.user_id', $user->id)
             ->count();
         $section_is_downloaded = ($downloaded_section_files_count == $total_section_files_count) ? true : false;
         return $section_is_downloaded;
@@ -382,14 +384,16 @@ class SectionController extends Controller
 
     private function set_subsection_is_downloaded($user, $subsection)
     {
-        $downloaded_subsection_files_count = DB::table('subsections')
-            ->join('files', 'subsections.id', '=', 'files.subsection_id')
+        $downloaded_subsection_files_count = DB::table('files')
             ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('files.subsection_id', $subsection->id)
             ->where('user_files.user_id', $user->id)
             ->where('user_files.downloaded', true)
             ->count();
-        $total_subsection_files_count = DB::table('subsections')
-            ->join('files', 'subsections.id', '=', 'files.subsection_id')
+        $total_subsection_files_count = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('files.subsection_id', $subsection->id)
+            ->where('user_files.user_id', $user->id)
             ->count();
         $subsection->is_downloaded = ($downloaded_subsection_files_count == $total_subsection_files_count) ? true : false;
         return $subsection;
