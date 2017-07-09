@@ -405,6 +405,8 @@ class UnitController extends Controller
             ->where('user_files.downloaded', true)
             ->count();
         $total_unit_files_count = File::where('unit_id', $unit->id)
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('user_files.user_id', $user->id)
             ->count();
         $unit_is_downloaded = ($downloaded_unit_files_count == $total_unit_files_count) ? true : false;
 

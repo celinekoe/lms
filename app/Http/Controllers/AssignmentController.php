@@ -50,7 +50,6 @@ class AssignmentController extends Controller
             ->whereNotNull('files.assignment_id')
             ->where('user_files.user_id', $user->id)
             ->update(['downloaded' => true]);
-        dd($user_files);
     }
 
     public function assignments_delete(Request $request)
@@ -151,11 +150,11 @@ class AssignmentController extends Controller
         $user_assignment = $this->get_user_assignment($user, $assignment);
         $assignment = $this->set_user_assignment($assignment, $user_assignment);
 
-        $uploaded_assignment_file = $this->get_uploaded_assignment_file($user, $assignment);
-        $assignment = $this->set_uploaded_assignment_file($assignment, $uploaded_assignment_file);
-
         $assignment_graded_by = $this->get_assignment_graded_by($user, $assignment);
         $assignment = $this->set_assignment_graded_by($assignment, $assignment_graded_by);
+
+        $uploaded_assignment_file = $this->get_uploaded_assignment_file($user, $assignment);
+        $assignment = $this->set_uploaded_assignment_file($assignment, $uploaded_assignment_file);
         
         return $assignment;
     }
@@ -177,6 +176,13 @@ class AssignmentController extends Controller
         $assignment->user_assignment = $user_assignment;
 
         return $assignment;
+    }
+
+    private function get_assignment_graded_by($user, $assignment)
+    {
+        $assignment_graded_by = User::find($assignment->user_assignment->staff_id);   
+
+        return $assignment_graded_by; 
     }
 
     private function get_assignment_time_remaining($assignment)
@@ -207,20 +213,6 @@ class AssignmentController extends Controller
     private function set_uploaded_assignment_file($assignment, $uploaded_assignment_file)
     {
         $assignment->uploaded_assignment_file = $uploaded_assignment_file;
-
-        return $assignment;
-    }
-
-    private function get_assignment_graded_by($user, $assignment)
-    {
-        $assignment_graded_by = User::find($assignment->user_assignment->staff_id);   
-
-        return $assignment_graded_by; 
-    }
-
-    private function set_assignment_graded_by($assignment, $assignment_graded_by)
-    {
-        $assignment->graded_by = $assignment_graded_by;
 
         return $assignment;
     }
@@ -307,7 +299,7 @@ class AssignmentController extends Controller
         $assignments = $this->get_assignments($unit);
         $assignments = $this->set_assignments($user, $assignments);
 
-        $assignments_has_files = $this->get_assignments_has_files($user, $unit, $assignments);
+        $assignments_has_files = $this->get_assignments_has_files($user, $unit);
         $assignment = $this->set_assignments_has_files($unit, $assignments_has_files);
 
         $assignments_is_downloaded = $this->get_assignments_is_downloaded($user, $unit);
@@ -328,8 +320,10 @@ class AssignmentController extends Controller
             ->where('user_files.downloaded', true)
             ->count();
         $total_assignments_files_count = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
             ->where('files.unit_id', $unit->id)
             ->whereNotNull('files.assignment_id')
+            ->where('user_files.user_id', $user->id)
             ->count();
 
         $assignments_is_downloaded = ($downloaded_assignments_files_count == $total_assignments_files_count) ? true : false;
@@ -344,7 +338,7 @@ class AssignmentController extends Controller
         return $unit;
     }
 
-    private function get_assignments_has_files($user, $unit, $assignments)
+    private function get_assignments_has_files($user, $unit)
     {
         $total_files_count = DB::table('files')
             ->join('user_files', 'files.id', '=', 'user_files.file_id')
@@ -387,11 +381,21 @@ class AssignmentController extends Controller
         $formatted_submit_by_date = $this->format_submit_by_date($assignment);
         $assignment = $this->set_submit_by_date($assignment, $formatted_submit_by_date);
 
+        $assignment_has_files = $this->get_assignment_has_files($user, $assignment);
+        $assignment = $this->set_assignment_has_files($assignment, $assignment_has_files);
+
         $assignment_is_downloaded = $this->get_assignment_is_downloaded($user, $assignment);
         $assignment = $this->set_assignment_is_downloaded($assignment, $assignment_is_downloaded);
 
         $assignment_files = $this->get_assignment_files($assignment);
         $assignment = $this->set_assignment_files($user, $assignment, $assignment_files);
+
+        return $assignment;
+    }
+
+    private function set_assignment_graded_by($assignment, $assignment_graded_by)
+    {
+        $assignment->graded_by = $assignment_graded_by;
 
         return $assignment;
     }
@@ -410,20 +414,41 @@ class AssignmentController extends Controller
         return $assignment;
     }
 
+    private function get_assignment_has_files($user, $assignment)
+    {
+        $total_assignment_files_count = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('files.unit_id', $assignment->unit_id)
+            ->where('files.assignment_id', $assignment->id)
+            ->where('user_files.user_id', $user->id)
+            ->count();
+
+        $assignment_has_files = ($total_assignment_files_count > 0) ? true : false;
+
+        return $assignment_has_files;
+    }
+
+    private function set_assignment_has_files($assignment, $assignment_has_files)
+    {
+        $assignment->has_files = $assignment_has_files;
+
+        return $assignment;
+    }
+
     private function get_assignment_is_downloaded($user, $assignment)
     {
         $downloaded_assignment_files_count = DB::table('files')
             ->join('user_files', 'files.id', '=', 'user_files.file_id')
             ->where('files.unit_id', $assignment->unit_id)
             ->where('files.assignment_id', $assignment->id)
-            ->whereNull('files.user_id')
             ->where('user_files.user_id', $user->id)
             ->where('user_files.downloaded', true)
             ->count();
         $total_assignment_files_count = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
             ->where('files.unit_id', $assignment->unit_id)
             ->where('files.assignment_id', $assignment->id)
-            ->whereNull('files.user_id')
+            ->where('user_files.user_id', $user->id)
             ->count();
 
         $assignment_is_downloaded = ($downloaded_assignment_files_count == $total_assignment_files_count) ? true : false;

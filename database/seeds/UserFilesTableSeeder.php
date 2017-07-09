@@ -87,7 +87,7 @@ class UserFilesTableSeeder extends Seeder
             'file_id' => 8,
             'completed' => false,
             'downloaded' => false,
-            'uploaded' => true,
+            'uploaded' => false,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
@@ -100,16 +100,16 @@ class UserFilesTableSeeder extends Seeder
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
-            // Subsection files
-
         DB::table('user_files')->insert([
             'user_id' => 1,
             'file_id' => 10,
             'completed' => false,
             'downloaded' => false,
-            'uploaded' => false,
+            'uploaded' => true,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
+
+            // Subsection files
 
         DB::table('user_files')->insert([
             'user_id' => 1,
@@ -204,6 +204,15 @@ class UserFilesTableSeeder extends Seeder
         DB::table('user_files')->insert([
             'user_id' => 1,
             'file_id' => 21,
+            'completed' => false,
+            'downloaded' => false,
+            'uploaded' => false,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('user_files')->insert([
+            'user_id' => 1,
+            'file_id' => 22,
             'completed' => false,
             'downloaded' => false,
             'uploaded' => false,
@@ -281,10 +290,10 @@ class UserFilesTableSeeder extends Seeder
 
         DB::table('user_files')->insert([
             'user_id' => 2,
-            'file_id' => 22,
+            'file_id' => 8,
             'completed' => false,
             'downloaded' => false,
-            'uploaded' => true,
+            'uploaded' => false,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
@@ -297,16 +306,16 @@ class UserFilesTableSeeder extends Seeder
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
-            // Subsection files
-
         DB::table('user_files')->insert([
             'user_id' => 2,
-            'file_id' => 10,
+            'file_id' => 24,
             'completed' => false,
             'downloaded' => false,
-            'uploaded' => false,
+            'uploaded' => true,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
+
+            // Subsection files
 
         DB::table('user_files')->insert([
             'user_id' => 2,
@@ -401,6 +410,15 @@ class UserFilesTableSeeder extends Seeder
         DB::table('user_files')->insert([
             'user_id' => 2,
             'file_id' => 21,
+            'completed' => false,
+            'downloaded' => false,
+            'uploaded' => false,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('user_files')->insert([
+            'user_id' => 2,
+            'file_id' => 22,
             'completed' => false,
             'downloaded' => false,
             'uploaded' => false,

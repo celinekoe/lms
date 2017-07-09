@@ -72,20 +72,49 @@ class DownloadController extends Controller
         $unit_is_downloaded = $this->get_unit_is_downloaded($user, $unit);
         $unit = $this->set_unit_is_downloaded($unit, $unit_is_downloaded);
 
+        $unit_has_files = $this->get_unit_has_files($unit);
+        $unit = $this->set_unit_has_files($unit, $unit_has_files);
+
+        $unit_info_has_files = $this->get_unit_info_has_files($unit);
+        $unit = $this->set_unit_info_has_files($unit, $unit_info_has_files);
+
         $unit_info_is_downloaded = $this->get_unit_info_is_downloaded($user, $unit);
         $unit = $this->set_unit_info_is_downloaded($unit, $unit_info_is_downloaded);
 
-        $sections_is_downloaded = $this->get_sections_is_downloaded($user, $unit);
-        $unit = $this->set_sections_is_downloaded($unit, $sections_is_downloaded);
+        $assignments_has_files = $this->get_assignments_has_files($user, $unit);
+        $assignment = $this->set_assignments_has_files($unit, $assignments_has_files);
 
         $assignments_is_downloaded = $this->get_assignments_is_downloaded($user, $unit);
         $unit = $this->set_assignments_is_downloaded($unit, $assignments_is_downloaded);
 
-        $sections = $this->get_sections($unit);
-        $unit = $this->set_sections($unit, $sections);
+        $sections_has_files = $this->get_sections_has_files($unit);
+        $unit = $this->set_sections_has_files($unit, $sections_has_files);
+
+        $sections_is_downloaded = $this->get_sections_is_downloaded($user, $unit);
+        $unit = $this->set_sections_is_downloaded($unit, $sections_is_downloaded);
 
         $assignments = $this->get_assignments($unit);
         $unit = $this->set_assignments($user, $unit, $assignments);
+
+        $sections = $this->get_sections($unit);
+        $unit = $this->set_sections($user, $unit, $sections);
+
+        return $unit;
+    }
+
+    private function get_unit_has_files($unit)
+    {
+        $total_files_count = DB::table('files')
+            ->where('files.unit_id', $unit->id)
+            ->count();
+        $unit_has_files = ($total_files_count > 0) ? true : false;
+
+        return $unit_has_files;
+    }
+
+    private function set_unit_has_files($unit, $unit_has_files)
+    {
+        $unit->has_files = $unit_has_files;
 
         return $unit;
     }
@@ -99,10 +128,48 @@ class DownloadController extends Controller
             ->where('user_files.downloaded', true)
             ->count();
         $total_unit_files_count = File::where('unit_id', $unit->id)
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('user_files.user_id', $user->id)
             ->count();
         $unit_is_downloaded = ($downloaded_unit_files_count == $total_unit_files_count) ? true : false;
 
         return $unit_is_downloaded;
+    }
+
+    private function get_sections_has_files($unit)
+    {
+        $total_files_count = DB::table('files')
+            ->where('files.unit_id', $unit->id)
+            ->whereNotNull('section_id')
+            ->count();
+        $sections_has_files = ($total_files_count > 0) ? true : false;
+
+        return $sections_has_files;
+    }
+
+    private function set_sections_has_files($unit, $sections_has_files)
+    {
+        $unit->sections_has_files = $sections_has_files;
+
+        return $unit;
+    }
+
+    private function get_unit_info_has_files($unit)
+    {
+        $total_files_count = File::where('files.unit_id', $unit->id)
+            ->whereNull('subsection_id')
+            ->whereNull('assignment_id')
+            ->count();
+        $unit_info_has_files = ($total_files_count > 0) ? true : false;
+
+        return $unit_info_has_files;
+    }
+
+    private function set_unit_info_has_files($unit, $unit_info_has_files)
+    {
+        $unit->unit_info_has_files = $unit_info_has_files;
+
+        return $unit;
     }
 
     private function set_unit_is_downloaded($unit, $unit_is_downloaded)
@@ -141,6 +208,26 @@ class DownloadController extends Controller
         return $unit;
     }
 
+    private function get_assignments_has_files($user, $unit)
+    {
+        $total_files_count = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('files.unit_id', $unit->id)
+            ->whereNotNull('files.assignment_id')
+            ->where('user_files.user_id', $user->id)
+            ->count();
+        $assignments_has_files = ($total_files_count > 0) ? true : false;
+
+        return $assignments_has_files;
+    }
+
+    private function set_assignments_has_files($unit, $assignments_has_files)
+    {
+        $unit->assignments_has_files = $assignments_has_files;
+
+        return $unit;
+    }
+
     private function get_assignments_is_downloaded($user, $unit)
     {
         $downloaded_assignments_files_count = DB::table('files')
@@ -151,10 +238,11 @@ class DownloadController extends Controller
             ->where('user_files.downloaded', true)
             ->count();
         $total_assignments_files_count = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
             ->where('files.unit_id', $unit->id)
             ->whereNotNull('files.assignment_id')
+            ->where('user_files.user_id', $user->id)
             ->count();
-
         $assignments_is_downloaded = ($downloaded_assignments_files_count == $total_assignments_files_count) ? true : false;
 
         return $assignments_is_downloaded;
@@ -198,21 +286,43 @@ class DownloadController extends Controller
         return $sections;
     }
 
-    private function set_sections($unit, $sections)
+    private function set_sections($user, $unit, $sections)
     {
         foreach ($sections as $section)
         {
-            $section = $this->set_section($section);
+            $section = $this->set_section($user, $section);
         }
         $unit->sections = $sections;
 
         return $unit;
     }
 
-    private function set_section($section)
+    private function set_section($user, $section)
     {
+        $section_has_files = $this->get_section_has_files($user, $section);
+        $section = $this->set_section_has_files($section, $section_has_files);
+
         $subsections = $this->get_subsections($section);
         $section = $this->set_subsections($section, $subsections);
+
+        return $section;
+    }
+
+    private function get_section_has_files($user, $section)
+    {
+        $total_files_count = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('user_files.user_id', $user->id)
+            ->where('files.section_id', $section->id)
+            ->count();
+        $section_has_files = ($total_files_count > 0) ? true : false;
+
+        return $section_has_files;
+    }
+
+    private function set_section_has_files($section, $section_has_files)
+    {
+        $section->has_files = $section_has_files;
 
         return $section;
     }
@@ -245,46 +355,72 @@ class DownloadController extends Controller
         $assignments_is_downloaded = $this->get_assignments_is_downloaded($user, $unit);
         $unit = $this->set_assignments_is_downloaded($unit, $assignments_is_downloaded);
         
-        // foreach ($assignments as $assignment)
-        // {
-        //     $assignment = $this->set_assignment($user, $assignment);
-        // }
+        foreach ($assignments as $assignment)
+        {
+            $assignment = $this->set_assignment($user, $assignment);
+        }
         $unit->assignments = $assignments;
 
         return $unit;
     }
 
-    // private function set_assignment($user, $assignment)
-    // {
-    //     $assignment_is_downloaded = $this->get_assignment_is_downloaded($user, $assignment);
-    //     $assignment = $this->set_assignment_is_downloaded($assignment, $assignment_is_downloaded);
+    private function set_assignment($user, $assignment)
+    {
+        $assignment_has_files = $this->get_assignment_has_files($user, $assignment);
+        $assignment = $this->set_assignment_has_files($assignment, $assignment_has_files);
 
-    //     return $assignment;
-    // }
+        $assignment_is_downloaded = $this->get_assignment_is_downloaded($user, $assignment);
+        $assignment = $this->set_assignment_is_downloaded($assignment, $assignment_is_downloaded);
 
-    // private function get_assignment_is_downloaded($user, $assignment)
-    // {
-    //     $downloaded_assignment_files_count = DB::table('files')
-    //         ->join('user_files', 'files.id', '=', 'user_files.file_id')
-    //         ->where('files.unit_id', $assignment->unit_id)
-    //         ->where('files.assignment_id', $assignment->id)
-    //         ->where('user_files.user_id', $user->id)
-    //         ->where('user_files.downloaded', true)
-    //         ->count();
-    //     $total_assignment_files_count = DB::table('files')
-    //         ->where('files.unit_id', $assignment->unit_id)
-    //         ->where('files.assignment_id', $assignment->id)
-    //         ->count();
+        return $assignment;
+    }
 
-    //     $assignment_is_downloaded = ($downloaded_assignment_files_count == $total_assignment_files_count) ? true : false;
+    private function get_assignment_has_files($user, $assignment)
+    {
+        $total_assignment_files_count = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('files.unit_id', $assignment->unit_id)
+            ->where('files.assignment_id', $assignment->id)
+            ->where('user_files.user_id', $user->id)
+            ->count();
 
-    //     return $assignment_is_downloaded;
-    // }
+        $assignment_has_files = ($total_assignment_files_count > 0) ? true : false;
 
-    // private function set_assignment_is_downloaded($assignment, $assignment_is_downloaded)
-    // {
-    //     $assignment->is_downloaded = $assignment_is_downloaded;
+        return $assignment_has_files;
+    }
 
-    //     return $assignment;
-    // }
+    private function set_assignment_has_files($assignment, $assignment_has_files)
+    {
+        $assignment->has_files = $assignment_has_files;
+
+        return $assignment;
+    }
+
+    private function get_assignment_is_downloaded($user, $assignment)
+    {
+        $downloaded_assignment_files_count = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('files.unit_id', $assignment->unit_id)
+            ->where('files.assignment_id', $assignment->id)
+            ->where('user_files.user_id', $user->id)
+            ->where('user_files.downloaded', true)
+            ->count();
+        $total_assignment_files_count = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('files.unit_id', $assignment->unit_id)
+            ->where('files.assignment_id', $assignment->id)
+            ->where('user_files.user_id', $user->id)
+            ->count();
+
+        $assignment_is_downloaded = ($downloaded_assignment_files_count == $total_assignment_files_count) ? true : false;
+
+        return $assignment_is_downloaded;
+    }
+
+    private function set_assignment_is_downloaded($assignment, $assignment_is_downloaded)
+    {
+        $assignment->is_downloaded = $assignment_is_downloaded;
+
+        return $assignment;
+    }
 }
