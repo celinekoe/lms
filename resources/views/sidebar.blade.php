@@ -24,24 +24,22 @@
                 <div class="margin-left-10">Course Grades</div>  
             </div>
         </a>
-        <a href="{{ url('calendar') }}">
+        <a href="{{ url('notifications') }}">
             <div class="flex-align-center padding-10">
-                <div class="glyphicon glyphicon-calendar margin-bottom-4" aria-hidden="true"></div>
-                <div class="margin-left-10">Calendar</div>  
+                <div class="glyphicon glyphicon-bell margin-bottom-4" aria-hidden="true"></div>
+                <div class="margin-left-10">Notifications</div>  
             </div>
         </a>
         <a href="{{ url('messages') }}">
             <div class="flex-align-center padding-10">
                 <div class="glyphicon glyphicon-comment margin-bottom-4" aria-hidden="true"></div>
                 <div class="margin-left-10">Messages</div>  
-                <div class="margin-left-auto badge">42</div>
             </div>
         </a>
-        <a href="{{ url('notifications') }}">
+        <a href="{{ url('calendar') }}">
             <div class="flex-align-center padding-10">
-                <div class="glyphicon glyphicon-bell margin-bottom-4" aria-hidden="true"></div>
-                <div class="margin-left-10">Notifications</div>  
-                <div class="margin-left-auto badge">42</div>
+                <div class="glyphicon glyphicon-calendar margin-bottom-4" aria-hidden="true"></div>
+                <div class="margin-left-10">Calendar</div>  
             </div>
         </a>
         <a href="{{ url('downloads') }}">
@@ -58,7 +56,6 @@
                 <div class="margin-left-10">Log Out</div>  
             </div>
         </a>
-
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             {{ csrf_field() }}
         </form>

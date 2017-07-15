@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="margin-10">
-    <div class="bg-white margin-bottom-20 padding-10">
+    <div class="bg-white margin-bottom-10 padding-10">
         <div class="font-size-32">Grades</div>
     </div>
     @foreach ($data['units'] as $unit)

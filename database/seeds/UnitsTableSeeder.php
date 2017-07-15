@@ -17,21 +17,27 @@ class UnitsTableSeeder extends Seeder
        		'course_id' => '1',
             'unit_code' => 'UC1',
             'name' => 'Unit1',
-            'info' => $unit_info
+            'unit_term' => 'TJA',
+            'unit_year' => '2017',
+            'info' => $unit_info,
         ]);
 
         DB::table('units')->insert([
         	'course_id' => '1',
             'unit_code' => 'UC2',
             'name' => 'Unit2',
-            'info' => $unit_info
+            'unit_term' => 'TJA',
+            'unit_year' => '2017',
+            'info' => $unit_info,
         ]);
 
         DB::table('units')->insert([
         	'course_id' => '1',
             'unit_code' => 'UC3',
             'name' => 'Unit3',
-            'info' => $unit_info
+            'unit_term' => 'TJA',
+            'unit_year' => '2017',
+            'info' => $unit_info,
         ]);
     }
 }

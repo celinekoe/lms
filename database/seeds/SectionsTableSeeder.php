@@ -23,28 +23,28 @@ class SectionsTableSeeder extends Seeder
         DB::table('sections')->insert([
        		'unit_id' => '1',
             'name' => 'Section1',
-            'introduction' => $section_introduction,
-            'guidelines' => $section_guidelines,
-            'learning_outcomes' => $section_learning_outcomes,
-            'resources' => $section_resources,
+            'introduction' => 'Introduction',
+            'guidelines' => 'Guidelines',
+            'learning_outcomes' => 'Learning Outcomes',
+            'resources' => 'Resources',
         ]);
 
         DB::table('sections')->insert([
         	'unit_id' => '1',
             'name' => 'Section2',
-            'introduction' => $section_introduction,
-            'guidelines' => $section_guidelines,
-            'learning_outcomes' => $section_learning_outcomes,
-            'resources' => $section_resources,
+            'introduction' => 'Introduction',
+            'guidelines' => 'Guidelines',
+            'learning_outcomes' => 'Learning Outcomes',
+            'resources' => 'Resources',
         ]);
 
         DB::table('sections')->insert([
         	'unit_id' => '1',
             'name' => 'Section3',
-            'introduction' => $section_introduction,
-            'guidelines' => $section_guidelines,
-            'learning_outcomes' => $section_learning_outcomes,
-            'resources' => $section_resources,
+            'introduction' => 'Introduction',
+            'guidelines' => 'Guidelines',
+            'learning_outcomes' => 'Learning Outcomes',
+            'resources' => 'Resources',
         ]);
     }
 }

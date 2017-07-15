@@ -19,20 +19,16 @@
             <div class="small">{{ $data['quiz']->grading_method }}</div>
         </div>
         <div class="bg-white margin-bottom-2 padding-10">
-            <div>Current Attempt No.</div>
+            <div>Current Attempt No./Total Attempts</div>
             @if ($data['quiz']->user_quizzes == null)
                 <div class="small">1</div>
             @else
                 @if (($data['quiz']->last_attempt_no + 1) <= $data['quiz']->total_attempts)
-                    <div class="small">{{ $data['quiz']->last_attempt_no + 1 }}</div>
+                    <div class="small">{{ $data['quiz']->last_attempt_no + 1 }}/{{ $data['quiz']->total_attempts}}</div>
                 @else
                     <div class="text-red small" style="color: #d9534f">No more attempts allowed</div>
                 @endif
             @endif
-        </div>
-        <div class="bg-white margin-bottom-2 padding-10">
-            <div>Total Attempts</div>
-            <div class="small">{{ $data['quiz']->total_attempts}}</div>
         </div>
         <div class="bg-white margin-bottom-2 padding-10">
             <div>Time Limit</div>
@@ -43,12 +39,12 @@
             <div class="small">{{ $data['quiz']->total_questions }}</div>
         </div>
         <div class="bg-white margin-bottom-2 padding-10">
-            <div>Time Remaining</div>
-            <div class="small">{{ $data['quiz']->time_remaining }}</div>
-        </div>
-        <div class="bg-white margin-bottom-10 padding-10">
             <div>Due Date</div>
             <div class="small">{{ $data['quiz']->submit_by_date }}</div>
+        </div>
+        <div class="bg-white margin-bottom-10 padding-10">
+            <div>Time Remaining</div>
+            <div class="small">{{ $data['quiz']->time_remaining }}</div>
         </div>
         <div class="margin-bottom-10">
         <div class="bg-white margin-bottom-2 padding-10">Previous Attempts</div>

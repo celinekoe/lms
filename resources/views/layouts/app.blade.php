@@ -18,7 +18,7 @@
 </head>
 <body>
     <div id="app height-100p">
-        <nav class="navbar navbar-custom navbar-static-top margin-0">
+        <nav class="navbar navbar-custom navbar-fixed-top margin-0">
             <div>
                 <div class="navbar-header flex width-100p">
                     <!-- Back -->
@@ -143,7 +143,7 @@
                         @endif
                     @endif                    
                     <div class="margin-left-auto">
-                        <span class="reset navbar-brand glyphicon glyphicon-refresh" href="/reset"></span> <!-- Reset test user -->
+                        <!-- <span class="reset navbar-brand glyphicon glyphicon-refresh" href="/reset"></span> --> <!-- Reset test user -->
                         <span class="sidebar-open navbar-brand glyphicon glyphicon-menu-hamburger"></span> <!-- Sidebar open -->
                     </div>
                 </div>

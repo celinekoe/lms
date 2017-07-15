@@ -37,21 +37,121 @@ class QuizController extends Controller
         $user = Auth::user();
         $unit = Unit::find($request->unit_id);
 
-        $quiz = Quiz::find($request->quiz_id);
-        $user_quizzes = UserQuiz::where('user_id', $user->id)
-            ->where('quiz_id', $quiz->id)
-            ->orderBy('attempt_no', 'asc')
-            ->get();
-        $quiz->user_quizzes = $user_quizzes;
-        $quiz->last_attempt_no = $this->get_last_attempt_no($user, $quiz);
-        $quiz->time_limit_string = $this->seconds_to_time_string($quiz->time_limit);
-        $quiz->time_remaining = Carbon::parse($quiz->submit_by_date)
-            ->diffForHumans();
+        $quiz = $this->get_quiz($request);
+        $quiz = $this->set_quiz_where_all_attempts($user, $quiz);
+        $this->complete_exited_quiz_attempts($user, $quiz);
         
         $data['unit'] = $unit;
         $data['quiz'] = $quiz;
 
         return view('quiz_start', ['data' => $data]);
+    }
+
+    private function set_quiz_where_all_attempts($user, $quiz)
+    {
+        $user_quizzes = $this->get_user_quizzes($user, $quiz);
+        $quiz = $this->set_user_quizzes_where_all_attempts($quiz, $user_quizzes);
+
+        $quiz->last_attempt_no = $this->get_last_attempt_no($user, $quiz);
+        $quiz->time_limit_string = $this->seconds_to_time_string($quiz->time_limit);
+        $quiz->time_remaining = Carbon::parse($quiz->submit_by_date)
+            ->diffForHumans();
+
+        return $quiz;
+    }
+
+    private function get_user_quizzes($user, $quiz)
+    {
+        $user_quizzes = UserQuiz::where('user_id', $user->id)
+            ->where('quiz_id', $quiz->id)
+            ->orderBy('attempt_no', 'asc')
+            ->get();
+
+        return $user_quizzes;
+    }
+
+    private function set_user_quizzes_where_all_attempts($quiz, $user_quizzes)
+    {
+        foreach ($user_quizzes as $user_quiz)
+        {
+            $questions = $this->get_questions($quiz);
+            $user_quiz = $this->set_questions_where_all_attempts($user_quiz, $questions);
+        }
+        $quiz = $this->set_user_quizzes($quiz, $user_quizzes);
+
+        return $quiz;
+    }
+
+    private function set_questions_where_all_attempts($user_quiz, $questions)
+    {
+        foreach ($questions as $question)
+        {
+            $question = $this->set_question_where_all_attempts($user_quiz, $question);
+        }
+        $user_quiz->questions = $questions;
+
+        return $user_quiz;
+    }
+
+    private function set_question_where_all_attempts($user_quiz, $question)
+    {
+        $user_question = $this->get_user_question_where_all_attempts($user_quiz, $question);
+        $question = $this->set_user_question($question, $user_question);
+
+        $options = $this->get_options($question);
+        $question = $this->set_options($question, $options);
+    }
+
+    private function get_user_question_where_all_attempts($user_quiz, $question)
+    {
+        $user_question = UserQuestion::where('user_quiz_id', $user_quiz->id)
+            ->where('question_id', $question->id)
+            ->first();
+
+        return $user_question;
+    }
+
+    private function set_user_quizzes($quiz, $user_quizzes)
+    {
+        $quiz->user_quizzes = $user_quizzes;
+
+        return $quiz;
+    }
+
+    private function complete_exited_quiz_attempts($user, $quiz)
+    {
+        $original_user_quizzes = $this->get_user_quizzes($user, $quiz);
+        foreach ($quiz->user_quizzes as $user_quiz)
+        {
+            $original_user_quiz = $original_user_quizzes->where('id', $user_quiz->id)
+                ->first();
+            $quiz_attempt_submitted_at = $this->get_exited_quiz_attempt_submitted_at($user_quiz);
+            $original_user_quiz->submitted_at = $quiz_attempt_submitted_at;
+            $quiz_attempt_grade = $this->get_exited_quiz_attempt_grade($quiz, $user_quiz);
+            $original_user_quiz->grade = $quiz_attempt_grade;
+            $original_user_quiz->save();
+        }
+    }
+
+    private function get_exited_quiz_attempt_submitted_at($user_quiz)
+    {
+        $quiz_attempt_created_at = Carbon::parse($user_quiz->created_at);
+        $quiz_attempt_submitted_at = $quiz_attempt_created_at->addSeconds($user_quiz->time_limit_remaining);
+        return $quiz_attempt_submitted_at;
+    }
+
+    private function get_exited_quiz_attempt_grade($quiz, $user_quiz)
+    {
+        $selected_options = [];
+        foreach ($user_quiz->questions as $question)
+        {
+            array_push($selected_options, $question->user_question->option_id);
+        }
+        $correct_questions = Option::whereIn('id', $selected_options)
+            ->where('is_correct', true)
+            ->count();
+        $grade = $correct_questions/$quiz->total_questions * 100;
+        return $grade;
     }
 
     /**
@@ -414,6 +514,15 @@ class QuizController extends Controller
 
     private function update_user_quiz_submitted_at_grade($user, $quiz) 
     {
+        $user_quiz = UserQuiz::find($quiz->user_quiz->id);
+        $user_quiz->time_limit_remaining = $quiz->time_limit_remaining;
+        $user_quiz->grade = $this->get_user_quiz_grade($quiz);
+        $user_quiz->submitted_at = $this->get_user_quiz_submitted_at();
+        $user_quiz->save();
+    }
+
+    private function get_user_quiz_grade($quiz)
+    {
         $selected_options = [];
         foreach ($quiz->questions as $question)
         {
@@ -422,11 +531,16 @@ class QuizController extends Controller
         $correct_questions = Option::whereIn('id', $selected_options)
             ->where('is_correct', true)
             ->count();
-        $user_quiz = UserQuiz::find($quiz->user_quiz->id);
-        $user_quiz->time_limit_remaining = $quiz->time_limit_remaining;
-        $user_quiz->grade = $correct_questions/$quiz->total_questions * 100;
-        $user_quiz->submitted_at = Carbon::now()->format('Y-m-d H:i:s');
-        $user_quiz->save();
+        $grade = $correct_questions/$quiz->total_questions * 100;
+
+        return $grade;
+    }
+
+    private function get_user_quiz_submitted_at()
+    {
+        $user_quiz_submitted_at = Carbon::now()->format('Y-m-d H:i:s');
+
+        return $user_quiz_submitted_at;
     }
 
     // Quiz Summary Helper Functions

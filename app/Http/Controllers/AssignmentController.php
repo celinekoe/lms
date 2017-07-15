@@ -485,11 +485,41 @@ class AssignmentController extends Controller
 
     private function set_assignment_file($user, $assignment_file)
     {
+        $formatted_file_size = $this->get_formatted_file_size($assignment_file);
+        $assignment_file = $this->set_formatted_file_size($assignment_file, $formatted_file_size);
         $assignment_file_is_downloaded = $this->get_assignment_file_is_downloaded($user, $assignment_file);
         $assignment_file = $this->set_assignment_file_is_downloaded($assignment_file, $assignment_file_is_downloaded);
 
         return $assignment_file;
         
+    }
+
+    private function get_formatted_file_size($assignment_file)
+    {
+        $formatted_file_size = $this->format_file_size($assignment_file->size);
+
+        return $formatted_file_size;
+    }
+
+    private function set_formatted_file_size($assignment_file, $formatted_file_size)
+    {
+        $assignment_file->formatted_file_size = $formatted_file_size;
+
+        return $assignment_file;
+    }
+
+    /**
+     * Format file size
+     *
+     * @return string
+     */
+    private function format_file_size($size, $precision = 2)
+    {
+        $base = log($size, 1024);
+        $suffixes = array('', 'K', 'M', 'G', 'T');   
+        $formatted_file_size = round(pow(1024, $base - floor($base)), $precision) .' '. $suffixes[floor($base)];
+
+        return $formatted_file_size;
     }
 
     private function get_assignment_file_is_downloaded($user, $assignment_file)

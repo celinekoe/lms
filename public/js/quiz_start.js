@@ -3,7 +3,7 @@ $(".start").click(function(e) {
 	var start_href = $(".start-form").attr("action");
 	var question_href = $(".start-form").attr("href");
 	open_confirm_start();
-	$(".confirm-text").text("Confirm start?");
+	$(".confirm-text").text("Confirm start quiz?");
 	$(".confirm-option-cancel").off().click(function(e) {
 		close_confirm_start();
 	});
@@ -20,7 +20,7 @@ $(".retry").click(function(e) {
 	var retry_href = $(".retry-form").attr("action");
 	var question_href = $(".retry-form").attr("href");
 	open_confirm_retry();
-	$(".confirm-text").text("Confirm retry?");
+	$(".confirm-text").text("Confirm retry quiz?");
 	$(".confirm-option-cancel").off().click(function(e) {
 		close_confirm_retry();
 	});

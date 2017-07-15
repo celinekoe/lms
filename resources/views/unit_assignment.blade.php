@@ -19,17 +19,17 @@
                 <span class="label label-success">Graded</span>
             @endif
         </div>
-        <div class="bg-white margin-top-bottom-2 padding-10">
+        <!-- <div class="bg-white margin-top-bottom-2 padding-10">
             <div>Submission Comments</div>
             <div class="small">Comments (0)</div>
+        </div> -->
+        <div class="bg-white margin-top-bottom-2 padding-10">
+            <div>Due Date</div>
+            <div class="small">{{ $data['assignment']->submit_by_date }}</div>
         </div>
         <div class="bg-white margin-top-bottom-2 padding-10">
             <div>Time Remaining</div>
             <div class="small">{{ $data['assignment']->time_remaining }}</div>
-        </div>
-        <div class="bg-white margin-top-bottom-2 padding-10">
-            <div>Due Date</div>
-            <div class="small">{{ $data['assignment']->submit_by_date }}</div>
         </div>
     </div>
 

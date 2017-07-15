@@ -3,8 +3,11 @@ html {
 	background: #EEEEEE;
 }
 
-a:link, a:hover, a:active, a:visited 
-{
+body {
+	padding-top: 50px;
+}
+
+a:link, a:hover, a:active, a:visited {
      color: inherit; 
      text-decoration: none; 
      cursor: pointer;  
