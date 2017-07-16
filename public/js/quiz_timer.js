@@ -29,14 +29,5 @@ var interval = setInterval(function() {
 		clearInterval(interval);
 		$(".timer").text("Time Limit Remaining 00:00:00");
 		$(".option-option").prop('disabled', true);
-		if ($(".previous-form").length) {
-			$(".previous-form").hide();	
-		}
-		if ($(".next-form").length) {
-			$(".next-form").hide();	
-		}
-		// if (!($(".submit-form").length)) {
-		// 	$(".submit-form").show();
-		// }
 	}
 }, 100);

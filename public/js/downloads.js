@@ -13,17 +13,17 @@ $(".sections-open").click(function(e) {
 	$(this).parent().parent().siblings(".sections-files").toggle();
 });
 
-$(".unit-download").click(function(e) {
+$(".unit-download").off().click(function(e) {
 	e.preventDefault();
 	var unit_download = $(this);
 	var href = unit_download.attr("href");
 	open_confirm_download();
 	$(".confirm-text").text("Confirm unit download?");
-	$(".confirm-option-cancel").click(function(e) {
+	$(".confirm-option-cancel").off().click(function(e) {
 		e.preventDefault();
 		close_confirm_download();
 	});
-	$(".confirm-option-download").click(function(e) {
+	$(".confirm-option-download").off().click(function(e) {
 		e.preventDefault();
 		close_confirm_download();
 		$.get(href, function(data) {
@@ -32,17 +32,17 @@ $(".unit-download").click(function(e) {
 	});
 });
 
-$(".unit-delete").click(function(e) {
+$(".unit-delete").off().click(function(e) {
 	e.preventDefault();
 	var unit_delete = $(this);
 	var href = unit_delete.attr("href");
 	open_confirm_delete();
 	$(".confirm-text").text("Confirm unit delete?");
-	$(".confirm-option-cancel").click(function(e) {
+	$(".confirm-option-cancel").off().click(function(e) {
 		e.preventDefault();
 		close_confirm_delete();
 	});
-	$(".confirm-option-delete").click(function(e) {
+	$(".confirm-option-delete").off().click(function(e) {
 		e.preventDefault();
 		close_confirm_delete();
 		$.get(href, function(data) {
@@ -51,7 +51,7 @@ $(".unit-delete").click(function(e) {
 	});
 });
 
-$(".unit-info-download").click(function(e) {
+$(".unit-info-download").off().click(function(e) {
 	e.preventDefault();
 	var unit_info_download = $(this);
 	var href = unit_info_download.attr("href");
@@ -70,7 +70,7 @@ $(".unit-info-download").click(function(e) {
 	});
 });
 
-$(".unit-info-delete").click(function(e) {
+$(".unit-info-delete").off().click(function(e) {
 	e.preventDefault();
 	var unit_info_delete = $(this);
 	var href = unit_info_delete.attr("href");
@@ -90,7 +90,7 @@ $(".unit-info-delete").click(function(e) {
 	});
 });
 
-$(".assignments-download").click(function(e) {
+$(".assignments-download").off().click(function(e) {
 	e.preventDefault();
 	var assignments_download = $(this);
 	var href = assignments_download.attr("href");
@@ -147,7 +147,7 @@ $(".assignment-download").click(function(e) {
 	});
 });
 
-$(".assignment-delete").click(function(e) {
+$(".assignment-delete").off().click(function(e) {
 	e.preventDefault();
 	var assignment_delete = $(this);
 	var href = assignment_delete.attr("href");
@@ -204,17 +204,17 @@ $(".sections-delete").off().click(function(e) {
 	});
 });
 
-$(".section-download").click(function(e) {
+$(".section-download").off().click(function(e) {
 	e.preventDefault();
 	var section_download = $(this);
 	var href = section_download.attr("href");
 	open_confirm_download();
 	$(".confirm-text").text("Confirm section download?");
-	$(".confirm-option-cancel").click(function(e) {
+	$(".confirm-option-cancel").off().click(function(e) {
 		e.preventDefault();
 		close_confirm_download();
 	});
-	$(".confirm-option-download").click(function(e) {
+	$(".confirm-option-download").off().click(function(e) {
 		e.preventDefault();
 		close_confirm_download();
 		$.get(href, function(data) {
@@ -223,17 +223,17 @@ $(".section-download").click(function(e) {
 	});
 });
 
-$(".section-delete").click(function(e) {
+$(".section-delete").off().click(function(e) {
 	e.preventDefault();
 	var section_delete = $(this);
 	var href = section_delete.attr("href");
 	open_confirm_delete();
 	$(".confirm-text").text("Confirm section delete?");
-	$(".confirm-option-cancel").click(function(e) {
+	$(".confirm-option-cancel").off().click(function(e) {
 		e.preventDefault();
 		close_confirm_delete();
 	});
-	$(".confirm-option-delete").click(function(e) {
+	$(".confirm-option-delete").off().click(function(e) {
 		e.preventDefault();
 		close_confirm_delete();
 		$.get(href, function(data) {

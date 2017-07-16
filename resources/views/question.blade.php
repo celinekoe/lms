@@ -28,17 +28,6 @@
         </div>
     </div>
     <div class="flex-align-center margin-bottom-10">
-        @foreach ($data['quiz']->questions as $question)
-            <form action="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/save') }}" method="POST" class="link-form margin-right-10" href="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/question/'.$question->question_no) }}">
-                <input type="hidden" name="attempt_no" value="{{ $data['quiz']->attempt_no }}">
-                <input type="hidden" name="question_no" value="{{ $data['question']->question_no }}">
-                <input type="hidden" name="hidden_option_id">
-                <input type="submit" class="link btn btn-default" value="{{ $question->question_no }}">
-                {{ csrf_field() }}
-            </form>
-        @endforeach
-    </div>
-    <div class="flex-align-center margin-bottom-10">
         @if ($data['question']->has_previous)
             <form action="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/save') }}" method="POST" class="previous-form" href="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/question/'.$data['question']->previous_question_no) }}">
                 <input type="hidden" name="attempt_no" value="{{ $data['quiz']->attempt_no }}">
@@ -72,6 +61,17 @@
                 <input type="submit" class="submit btn btn-default" value="Submit">
             </div>
         </form>
+    </div>
+    <div class="flex-align-center margin-bottom-10">
+        @foreach ($data['quiz']->questions as $question)
+            <form action="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/save') }}" method="POST" class="link-form margin-right-10" href="{{ url('unit/'.$data['quiz']->unit_id.'/section/'.$data['quiz']->section_id.'/subsection/'.$data['quiz']->subsection_id.'/quiz/'.$data['quiz']->id.'/question/'.$question->question_no) }}">
+                <input type="hidden" name="attempt_no" value="{{ $data['quiz']->attempt_no }}">
+                <input type="hidden" name="question_no" value="{{ $data['question']->question_no }}">
+                <input type="hidden" name="hidden_option_id">
+                <input type="submit" class="link btn btn-default" value="{{ $question->question_no }}">
+                {{ csrf_field() }}
+            </form>
+        @endforeach
     </div>
 </div>
 @endsection

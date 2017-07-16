@@ -39,7 +39,7 @@ class QuizController extends Controller
 
         $quiz = $this->get_quiz($request);
         $quiz = $this->set_quiz_where_all_attempts($user, $quiz);
-        $this->complete_exited_quiz_attempts($user, $quiz);
+        $quiz = $this->complete_exited_quiz_attempts($user, $quiz);
         
         $data['unit'] = $unit;
         $data['quiz'] = $quiz;
@@ -50,7 +50,7 @@ class QuizController extends Controller
     private function set_quiz_where_all_attempts($user, $quiz)
     {
         $user_quizzes = $this->get_user_quizzes($user, $quiz);
-        $quiz = $this->set_user_quizzes_where_all_attempts($quiz, $user_quizzes);
+        $quiz = $this->set_user_quizzes($quiz, $user_quizzes);
 
         $quiz->last_attempt_no = $this->get_last_attempt_no($user, $quiz);
         $quiz->time_limit_string = $this->seconds_to_time_string($quiz->time_limit);
@@ -70,14 +70,14 @@ class QuizController extends Controller
         return $user_quizzes;
     }
 
-    private function set_user_quizzes_where_all_attempts($quiz, $user_quizzes)
+    private function set_user_quizzes($quiz, $user_quizzes)
     {
         foreach ($user_quizzes as $user_quiz)
         {
             $questions = $this->get_questions($quiz);
             $user_quiz = $this->set_questions_where_all_attempts($user_quiz, $questions);
         }
-        $quiz = $this->set_user_quizzes($quiz, $user_quizzes);
+        $quiz->user_quizzes = $user_quizzes;
 
         return $quiz;
     }
@@ -111,26 +111,25 @@ class QuizController extends Controller
         return $user_question;
     }
 
-    private function set_user_quizzes($quiz, $user_quizzes)
-    {
-        $quiz->user_quizzes = $user_quizzes;
-
-        return $quiz;
-    }
-
     private function complete_exited_quiz_attempts($user, $quiz)
     {
+
         $original_user_quizzes = $this->get_user_quizzes($user, $quiz);
         foreach ($quiz->user_quizzes as $user_quiz)
         {
             $original_user_quiz = $original_user_quizzes->where('id', $user_quiz->id)
                 ->first();
             $quiz_attempt_submitted_at = $this->get_exited_quiz_attempt_submitted_at($user_quiz);
-            $original_user_quiz->submitted_at = $quiz_attempt_submitted_at;
+            $user_quiz->submitted_at = $quiz_attempt_submitted_at;
             $quiz_attempt_grade = $this->get_exited_quiz_attempt_grade($quiz, $user_quiz);
+            $user_quiz->grade = $quiz_attempt_grade;
+
+            $original_user_quiz->submitted_at = $quiz_attempt_submitted_at;
             $original_user_quiz->grade = $quiz_attempt_grade;
             $original_user_quiz->save();
         }
+
+        return $quiz;
     }
 
     private function get_exited_quiz_attempt_submitted_at($user_quiz)
@@ -150,7 +149,7 @@ class QuizController extends Controller
         $correct_questions = Option::whereIn('id', $selected_options)
             ->where('is_correct', true)
             ->count();
-        $grade = $correct_questions/$quiz->total_questions * 100;
+        $grade = round($correct_questions/$quiz->total_questions * 100);
         return $grade;
     }
 
