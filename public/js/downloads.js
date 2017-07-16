@@ -301,23 +301,36 @@ function toggle_unit_info_delete(unit_info_delete) {
 
 function toggle_unit_downloaded(unit_download)
 {
-	var unit_info_delete = unit_download.parent().parent().parent().find(".unit-info-delete");
-	var assignments_delete = unit_download.parent().parent().parent().find(".assignments-delete");
-	var sections_delete = unit_download.parent().parent().parent().find(".sections-delete");
+	unit_download.siblings(".unit-delete").show();
 
-	var is_unit_downloaded = unit_info_delete.is(":visible") && 
-		assignments_delete.is(":visible") && sections_delete.is(":visible");
+	var unit_info_download = unit_download.parent().parent().parent().find(".unit-info-download");
+	var assignments_download = unit_download.parent().parent().parent().find(".assignments-download");
+	var sections_download = unit_download.parent().parent().parent().find(".sections-download");
+
+	var is_unit_downloaded = !(unit_info_download.is(":visible") ||  
+		assignments_download.is(":visible") || sections_download.is(":visible"));
 
 	if (is_unit_downloaded) {
 		unit_download.hide();
-		unit_download.siblings(".unit-delete").show();
 	}
 }
 
 function toggle_unit_deleted(unit_delete)
 {
 	unit_delete.siblings(".unit-download").show();
-	unit_delete.hide();
+
+	var unit_info_delete = unit_delete.parent().parent().parent().find(".unit-info-delete");
+	var assignments_delete = unit_delete.parent().parent().parent().find(".assignments-delete");
+	var sections_delete = unit_delete.parent().parent().parent().find(".sections-delete");
+
+	var is_unit_deleted = !(unit_info_delete.is(":visible") ||  
+		assignments_delete.is(":visible") || sections_delete.is(":visible"));
+
+	alert(is_unit_deleted);
+
+	if (is_unit_deleted) {
+		unit_delete.hide();
+	}
 }
 
 
@@ -464,6 +477,8 @@ function toggle_section_delete(section_delete) {
 function toggle_sections_downloaded(section_download)
 {
 	var sections_download = section_download.parent().parent().parent().parent().find(".sections-download");
+	sections_download.siblings(".sections-delete").show();
+
 	var section_downloads = section_download.parent().parent().parent().find(".section-download");
 
 	var is_sections_downloaded = true;
@@ -475,12 +490,24 @@ function toggle_sections_downloaded(section_download)
 
 	if (is_sections_downloaded) {
 		sections_download.hide();
-		sections_download.siblings(".sections-delete").show();
 	}
 }
 
 function toggle_sections_deleted(section_delete)
 {
-	section_delete.parent().parent().parent().parent().find(".sections-download").show();
-	section_delete.parent().parent().parent().parent().find(".sections-delete").hide();
+	var sections_delete = section_delete.parent().parent().parent().parent().find(".sections-delete");
+	sections_delete.siblings(".sections-download").show();
+
+	var section_deletes = section_delete.parent().parent().parent().find(".section-delete");
+
+	var is_sections_deleted = true;
+	section_deletes.each(function() {
+		if ($(this).is(":visible")) {
+			is_sections_deleted = false;
+		}
+	});
+
+	if (is_sections_deleted) {
+		sections_delete.hide();
+	}
 }
