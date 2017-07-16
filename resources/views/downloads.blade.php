@@ -2,15 +2,29 @@
 
 @section('content')
 <div class="margin-10">
-    <div class="bg-white margin-bottom-10 padding-10">
+    <div class="bg-white flex-align-center margin-bottom-10 padding-10">
         <div class="font-size-32">Downloads</div>
+        <div class="margin-left-auto">
+            @if ($data['course']->has_files)
+                @if (!$data['course']->is_downloaded)
+                    <div class="course-download glyphicon glyphicon-download margin-top-4 margin-right-10" href="{{ url('course/'.$data['course']->id.'/download') }}"></div>
+                @else
+                    <div class="course-download glyphicon glyphicon-download margin-top-4 margin-right-10" href="{{ url('course/'.$data['course']->id.'/download') }}" style="display: none"></div>
+                @endif
+                @if ($data['course']->is_deleted)
+                    <div class="course-delete glyphicon glyphicon-remove-circle margin-top-4 margin-right-10" href="{{ url('course/'.$data['course']->id.'/delete') }}" style="display: none"></div>
+                @else
+                    <div class="course-delete glyphicon glyphicon-remove-circle margin-top-4 margin-right-10" href="{{ url('course/'.$data['course']->id.'/delete') }}"></div>
+                @endif
+            @endif
+        </div>
     </div>
     <div>
-        @foreach ($data['units'] as $unit)
+        @foreach ($data['course']->units as $unit)
             <div>
                 <div class="unit bg-white flex-align-center margin-bottom-2 padding-10">
                     <div class="font-size-19 margin-left-10">{{ $unit->unit_code }} {{ $unit->name }}</div>
-                    <span class="margin-left-auto margin-right-10">
+                    <span class="margin-left-auto">
                         @if ($unit->has_files)
                             @if (!$unit->is_downloaded)
                                 <div class="unit-download glyphicon glyphicon-download margin-top-4 margin-right-10" href="{{ url('unit/'.$unit->id.'/download') }}"></div>
@@ -22,7 +36,7 @@
                             @else
                                 <div class="unit-delete glyphicon glyphicon-remove-circle margin-top-4 margin-right-10" href="{{ url('unit/'.$unit->id.'/delete') }}"></div>
                             @endif
-                            <span class="unit-open glyphicon glyphicon-chevron-down" href=""></span>
+                            <span class="unit-open glyphicon glyphicon-chevron-down margin-right-10" href=""></span>
                         @endif
                     </span>
                 </div>

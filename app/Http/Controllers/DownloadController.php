@@ -35,16 +35,100 @@ class DownloadController extends Controller
     {
         $user = Auth::user();
         $course = $this->get_course($user);
-        $units = $this->get_units($course);
-        $units = $this->set_units($user, $units);
+        $course = $this->set_course($user, $course);
         
-        $data['units'] = $units;
+        $data['course'] = $course;
         return view('downloads', ['data' => $data]);
     }
 
     private function get_course($user)
     {
         $course = Course::find($user->course_id);
+
+        return $course;
+    }
+
+    private function set_course($user, $course)
+    {
+        $units = $this->get_units($course);
+        $units = $this->set_units($user, $course, $units);
+
+        $course_is_downloaded = $this->get_course_is_downloaded($user, $course);
+        $course = $this->set_course_is_downloaded($course, $course_is_downloaded);
+
+        $course_is_deleted = $this->get_course_is_deleted($user, $course);
+        $course = $this->set_course_is_deleted($course, $course_is_deleted);
+
+        $course_has_files = $this->get_course_has_files($user, $course);
+        $course = $this->set_course_has_files($course, $course_has_files);
+
+        return $course;
+    }
+
+    private function get_course_is_downloaded($user, $course)
+    {
+        $downloaded_course_files_count = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->whereIn('files.unit_id', $course->units->pluck('id'))
+            ->where('user_files.user_id', $user->id)
+            ->where('user_files.downloaded', true)
+            ->count();
+        $total_course_files_count = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->whereIn('files.unit_id', $course->units->pluck('id'))
+            ->where('user_files.user_id', $user->id)
+            ->count();
+        $course_is_downloaded = ($downloaded_course_files_count == $total_course_files_count) ? true : false;
+
+        return $course_is_downloaded;
+    }
+
+    private function set_course_is_downloaded($course, $course_is_downloaded)
+    {
+        $course->is_downloaded = $course_is_downloaded;
+
+        return $course;
+    }
+
+    private function get_course_is_deleted($user, $course)
+    {
+        $deleted_course_files_count = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->whereIn('files.unit_id', $course->units->pluck('id'))
+            ->where('user_files.user_id', $user->id)
+            ->where('user_files.downloaded', false)
+            ->count();
+        $total_course_files_count = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->whereIn('files.unit_id', $course->units->pluck('id'))
+            ->where('user_files.user_id', $user->id)
+            ->count();
+        $course_is_deleted = ($deleted_course_files_count == $total_course_files_count) ? true : false;
+        return $course_is_deleted;
+    }
+
+    private function set_course_is_deleted($course, $course_is_deleted)
+    {
+        $course->is_deleted = $course_is_deleted;
+
+        return $course;
+    }
+
+    private function get_course_has_files($user, $course)
+    {
+        $total_course_files_count = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->whereIn('files.unit_id', $course->units->pluck('id'))
+            ->where('user_files.user_id', $user->id)
+            ->count();
+        $course_has_files = ($total_course_files_count > 0) ? true : false;
+
+        return $course_has_files;
+    }
+
+    private function set_course_has_files($course, $course_has_files)
+    {
+        $course->has_files = $course_has_files;
 
         return $course;
     }
@@ -57,12 +141,13 @@ class DownloadController extends Controller
         return $units;   
     }
 
-    private function set_units($user, $units)
+    private function set_units($user, $course, $units)
     {
         foreach ($units as $unit)
         {
             $unit = $this->set_unit($user, $unit);
         }
+        $course->units = $units;
 
         return $units;
     }
@@ -72,10 +157,10 @@ class DownloadController extends Controller
         $unit_is_downloaded = $this->get_unit_is_downloaded($user, $unit);
         $unit = $this->set_unit_is_downloaded($unit, $unit_is_downloaded);
 
-        $unit_is_downloaded = $this->get_unit_is_deleted($user, $unit);
-        $unit = $this->set_unit_is_deleted($unit, $unit_is_downloaded);
+        $unit_is_deleted = $this->get_unit_is_deleted($user, $unit);
+        $unit = $this->set_unit_is_deleted($unit, $unit_is_deleted);
 
-        $unit_has_files = $this->get_unit_has_files($unit);
+        $unit_has_files = $this->get_unit_has_files($user, $unit);
         $unit = $this->set_unit_has_files($unit, $unit_has_files);
 
         $unit_info_has_files = $this->get_unit_info_has_files($unit);
@@ -114,12 +199,14 @@ class DownloadController extends Controller
         return $unit;
     }
 
-    private function get_unit_has_files($unit)
+    private function get_unit_has_files($user, $unit)
     {
-        $total_files_count = DB::table('files')
+        $total_unit_files_count = DB::table('files')
+            ->join('user_files', 'files.id', '=', 'user_files.file_id')
             ->where('files.unit_id', $unit->id)
+            ->where('user_files.user_id', $user->id)
             ->count();
-        $unit_has_files = ($total_files_count > 0) ? true : false;
+        $unit_has_files = ($total_unit_files_count > 0) ? true : false;
 
         return $unit_has_files;
     }
@@ -139,8 +226,9 @@ class DownloadController extends Controller
             ->where('user_files.user_id', $user->id)
             ->where('user_files.downloaded', true)
             ->count();
-        $total_unit_files_count = File::where('unit_id', $unit->id)
+        $total_unit_files_count = DB::table('files')
             ->join('user_files', 'files.id', '=', 'user_files.file_id')
+            ->where('unit_id', $unit->id)
             ->where('user_files.user_id', $user->id)
             ->count();
         $unit_is_downloaded = ($downloaded_unit_files_count == $total_unit_files_count) ? true : false;
