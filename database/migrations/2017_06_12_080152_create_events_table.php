@@ -19,9 +19,11 @@ class CreateEventsTable extends Migration
             $table->integer('assignment_id')->unsigned()->nullable();
             $table->integer('quiz_id')->unsigned()->nullable();
             $table->string('name');
-            $table->boolean('full_day');
+            $table->boolean('all_day');
             $table->date('date_start');
+            $table->time('time_start')->nullable();
             $table->date('date_end');
+            $table->time('time_end')->nullable();
             $table->text('description');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');

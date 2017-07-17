@@ -26,9 +26,9 @@
 		    	</div>
 	    	</div>
 			<div class="form-group">
-    			<label for="full_day">Full Day?</label>
+    			<label for="all_day">Full Day?</label>
     			<div class="flex-align-start">
-    				<input type="checkbox" style="margin: 0px;" name="full_day">	
+    				<input type="checkbox" style="margin: 0px;" name="all_day">	
     			</div>
     		</div>
     		<div class="flex-align-center-justify-between">

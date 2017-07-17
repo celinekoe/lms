@@ -58,18 +58,18 @@ class CalendarController extends Controller
     public function store(Request $request)
     {
     	$user = Auth::user();
-    	if ($request->full_day == 'on')
+    	if ($request->all_day == 'on')
     	{
-    		$full_day = true;
+    		$all_day = true;
     	}
     	else
     	{
-    		$full_day = false;
+    		$all_day = false;
     	}
     	$event = Event::create([
     		'user_id' => $user->id,
     		'name' => $request->name,
-    		'full_day' => $full_day,
+    		'all_day' => $all_day,
     		'date_start' => $request->date_start,
     		'date_end' => $request->date_end,
     	]);
@@ -83,9 +83,98 @@ class CalendarController extends Controller
     public function edit_event(Request $request)
     {
         $event = $this->get_event($request);
+        $event = $this->set_event($event);
 
         $data['event'] = $event;
-        
+
+        return view('edit_event', ['data' => $data]);
+    }
+
+    private function set_event($event)
+    {
+        $formatted_time_start = $this->get_formatted_time_start($event);
+        $event = $this->set_formatted_time_start($event, $formatted_time_start);
+
+        $formatted_time_end = $this->get_formatted_time_end($event);
+        $event = $this->set_formatted_time_end($event, $formatted_time_end);
+
+        return $event;
+    }
+
+    private function get_formatted_time_start($event)
+    {
+        $formatted_time_start = $this->format_time($event->time_start);
+
+        return $formatted_time_start;
+    }
+
+    private function format_time($time)
+    {
+        $formatted_time = substr($time, 0, -3);
+
+        return $formatted_time;
+    }
+
+    private function set_formatted_time_start($event, $formatted_time_start)
+    {
+        $event->formatted_time_start = $formatted_time_start;
+
+        return $event;
+    }
+
+    private function get_formatted_time_end($event)
+    {
+        $formatted_time_end = $this->format_time($event->time_end);
+
+        return $formatted_time_end;
+    }
+
+    private function set_formatted_time_end($event, $formatted_time_end)
+    {
+        $event->formatted_time_end = $formatted_time_end;
+
+        return $event;
+    }
+
+    /**
+     * Update the edited event.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update_event(Request $request)
+    {
+
+        $user = Auth::user();
+
+        $event = $this->get_event($request);
+
+        if ($request->all_day)
+        {
+            $event->update([
+                'name' => $request->name,
+                'description' => $request->description,
+                'all_day' => true,
+                'date_start' => $request->date_start,
+                'time_start' => null,
+                'date_end' => $request->date_end,
+                'time_end' => null,
+            ]);
+        }
+        else
+        {
+            $event->update([
+                'name' => $request->name,
+                'description' => $request->description,
+                'all_day' => false,
+                'date_start' => $request->date_start,
+                'time_start' => $request->time_start,
+                'date_end' => $request->date_end,
+                'time_end' => $request->time_end,
+            ]);
+        }
+
+        $data['event'] = $event;
+
         return view('edit_event', ['data' => $data]);
     }
 
@@ -109,7 +198,7 @@ class CalendarController extends Controller
     	{
     		$calendar_event = Calendar::event(
 	    		$event->name, 
-	    		$event->full_day, 
+	    		$event->all_day, 
 	    		$event->date_start, 
 	    		$event->date_end,
 	    		$event->id,
