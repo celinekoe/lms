@@ -1,16 +1,16 @@
 var date_html = 
 `
-	<div class="date">
+	<div class="date" width-100p>
 		<div class="flex-align-center-justify-between">
-    		<div class="form-group width-50p padding-right-5" style="width: 48.65%">
+    		<div class="form-group width-49p padding-right-5">
 	    		<label for="date_start">Date Start</label>
-	    		<input type="date" class="form-control" name="date_start" value="{{ $data['event']->date_start }}">	
+	    		<input type="date" class="date-start form-control" name="date_start" value="{{ $data['event']->date_start }}">	
 	    	</div>
     	</div>
     	<div class="flex-align-center-justify-between">
-	    	<div class="form-group width-50p padding-left-5" style="width: 48.65%">
+	    	<div class="form-group width-49p padding-left-5">
 	    		<label for="date_end">Date End</label>
-	    		<input type="date" class="form-control" name="date_end" value="{{ $data['event']->date_end }}"> 		
+	    		<input type="date" class="date-end form-control" name="date_end" value="{{ $data['event']->date_end }}"> 		
 	    	</div>
     	</div>
 	</div>
@@ -18,24 +18,24 @@ var date_html =
 
 var date_time_html = 
 `
-	<div class="date-time">
+	<div class="date-time width-100p">
 		<div class="flex-align-center-justify-between">
-    		<div class="form-group width-50p padding-right-5" style="width: 48.65%">
+    		<div class="form-group width-49p padding-right-5">
 	    		<label for="date_start">Date Start</label>
-	    		<input type="date" class="form-control" name="date_start" value="{{ $data['event']->date_start }}">	
+	    		<input type="date" class="date-start form-control" name="date_start" value="{{ $data['event']->date_start }}">	
 	    	</div>
-	    	<div class="form-group" style="width: 48.65%">
+	    	<div class="form-group width-49p">
 	    		<label for="time_start">Time Start</label>
 	    		<select class="time form-control" name="time_start">
 	    		</select>
 	    	</div>
 	    </div>
 	    <div class="flex-align-center-justify-between">
-	    	<div class="form-group width-50p padding-left-5" style="width: 48.65%">
+	    	<div class="form-group width-49p padding-left-5">
 	    		<label for="date_end">Date End</label>
-	    		<input type="date" class="form-control" name="date_end" value="{{ $data['event']->date_end }}"> 		
+	    		<input type="date" class="date-end form-control" name="date_end" value="{{ $data['event']->date_end }}"> 		
 	    	</div>
-	    	<div class="form-group" style="width: 48.65%">
+	    	<div class="form-group width-49p">
 	    		<label for="time_end">Time End</label>
 	    		<select class="time form-control" name="time_end">
 	    		</select>
@@ -100,14 +100,31 @@ $(".all-day").off().click(function(e) {
 	// change all day button to not all day button
 	if ($(this).is(':checked')) // unchecked, on click triggers after checked
 	{
+		var date_start = $(".date-start").val();
+		var date_end = $(".date-end").val();
 		$(".date-time").remove();
-		$(".submit").before(date_html);
+		$(".submit").parent().before(date_html);
+		$(".date-start").val(date_start);
+		$(".date-end").val(date_end);
 	}
 	else // checked, on click triggers after unchecked
 	{
+		var date_start = $(".date-start").val();
+		var date_end = $(".date-end").val();
 		$(".date").remove();
-		$(".submit").before(date_time_html);
+		$(".submit").parent().before(date_time_html);
+		$(".date-start").val(date_start);
+		$(".date-end").val(date_end);
 		var time = $(".date-time").find(".time");
 		time.append(time_options_html);
 	}
+});
+
+$(".submit").off().click(function(e) {
+	e.preventDefault();
+	var submit_href = $(".submit-form").attr("action");
+	var edit_href = $(".submit-form").attr("href");
+	$.post(submit_href, $(".submit-form").serialize(), function(data) {
+		window.location = edit_href;
+	});
 });

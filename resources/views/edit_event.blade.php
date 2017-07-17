@@ -6,7 +6,7 @@
         <div class="font-size-32">Edit Event</div>
     </div>
     <div class="bg-white margin-bottom-10 padding-10">
-    	<form action="{{ url('calendar/'.$data['event']->id) }}" method="POST" class="event-form">
+    	<form action="{{ url('calendar/'.$data['event']->id) }}" method="POST" class="submit-form" href="{{ url('calendar/'.$data['event']->id.'/edit') }}">
     		<div class="name form-group">
     			<label for="name">Name</label>
     			<input type="text" class="form-control" name="name" value="{{ $data['event']->name }}">
@@ -22,15 +22,15 @@
     			</div>
     			<div class="date">
     				<div class="flex-align-center-justify-between">
-			    		<div class="form-group width-50p padding-right-5" style="width: 48.65%">
+			    		<div class="form-group width-49p padding-right-5">
 				    		<label for="date_start">Date Start</label>
-				    		<input type="date" class="form-control" name="date_start" value="{{ $data['event']->date_start }}">	
+				    		<input type="date" class="date-start form-control" name="date_start" value="{{ $data['event']->date_start }}">	
 				    	</div>
 			    	</div>
 			    	<div class="flex-align-center-justify-between">
-				    	<div class="form-group width-50p padding-left-5" style="width: 48.65%">
+				    	<div class="form-group width-49p padding-left-5">
 				    		<label for="date_end">Date End</label>
-				    		<input type="date" class="form-control" name="date_end" value="{{ $data['event']->date_end }}"> 		
+				    		<input type="date" class="date-end form-control" name="date_end" value="{{ $data['event']->date_end }}"> 		
 				    	</div>
 			    	</div>
     			</div>
@@ -41,11 +41,11 @@
     			</div>
     			<div class="date-time">
     				<div class="flex-align-center-justify-between">
-			    		<div class="form-group width-50p padding-right-5" style="width: 48.65%">
+			    		<div class="form-group width-49p padding-right-5">
 				    		<label for="date_start">Date Start</label>
 				    		<input type="date" class="form-control" name="date_start" value="{{ $data['event']->date_start }}">	
 				    	</div>
-				    	<div class="form-group" style="width: 48.65%">
+				    	<div class="form-group width-49p">
 				    		<label for="time_start">Time Start</label>
 				    		<select class="form-control" name="time_start">
 				    			@for ($i = 0; $i < 24; $i++)
@@ -86,13 +86,13 @@
 				    	</div>
 				    </div>
 				    <div class="flex-align-center-justify-between">
-				    	<div class="form-group width-50p padding-left-5" style="width: 48.65%">
+				    	<div class="form-group width-49p padding-left-5">
 				    		<label for="date_end">Date End</label>
 				    		<input type="date" class="form-control" name="date_end" value="{{ $data['event']->date_end }}"> 		
 				    	</div>
-				    	<div class="form-group" style="width: 48.65%">
+				    	<div class="form-group">
 				    		<label for="time_end">Time End</label>
-				    		<select class="form-control" name="time_end">
+				    		<select class="form-control width-49p" name="time_end">
 				    			@for ($i = 0; $i < 24; $i++)
 				    				@for ($j = 0; $j < 2; $j++)
 					    				@if ($i < 10)
@@ -132,9 +132,9 @@
 			    	</div>
     			</div>
 	    	@endif
-	    	<div class="submit flex">
+	    	<div class="flex">
 	    		{{ csrf_field() }}
-	    		<input type="submit" class="btn btn-default margin-left-auto" value="Submit">	
+	    		<input type="submit" class="submit btn btn-default margin-left-auto" value="Submit">
 	    	</div>
 	    </form>	
     </div>

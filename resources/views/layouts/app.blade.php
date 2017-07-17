@@ -56,6 +56,10 @@
                             <a class="back navbar-brand" href="{{ url('calendar') }}">
                                 <span class="glyphicon glyphicon-chevron-left"></span>
                             </a>
+                        @elseif (strpos($url, 'edit') == true)
+                            <a class="back navbar-brand" href="{{ url('calendar') }}">
+                                <span class="glyphicon glyphicon-chevron-left"></span>
+                            </a>
                         @else
                             <a class="back navbar-brand" href="{{ url('home') }}">
                                 <span class="glyphicon glyphicon-chevron-left"></span>

@@ -122,7 +122,6 @@ Route::get('/calendar/{event_id}/edit', 'CalendarController@edit_event');
 Route::post('/calendar/{event_id}', 'CalendarController@update_event');
 
 
-
 // Messages
 
 Route::get('/messages', 'MessageController@messages');
