@@ -154,16 +154,41 @@ class CalendarController extends Controller
     	$calendar_events = [];
     	foreach ($events as $event)
     	{
-    		$calendar_event = Calendar::event(
-	    		$event->name, 
-	    		$event->all_day, 
-	    		$event->date_start, 
-	    		$event->date_end,
-	    		$event->id,
-	    		[
-					'url' => '/calendar/'.$event->id.'/edit',
-				]
-	    	);
+            if ($event->all_day)
+            {
+                $calendar_event = Calendar::event(
+                    $event->name, 
+                    $event->all_day, 
+                    $event->date_start, 
+                    $event->date_end,
+                    $event->id,
+                    [
+                        'url' => '/calendar/'.$event->id.'/edit',
+                    ]
+                );
+            }
+            else
+            {
+
+                $date_start = Carbon::parse($event->date_start);
+                $time_start = Carbon::parse($event->time_start);
+                $date_time_start = Carbon::create($date_start->year, $date_start->month, $date_start->day, $time_start->hour, $time_start->minute, $time_start->second);
+
+                $date_end = Carbon::parse($event->date_end);
+                $time_end = Carbon::parse($event->time_end);
+                $date_time_end = Carbon::create($date_end->year, $date_end->month, $date_end->day, $time_end->hour, $time_end->minute, $time_end->second);
+
+                $calendar_event = Calendar::event(
+                    $event->name, 
+                    $event->all_day, 
+                    $date_time_start,
+                    $date_time_end,
+                    $event->id,
+                    [
+                        'url' => '/calendar/'.$event->id.'/edit',
+                    ]
+                );
+            }
 	    	array_push($calendar_events, $calendar_event);
     	}
     	$calendar = Calendar::addEvents($calendar_events, ['color' => '#0275D8', 'textColor' => '#FFFFFF'])

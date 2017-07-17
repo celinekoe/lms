@@ -21,11 +21,11 @@
 			</div>
 			<div class="date-time">
 				<div class="flex-align-center-justify-between">
-		    		<div class="form-group width-50p padding-right-5" style="width: 48.65%">
+		    		<div class="form-group width-49p padding-right-5">
 			    		<label for="date_start">Date Start</label>
-			    		<input type="date" class="form-control" name="date_start">	
+			    		<input type="date" class="date-start form-control" name="date_start">	
 			    	</div>
-			    	<div class="form-group" style="width: 48.65%">
+			    	<div class="form-group width-49p">
 			    		<label for="time_start">Time Start</label>
 			    		<select class="form-control" name="time_start">
 			    			@for ($i = 0; $i < 24; $i++)
@@ -49,11 +49,11 @@
 			    	</div>
 			    </div>
 			    <div class="flex-align-center-justify-between">
-			    	<div class="form-group width-50p padding-left-5" style="width: 48.65%">
+			    	<div class="form-group width-49p padding-left-5">
 			    		<label for="date_end">Date End</label>
-			    		<input type="date" class="form-control" name="date_end"> 		
+			    		<input type="date" class="date-end form-control" name="date_end"> 		
 			    	</div>
-			    	<div class="form-group" style="width: 48.65%">
+			    	<div class="form-group width-49p">
 			    		<label for="time_end">Time End</label>
 			    		<select class="form-control" name="time_end">
 			    			@for ($i = 0; $i < 24; $i++)

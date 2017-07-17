@@ -43,7 +43,7 @@
     				<div class="flex-align-center-justify-between">
 			    		<div class="form-group width-49p padding-right-5">
 				    		<label for="date_start">Date Start</label>
-				    		<input type="date" class="form-control" name="date_start" value="{{ $data['event']->date_start }}">	
+				    		<input type="date" class="date-start form-control" name="date_start" value="{{ $data['event']->date_start }}">	
 				    	</div>
 				    	<div class="form-group width-49p">
 				    		<label for="time_start">Time Start</label>
@@ -88,11 +88,11 @@
 				    <div class="flex-align-center-justify-between">
 				    	<div class="form-group width-49p padding-left-5">
 				    		<label for="date_end">Date End</label>
-				    		<input type="date" class="form-control" name="date_end" value="{{ $data['event']->date_end }}"> 		
+				    		<input type="date" class="date-end form-control" name="date_end" value="{{ $data['event']->date_end }}"> 		
 				    	</div>
-				    	<div class="form-group">
+				    	<div class="form-group width-49p">
 				    		<label for="time_end">Time End</label>
-				    		<select class="form-control width-49p" name="time_end">
+				    		<select class="form-control" name="time_end">
 				    			@for ($i = 0; $i < 24; $i++)
 				    				@for ($j = 0; $j < 2; $j++)
 					    				@if ($i < 10)
