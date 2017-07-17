@@ -6,18 +6,15 @@
         <div class="font-size-32">Contacts</div>
     </div>
     <div class="bg-white flex-align-center height-50 margin-bottom-2 padding-10">
-        <form action="" method="POST" class="post-form width-100p">
-            <div class="flex-align-center width-100p">
-                <input type="text" placeholder="Search contacts" class="form-control">
-                {{ csrf_field() }}  
-            </div>
-        </form>
+        <div class="flex-align-center width-100p">
+            <input type="text" placeholder="Search contacts" class="search form-control">
+        </div>
     </div>
     <div class="contacts">
         @foreach ($data['contacts'] as $contact)
             <div class="contact bg-white margin-bottom-2 padding-10">
                 <a href="{{ url('message/'.$contact->message_thread->id) }}">
-                    <div>{{ $contact->name }}</div>
+                    <div class="contact-name">{{ $contact->name }}</div>
                 </a>
             </div>
         @endforeach
@@ -27,4 +24,8 @@
         <a class="bg-primary flex-align-center-justify-center height-100p text-white width-50p" href="{{ url('/contacts') }}">Contacts</a>
     </div>
 </div>
+@endsection
+
+@section('script')
+    <script src="{{ asset('js/contacts.js') }}"></script>
 @endsection

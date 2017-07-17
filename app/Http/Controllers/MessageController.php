@@ -55,6 +55,11 @@ class MessageController extends Controller
         return view('message', ['data' => $data]);
     }
 
+    /**
+     * Show the contacts page.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function contacts(Request $request)
     {
         $user = Auth::user();
@@ -108,6 +113,7 @@ class MessageController extends Controller
             $message_thread = MessageThread::create([
                 'user_id_1' => $user->id,
                 'user_id_2' => $contact->id,
+                'preview' => '',
             ]);
         }
 
