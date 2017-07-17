@@ -113,11 +113,14 @@ Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/quiz
 
 Route::get('/grades', 'GradeController@index');
 
+// Calendar
+
 Route::get('/calendar', 'CalendarController@index');
-
 Route::get('/calendar/create', 'CalendarController@create');
-
 Route::post('/calendar', 'CalendarController@store');
+Route::get('/calendar/{event_id}/edit', 'CalendarController@edit_event');
+
+
 
 // Messages
 

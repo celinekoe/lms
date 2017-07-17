@@ -25,7 +25,10 @@
                 <a href="{{ url('unit/'.$data['unit']->id.'/unit_info/file/'.$unit_info_file->id) }}">
                     <div>
                         @if ($unit_info_file->type == 'video')
-                            <span class="glyphicon glyphicon-facetime-video margin-left-10"></span>
+                            <span>
+                                <span class="glyphicon glyphicon-facetime-video margin-left-10"></span>
+                                <span class="margin-left-10">[{{ $unit_info_file->formatted_file_size}}, {{ $unit_info_file->length }}]</span>
+                            </span>
                         @elseif ($unit_info_file->type == 'document')
                             <span class="glyphicon glyphicon-book margin-left-10"></span>
                         @endif

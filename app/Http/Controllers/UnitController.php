@@ -213,10 +213,33 @@ class UnitController extends Controller
 
     private function set_unit_info_file($user, $unit_info_file)
     {
+        $unit_info_file = $this->set_formatted_file_size($unit_info_file);
+
         $unit_info_file_is_downloaded = $this->get_unit_info_file_is_downloaded($user, $unit_info_file);
         $unit_info_file = $this->set_unit_info_file_is_downloaded($unit_info_file, $unit_info_file_is_downloaded);
 
         return $unit_info_file;
+    }
+
+    private function set_formatted_file_size($file)
+    {
+        $file->formatted_file_size = $this->format_file_size($file->size);
+
+        return $file;
+    }
+
+    /**
+     * Format file size
+     *
+     * @return string
+     */
+    private function format_file_size($size, $precision = 2)
+    {
+        $base = log($size, 1024);
+        $suffixes = array('', 'K', 'M', 'G', 'T');   
+        $formatted_file_size = round(pow(1024, $base - floor($base)), $precision) .' '. $suffixes[floor($base)];
+
+        return $formatted_file_size;
     }
 
     private function get_unit_info_file_is_downloaded($user, $unit_info_file)

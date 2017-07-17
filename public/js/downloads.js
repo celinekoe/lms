@@ -13,6 +13,44 @@ $(".sections-open").click(function(e) {
 	$(this).parent().parent().siblings(".sections-files").toggle();
 });
 
+$(".course-download").off().click(function(e) {
+	e.preventDefault();
+	var course_download = $(this);
+	var href = course_download.attr("href");
+	open_confirm_download();
+	$(".confirm-text").text("Confirm course download?");
+	$(".confirm-option-cancel").off().click(function(e) {
+		e.preventDefault();
+		close_confirm_download();
+	});
+	$(".confirm-option-download").off().click(function(e) {
+		e.preventDefault();
+		close_confirm_download();
+		$.get(href, function(data) {
+			toggle_course_download(course_download);
+		});
+	});
+});
+
+$(".course-delete").off().click(function(e) {
+	e.preventDefault();
+	var course_delete = $(this);
+	var href = course_delete.attr("href");
+	open_confirm_delete();
+	$(".confirm-text").text("Confirm course delete?");
+	$(".confirm-option-cancel").off().click(function(e) {
+		e.preventDefault();
+		close_confirm_delete();
+	});
+	$(".confirm-option-delete").off().click(function(e) {
+		e.preventDefault();
+		close_confirm_delete();
+		$.get(href, function(data) {
+			toggle_course_delete(course_delete);
+		});
+	});
+});
+
 $(".unit-download").off().click(function(e) {
 	e.preventDefault();
 	var unit_download = $(this);
@@ -242,6 +280,39 @@ $(".section-delete").off().click(function(e) {
 	});
 });
 
+// Toggle course download/delete
+
+function toggle_course_download(course_download)
+{
+	course_download.hide();
+	course_download.siblings(".course-delete").show();
+	$(".unit-info-download").hide();
+	$(".unit-info-delete").show();
+	$(".sections-download").hide();
+	$(".sections-delete").show();
+	$(".section-download").hide();
+	$(".section-delete").show();
+	$(".assignments-download").hide();
+	$(".assignments-delete").show();
+	$(".assignment-download").hide();
+	$(".assignment-delete").show();
+}
+
+function toggle_course_delete(course_delete)
+{
+	course_delete.siblings(".course-download").show();
+	course_delete.hide();
+	$(".unit-info-download").show();
+	$(".unit-info-delete").hide();
+	$(".sections-download").show();
+	$(".sections-delete").hide();
+	$(".section-download").show();
+	$(".section-delete").hide();
+	$(".assignments-download").show();
+	$(".assignments-delete").hide();
+	$(".assignment-download").show();
+	$(".assignment-delete").hide();
+}
 
 // Toggle unit download/delete
 

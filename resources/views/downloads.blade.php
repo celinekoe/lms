@@ -4,7 +4,7 @@
 <div class="margin-10">
     <div class="bg-white flex-align-center margin-bottom-10 padding-10">
         <div class="font-size-32">Downloads</div>
-        <div class="margin-left-auto">
+        <!-- <div class="margin-left-auto">
             @if ($data['course']->has_files)
                 @if (!$data['course']->is_downloaded)
                     <div class="course-download glyphicon glyphicon-download margin-top-4 margin-right-10" href="{{ url('course/'.$data['course']->id.'/download') }}"></div>
@@ -17,7 +17,7 @@
                     <div class="course-delete glyphicon glyphicon-remove-circle margin-top-4 margin-right-10" href="{{ url('course/'.$data['course']->id.'/delete') }}"></div>
                 @endif
             @endif
-        </div>
+        </div> -->
     </div>
     <div>
         @foreach ($data['course']->units as $unit)

@@ -16,7 +16,7 @@
                       </div>
                     </div>
                     <div class="margin-left-10">
-                        <div>{{ $unit->unit_code }} {{ $unit->name }}</div>
+                        <div>{{ $unit->unit_code }} {{ $unit->name }} ({{ $unit->unit_term }}, {{ $unit->unit_year }})</div>
                         <div class="small">Due Date {{ $unit->submit_by_date }}</div>
                     </div>
                     <div class="margin-left-auto">

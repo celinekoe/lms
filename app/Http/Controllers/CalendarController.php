@@ -15,6 +15,16 @@ use Carbon\Carbon;
 class CalendarController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Show the calendar page.
      *
      * @return \Illuminate\Http\Response
@@ -70,6 +80,22 @@ class CalendarController extends Controller
         return view('calendar', ['data' => $data]);
     }
 
+    public function edit_event(Request $request)
+    {
+        $event = $this->get_event($request);
+
+        $data['event'] = $event;
+        
+        return view('edit_event', ['data' => $data]);
+    }
+
+    private function get_event($request)
+    {
+        $event = Event::find($request->event_id);
+
+        return $event;
+    }
+
     /**
      * Create calendar
      *
@@ -81,23 +107,6 @@ class CalendarController extends Controller
     	$calendar_events = [];
     	foreach ($events as $event)
     	{
-    		if ($event->assignment_id == null && $event->quiz_id == null)
-            {
-                $url = null;
-            }
-            else if ($event->assignment_id != null)
-    		{
-    			$assignment = Assignment::find($event->assignment_id);
-    			$unit = Unit::find($assignment->unit_id);
-    			$url = url('unit/'.$unit->id.'/assignment/'.$assignment->id);
-    		}
-    		else if ($event->quiz_id != null)
-    		{
-    			$quiz = Quiz::find($event->quiz_id);
-    			$unit = Unit::find($quiz->unit_id);
-    			$section = Section::find($quiz->section_id);
-    			$url = url('unit/'.$unit->id.'/section/'.$section->id.'/quiz/'.$quiz->id);
-    		}
     		$calendar_event = Calendar::event(
 	    		$event->name, 
 	    		$event->full_day, 
@@ -105,7 +114,7 @@ class CalendarController extends Controller
 	    		$event->date_end,
 	    		$event->id,
 	    		[
-					'url' => $url,
+					'url' => '/calendar/'.$event->id.'/edit',
 				]
 	    	);
 	    	array_push($calendar_events, $calendar_event);
