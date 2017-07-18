@@ -68,7 +68,7 @@
             <div>Forum</div>
         </div>
     </a>
-    <div class="bg-white flex-align-center margin-bottom-2 padding-left-20 padding-right-10 padding-top-bottom-10">
+    <div class="bg-white flex-align-center margin-bottom-10 padding-left-20 padding-right-10 padding-top-bottom-10">
         <div class="sections-progress margin-right-10">
             <div class="c100 {{ 'p' . $data['unit']->sections_progress }} font-size-171em green">
               <div class="slice">

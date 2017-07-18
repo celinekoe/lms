@@ -128,7 +128,7 @@ $(".all-day").off().click(function(e) {
 		var date_start = $(".date-start").val();
 		var date_end = $(".date-end").val();
 		$(".date-time").remove();
-		$(".submit").parent().before(date_html);
+		$(".description").parent().before(date_html);
 		$(".date-start").val(date_start);
 		$(".date-end").val(date_end);
 	}
@@ -137,7 +137,7 @@ $(".all-day").off().click(function(e) {
 		var date_start = $(".date-start").val();
 		var date_end = $(".date-end").val();
 		$(".date").remove();
-		$(".submit").parent().before(date_time_html);
+		$(".description").parent().before(date_time_html);
 		$(".date-start").val(date_start);
 		$(".date-end").val(date_end);
 		var time = $(".date-time").find(".time");

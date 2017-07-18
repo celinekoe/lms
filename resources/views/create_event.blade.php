@@ -11,10 +11,6 @@
     			<label for="name">Name</label>
     			<input type="text" class="form-control" name="name">
     		</div>
-	    	<div class="form-group">
-	    		<label for="description">Description</label>
-	    		<textarea type="text" class="form-control" name="description"></textarea>
-	    	</div>
 			<div class="form-group">
 				<label for="all_day">All Day?</label>
 				<input type="checkbox" name="all_day" class="all-day">	
@@ -77,6 +73,10 @@
 			    	</div>
 		    	</div>
 			</div>
+			<div class="form-group">
+	    		<label for="description">Description</label>
+	    		<textarea type="text" class="description form-control" name="description"></textarea>
+	    	</div>
 	    	<div class="flex">
 	    		{{ csrf_field() }}
 	    		<input type="submit" class="submit btn btn-default margin-left-auto" value="Submit">

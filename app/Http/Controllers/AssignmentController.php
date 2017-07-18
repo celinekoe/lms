@@ -138,6 +138,19 @@ class AssignmentController extends Controller
             ->update(['submitted_at' => null]);
     }
 
+    public function uploaded_assignment_file(Request $request)
+    {
+        
+        $unit = Unit::find($request->unit_id);
+        $assignment = Assignment::find($request->assignment_id);
+        $file = File::find($request->file_id);
+        $data['unit'] = $unit;
+        $data['assignment'] = $assignment;
+        $data['file'] = $file;
+
+        return view('uploaded_assignment_file', ['data' => $data]);
+    }
+
     // Assignment Page Helper Functions
 
     /**

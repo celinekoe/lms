@@ -57,7 +57,9 @@ Route::get('/unit/{unit_id}/assignment/{assignment_id}/delete', 'AssignmentContr
 Route::get('/unit/{unit_id}/assignment/{assignment_id}/file/{file_id}', 'AssignmentController@assignment_file');
 Route::get('/unit/{unit_id}/assignment/{assignment_id}/file/{file_id}/download', 'AssignmentController@assignment_file_download');
 Route::get('/unit/{unit_id}/assignment/{assignment_id}/file/{file_id}/delete', 'AssignmentController@assignment_file_delete');
+
 Route::post('/unit/{unit_id}/assignment/{assignment_id}', 'AssignmentController@submit');
+Route::get('/unit/{unit_id}/assignment/{assignment_id}/uploaded_file/{file_id}', 'AssignmentController@uploaded_assignment_file');
 Route::get('/unit/{unit_id}/assignment/{assignment_id}/file/{file_id}/cancel-submit', 'AssignmentController@cancel_submit');
 
 // Grade routes

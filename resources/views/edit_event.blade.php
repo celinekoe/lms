@@ -15,10 +15,6 @@
     			<label for="name">Name</label>
     			<input type="text" class="form-control" name="name" value="{{ $data['event']->name }}">
     		</div>
-	    	<div class="description form-group">
-	    		<label for="description">Description</label>
-	    		<textarea type="text" class="form-control" name="description" rows="4">{{ $data['event']->description }}</textarea>
-	    	</div>
 	    	@if ($data['event']->all_day)
 	    		<div class="form-group">
     				<label for="all_day">All Day?</label>
@@ -136,6 +132,10 @@
 			    	</div>
     			</div>
 	    	@endif
+	    	<div class="form-group">
+	    		<label for="">Description</label>
+	    		<textarea type="text" class="description form-control" name="description" rows="4">{{ $data['event']->description }}</textarea>
+	    	</div>
 	    	<div class="flex">
 	    		{{ csrf_field() }}
 	    		<input type="submit" class="submit btn btn-default margin-left-auto" value="Submit">
