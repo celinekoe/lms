@@ -20,7 +20,6 @@ class CreateNotificationsTable extends Migration
             $table->integer('quiz_id')->unsigned()->nullable();
             $table->integer('event_id')->unsigned()->nullable();
             $table->timestamps();
-            $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('assignment_id')->references('id')->on('assignments');
             $table->foreign('quiz_id')->references('id')->on('quizzes');

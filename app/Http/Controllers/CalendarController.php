@@ -9,6 +9,7 @@ use App\Assignment;
 use App\Section;
 use App\Quiz;
 use App\Event;
+use App\Notification;
 use Calendar;
 use Carbon\Carbon;
 
@@ -134,6 +135,23 @@ class CalendarController extends Controller
                 'time_end' => $request->time_end,
             ]);
         }
+    }
+
+    public function delete_event(Request $request)
+    {
+        $user = Auth::user();
+        $event = $this->get_event($request);
+
+        $this->delete_event_notifications($user, $event);
+
+        $event->delete();
+    }
+
+    private function delete_event_notifications($user, $event)
+    {
+        $notifications = Notification::where('user_id', $user->id)
+            ->where('event_id', $event->id)
+            ->delete();
     }
 
     private function get_event($request)

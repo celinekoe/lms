@@ -120,7 +120,7 @@ Route::get('/calendar/create', 'CalendarController@create');
 Route::post('/calendar', 'CalendarController@store');
 Route::get('/calendar/{event_id}/edit', 'CalendarController@edit_event');
 Route::post('/calendar/{event_id}', 'CalendarController@update_event');
-
+Route::delete('/calendar/{event_id}', 'CalendarController@delete_event');
 
 // Messages
 

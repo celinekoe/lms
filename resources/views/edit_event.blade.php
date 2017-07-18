@@ -7,6 +7,10 @@
     </div>
     <div class="bg-white margin-bottom-10 padding-10">
     	<form action="{{ url('calendar/'.$data['event']->id) }}" method="POST" class="submit-form" href="{{ url('calendar/'.$data['event']->id.'/edit') }}">
+    		<div class="flex">
+	    		<div class="event-delete glyphicon glyphicon-remove margin-left-auto" action="{{ url('calendar/'.$data['event']->id) }}" href="{{ url('calendar') }}"></div>
+	    		<input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+    		</div>
     		<div class="name form-group">
     			<label for="name">Name</label>
     			<input type="text" class="form-control" name="name" value="{{ $data['event']->name }}">
@@ -143,4 +147,5 @@
 
 @section('script')
 	<script src="{{ asset('js/event.js') }}"></script>
+	<script src="{{ asset('js/confirm.js') }}"></script>
 @endsection

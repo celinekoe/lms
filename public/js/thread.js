@@ -13,7 +13,7 @@ var edit_form =
 </form>
 `;
 
-$(".thread-delete").click(function(e) {
+$(".thread-delete").off().click(function(e) {
 	var thread_delete = $(this);
 	var post = thread_delete.parent().parent().parent().parent();
 	var href = thread_delete.attr("href");
@@ -30,7 +30,7 @@ $(".thread-delete").click(function(e) {
 	});
 });
 
-$(".post-edit").click(function(e) {
+$(".post-edit").off().click(function(e) {
 	var post_edit = $(this);
 	var post_body = post_edit.parent().parent().parent().siblings(".post-body");
 	var post_body_text = post_body.text();
@@ -41,7 +41,7 @@ $(".post-edit").click(function(e) {
 	post_body.find(":input[name=_token]").val($('meta[name="csrf-token"]').attr('content'));
 });
 
-$(".post-delete").click(function(e) {
+$(".post-delete").off().click(function(e) {
 	var post_delete = $(this);
 	var post = post_delete.parent().parent().parent().parent();
 
@@ -59,7 +59,7 @@ $(".post-delete").click(function(e) {
 	});
 });
 
-$(document).on('click', '.submit', function(e) {
+$(document).off().on('click', '.submit', function(e) {
 	e.preventDefault();
 	var post_form = $(this).parent().parent();
 	var href = post_form.attr("action");

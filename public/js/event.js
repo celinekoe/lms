@@ -96,6 +96,31 @@ var time_options_html =
 	<option value="23:30">023:30</option>
 `
 
+$(".event-delete").off().click(function(e) {
+	var event_delete = $(this);
+	var delete_href = event_delete.attr("action");
+	var calendar_href = event_delete.attr("href");
+	open_confirm_delete();
+	$(".confirm-text").text("Confirm event delete?");
+	$(".confirm-option-cancel").off().click(function(e) {
+		close_confirm_delete();
+	});
+	$(".confirm-option-delete").off().click(function(e) {
+		close_confirm_delete();
+		var data = {
+	        "_token": $('#token').val()
+	    };
+		$.ajax({
+			url: delete_href,
+			method: 'DELETE',
+			data: data,
+		})
+		.done(function(data) {
+			window.location = calendar_href;
+		});
+	});
+});
+
 $(".all-day").off().click(function(e) {
 	// change all day button to not all day button
 	if ($(this).is(':checked')) // unchecked, on click triggers after checked
