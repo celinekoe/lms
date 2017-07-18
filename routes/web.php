@@ -62,7 +62,7 @@ Route::get('/unit/{unit_id}/assignment/{assignment_id}/file/{file_id}/cancel-sub
 
 // Grade routes
 
-Route::get('/unit/{unit_id}/grade', 'GradeController@show');
+Route::get('/unit/{unit_id}/grades', 'GradeController@show');
 
 // Forum routes
 

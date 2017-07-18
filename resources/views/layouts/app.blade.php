@@ -135,6 +135,10 @@
                                         <span class="glyphicon glyphicon-chevron-left"></span>
                                     </a>
                                 @endif
+                            @elseif (strpos($url, 'file') == true) <!-- File page -->
+                                <a class="back navbar-brand" href="{{ url('unit/'.$unit_id.'/section/'.$section_id) }}">
+                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                </a>
                             @else <!-- Section page -->
                             <a class="back navbar-brand" href="{{ url('unit/'.$unit_id) }}">
                                 <span class="glyphicon glyphicon-chevron-left"></span>

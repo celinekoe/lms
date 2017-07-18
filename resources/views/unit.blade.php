@@ -53,7 +53,7 @@
                 </div>
             </div>
         </a>
-        <a href="{{ url('unit/'.$data['unit']->id.'/grade') }}" class="unit-tab grades-tab bg-white flex-align-center-justify-center width-25p" style="height: 86px;">
+        <a href="{{ url('unit/'.$data['unit']->id.'/grades') }}" class="unit-tab grades-tab bg-white flex-align-center-justify-center width-25p" style="height: 86px;">
             <div>
                 <div class="glyphicon glyphicon-signal flex-justify-center margin-bottom-4" aria-hidden="true"></div>
                 <div class="flex-justify-center">
