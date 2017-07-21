@@ -8,7 +8,7 @@
     @foreach ($data['units'] as $unit)
     	<div class="margin-bottom-10">
 	        <div class="unit bg-white flex-align-center margin-bottom-2 padding-10">
-	        	<div>{{ $unit->unit_code }} {{ $unit->name }}</div>
+	        	<div>{{ $unit->unit_code }} {{ $unit->name }} ({{ $unit->unit_term }}, {{ $unit->unit_year }})</div>
 	        	<div class="flex-align-center margin-left-auto">
 	        		<div class="margin-right-10">{{ $unit->alphabet_grade }}</div>
 	        		<div class="glyphicon glyphicon-chevron-down margin-right-10"></div>

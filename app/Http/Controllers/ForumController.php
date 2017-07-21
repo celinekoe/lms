@@ -105,14 +105,31 @@ class ForumController extends Controller
      */
     public function post_index(Request $request)
     {
+        $user = Auth::user();
+        
         $unit = Unit::find($request->unit_id);
-        $thread = Thread::find($request->thread_id);
-        $thread->posts = $this->posts($thread);
+        $thread = $this->get_thread($request);
+        $thread = $this->set_thread($user, $thread);
 
         $data['unit'] = $unit;
         $data['thread'] = $thread;
 
         return view('thread', ['data' => $data]);
+    }
+
+    private function get_thread($request)
+    {
+        $thread = Thread::find($request->thread_id);
+
+        return $thread;
+    }
+
+    private function set_thread($user, $thread)
+    {
+        $thread->user = $user;
+        $thread->posts = $this->posts($thread);
+
+        return $thread;
     }
 
     /**

@@ -47,10 +47,6 @@
                         }
                     ?>
                     @if (strpos($url, 'home') == true) <!-- Dashboard -->
-                    @elseif (strpos($url, 'grades') == true) <!-- Messages page -->
-                        <a class="back navbar-brand" href="{{ url('home') }}">
-                            <span class="glyphicon glyphicon-chevron-left"></span>
-                        </a>
                     @elseif (strpos($url, 'calendar') == true) <!-- Calendar page -->
                         @if (strpos($url, 'create') == true)
                             <a class="back navbar-brand" href="{{ url('calendar') }}">
@@ -104,7 +100,7 @@
                             <a class="back navbar-brand" href="{{ url('unit/'.$unit_id) }}">
                                 <span class="glyphicon glyphicon-chevron-left"></span>
                             </a>
-                        @elseif (strpos($url, 'grade') == true) <!-- Grade page -->
+                        @elseif (strpos($url, 'grades') == true) <!-- Grade page -->
                             <a class="back navbar-brand" href="{{ url('unit/'.$unit_id) }}">
                                 <span class="glyphicon glyphicon-chevron-left"></span>
                             </a>
@@ -149,6 +145,10 @@
                                 <span class="glyphicon glyphicon-chevron-left"></span>
                             </a>
                         @endif
+                    @elseif (strpos($url, 'grades') == true) <!-- Course grades page -->
+                        <a class="back navbar-brand" href="{{ url('home') }}">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
                     @endif                    
                     <div class="margin-left-auto">
                         <!-- <span class="reset navbar-brand glyphicon glyphicon-refresh" href="/reset"></span> --> <!-- Reset test user -->

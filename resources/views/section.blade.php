@@ -9,7 +9,7 @@
             <div class="fill"></div>
           </div>
         </div>
-        <div class="font-size-32 margin-left-10">{{ $data['section']->name }}</div>
+        <div class="font-size-32 margin-left-10">{{ $data['unit']->unit_code }} {{ $data['section']->name }}</div>
         <span class="margin-left-auto margin-right-10">
             @if ($data['section']->has_files)
                 @if ($data['section']->is_downloaded == false)

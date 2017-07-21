@@ -2,10 +2,10 @@
 
 @section('content')
 <div class="margin-10">
-    <div class="bg-white margin-bottom-20 padding-10">
+    <div class="bg-white margin-bottom-10 padding-10">
         <div class="font-size-32">{{ $data['unit']->unit_code }} Forum</div>
     </div>
-    <div class="margin-bottom-20">
+    <div class="margin-bottom-10">
         <a href="{{ url('unit/'.$data['unit']->id.'/forum/create') }}" class="btn btn-default pull-right">Create Thread</a> 
         <div class="clear"></div>   
     </div>
@@ -13,9 +13,11 @@
         <div class="thread margin-bottom-10">
             <a href="{{ url('unit/'.$data['unit']->id.'/forum/'.$thread->id) }}">
                 <div class="bg-white margin-bottom-2 padding-10">
-                    <div class="flex margin-bottom-4">
-                        <div class="thread-delete glyphicon glyphicon-remove margin-left-auto" href="{{ url('unit/'.$data['unit']->id.'/forum/'.$thread->id.'/delete') }}"></div>
-                    </div>
+                    @if (Auth::user()->id == $thread->user_id)
+                        <div class="flex margin-bottom-4">
+                            <div class="thread-delete glyphicon glyphicon-remove margin-left-auto" href="{{ url('unit/'.$data['unit']->id.'/forum/'.$thread->id.'/delete') }}"></div>
+                        </div>
+                    @endif
                     <div>{{ $thread->title }}</div>
                 </div>
                 <div class="bg-white padding-10">

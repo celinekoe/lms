@@ -29,9 +29,11 @@ class SectionController extends Controller
     {
         $user = Auth::user();
 
+        $unit = Unit::find($request->unit_id);
         $section = $this->get_section($request);
         $section = $this->set_section($user, $section);
 
+        $data['unit'] = $unit;
         $data['section'] = $section;
 
         return view('section', ['data' => $data]);
