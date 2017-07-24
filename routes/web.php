@@ -126,6 +126,7 @@ Route::get('/messages', 'MessageController@messages');
 Route::get('/contacts', 'MessageController@contacts');
 Route::get('/message/{message_thread_id}', 'MessageController@message');
 Route::post('/message/{message_thread_id}/send', 'MessageController@send_message');
+Route::get('/message/{message_id}/delete', 'MessageController@delete_message');
 
 
 // Notifications

@@ -5,7 +5,7 @@
     <div class="message-header bg-white flex-align-center-justify-between height-50 margin-bottom-10 padding-10">
         <div class="width-14"></div>
         <div>{{ $data['message_thread']->other_user->name }}</div>
-        <div class="post-edit glyphicon glyphicon-edit" href="{{ url('message/'.$data['message_thread']->id.'/edit') }}"></div>
+        <div class="message-edit glyphicon glyphicon-edit" href="{{ url('message/'.$data['message_thread']->id.'/edit') }}"></div>
     </div>
     <div class="messages margin-bottom-60">
         @foreach ($data['message_thread']->messages_grouped_by_date as $date => $messages)
@@ -17,6 +17,11 @@
                     <div class="message flex margin-bottom-10">
                         @if($message->sender_id == $data['user']->id)
                             <div class="bg-white border-radius-10 margin-left-auto margin-right-10 max-width-80p padding-10">
+                                <div class="message-delete-container display-none">
+                                    <div class="flex margin-bottom-4">
+                                        <div class="message-delete glyphicon glyphicon-remove margin-left-auto" href="{{ url('message/'.$message->id.'/delete') }}"></div>
+                                    </div>
+                                </div>
                                 <div class="message-body">{{ $message->body }}</div>
                                 <div class="flex">
                                     <div class="message-formatted-time margin-left-auto small">{{ $message->formatted_time }}</div>    
@@ -24,6 +29,11 @@
                             </div>
                         @else
                             <div class="bg-white border-radius-10 margin-left-10 max-width-80p padding-10">
+                                <div class="message-delete-container display-none">
+                                    <div class="flex margin-bottom-4">
+                                        <div class="message-delete glyphicon glyphicon-remove margin-left-auto" href="{{ url('message/'.$message->id.'/delete') }}"></div>
+                                    </div>
+                                </div>
                                 <div class="message-body">{{ $message->body }}</div>
                                 <div class="flex">
                                     <div class="message-formatted-time margin-left-auto small">{{ $message->formatted_time }}</div>    

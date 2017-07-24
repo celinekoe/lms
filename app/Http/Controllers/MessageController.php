@@ -76,6 +76,17 @@ class MessageController extends Controller
 
         return $message;
     }
+    /**
+     * Delete message.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function delete_message(Request $request)
+    {
+        $user = Auth::user();
+        $message = Message::find($request->message_id);
+        $message->delete();
+    }
 
     /**
      * Show the contacts page.
