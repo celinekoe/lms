@@ -56,6 +56,28 @@ class MessageController extends Controller
     }
 
     /**
+     * Store message.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function send_message(Request $request)
+    {
+        $user = Auth::user();
+        $message_thread = MessageThread::find($request->message_thread_id);
+        $receiver = $this->get_other_user($user, $message_thread);
+        
+        $message = Message::create([
+            'receiver_id' => $receiver->id,
+            'sender_id' => $user->id,
+            'message_thread_id' => $message_thread->id,
+            'body' => $request->message_body,
+        ]);
+        $message = $this->set_message($message);
+
+        return $message;
+    }
+
+    /**
      * Show the contacts page.
      *
      * @return \Illuminate\Http\Response
@@ -125,27 +147,6 @@ class MessageController extends Controller
         $contact->message_thread = $message_thread;
 
         return $message_thread;
-    }
-
-    /**
-     * Store message.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function send_message(Request $request)
-    {
-        $user = Auth::user();
-        $message = Message::create([
-        	'receiver_id' => $request->receiver_id,
-        	'sender_id' => $user->id,
-        	'body' => $request->body,
-        ]);
-        $messages = $this->get_messages($user);
-
-        $data['user'] = $user;
-        $data['messages'] = $messages;
-        
-        return view('messages', ['data' => $data]);
     }
 
     private function get_message_threads($user)

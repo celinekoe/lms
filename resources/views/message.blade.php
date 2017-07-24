@@ -7,7 +7,7 @@
         <div>{{ $data['message_thread']->other_user->name }}</div>
         <div class="post-edit glyphicon glyphicon-edit" href="{{ url('message/'.$data['message_thread']->id.'/edit') }}"></div>
     </div>
-    <div class="message-body messages margin-bottom-60">
+    <div class="messages margin-bottom-60">
         @foreach ($data['message_thread']->messages_grouped_by_date as $date => $messages)
             <div>
                 <div class="flex-align-center-justify-center">
@@ -17,16 +17,16 @@
                     <div class="message flex margin-bottom-10">
                         @if($message->sender_id == $data['user']->id)
                             <div class="bg-white border-radius-10 margin-left-auto margin-right-10 max-width-80p padding-10">
-                                <div class="body">{{ $message->body }}</div>
+                                <div class="message-body">{{ $message->body }}</div>
                                 <div class="flex">
-                                    <div class="margin-left-auto small">{{ $message->formatted_time }}</div>    
+                                    <div class="message-formatted-time margin-left-auto small">{{ $message->formatted_time }}</div>    
                                 </div>
                             </div>
                         @else
                             <div class="bg-white border-radius-10 margin-left-10 max-width-80p padding-10">
-                                <div class="body">{{ $message->body }}</div>
+                                <div class="message-body">{{ $message->body }}</div>
                                 <div class="flex">
-                                    <div class="margin-left-auto small">{{ $message->formatted_time }}</div>    
+                                    <div class="message-formatted-time margin-left-auto small">{{ $message->formatted_time }}</div>    
                                 </div>
                             </div>
                         @endif
@@ -36,9 +36,9 @@
         @endforeach
     </div>
     <div class="message-footer bg-white flex-align-center height-50 width-100p">
-        <form action="" method="POST" class="post-form width-100p">
+        <form action="" method="POST" class="message-form width-100p">
             <div class="flex-align-center width-100p">
-                <textarea name="body" id="" cols="30" rows="1" class="form-control margin-left-10 width-90p"></textarea>
+                <textarea name="message_body" id="" cols="30" rows="1" class="form-control margin-left-10 width-90p"></textarea>
                 {{ csrf_field() }}
                 <div class="flex-align-center-justify-center margin-left-auto width-10p">
                     <div class="message-send glyphicon glyphicon-circle-arrow-right font-size-19" href="{{ url('/message/'.$data['message_thread']->id.'/send') }}"></div>    
