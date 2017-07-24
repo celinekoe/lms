@@ -151,7 +151,7 @@
                         </a>
                     @endif                    
                     <div class="margin-left-auto">
-                        <!-- <span class="reset navbar-brand glyphicon glyphicon-refresh" href="/reset"></span> --> <!-- Reset test user -->
+                        <span class="reset navbar-brand glyphicon glyphicon-refresh" href="/reset"></span> <!-- Reset test user -->
                         <span class="sidebar-open navbar-brand glyphicon glyphicon-menu-hamburger"></span> <!-- Sidebar open -->
                     </div>
                 </div>
