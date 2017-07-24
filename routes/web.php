@@ -111,10 +111,6 @@ Route::post('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/qui
 Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/quiz/{quiz_id}/summary/{attempt_no}', 'QuizController@quiz_summary');
 
 
-// Other routes
-
-Route::get('/grades', 'GradeController@index');
-
 // Calendar
 
 Route::get('/calendar', 'CalendarController@index');
@@ -129,8 +125,7 @@ Route::delete('/calendar/{event_id}', 'CalendarController@delete_event');
 Route::get('/messages', 'MessageController@messages');
 Route::get('/contacts', 'MessageController@contacts');
 Route::get('/message/{message_thread_id}', 'MessageController@message');
-Route::post('/messages/send', 'MessageController@send');
-Route::post('/messages/delete', 'MessageController@delete');
+Route::post('/message/{message_thread_id}/send', 'MessageController@send_message');
 
 
 // Notifications
@@ -142,3 +137,8 @@ Route::get('/notification/{notification_id}/delete', 'NotificationController@not
 // Downloads Page
 
 Route::get('/downloads', 'DownloadController@downloads');
+
+// Other routes
+
+Route::get('/grades', 'GradeController@index');
+

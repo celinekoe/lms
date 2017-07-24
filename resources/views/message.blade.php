@@ -17,14 +17,14 @@
                     <div class="message flex margin-bottom-10">
                         @if($message->sender_id == $data['user']->id)
                             <div class="bg-white border-radius-10 margin-left-auto margin-right-10 max-width-80p padding-10">
-                                <div>{{ $message->body }}</div>
+                                <div class="body">{{ $message->body }}</div>
                                 <div class="flex">
                                     <div class="margin-left-auto small">{{ $message->formatted_time }}</div>    
                                 </div>
                             </div>
                         @else
                             <div class="bg-white border-radius-10 margin-left-10 max-width-80p padding-10">
-                                <div>{{ $message->body }}</div>
+                                <div class="body">{{ $message->body }}</div>
                                 <div class="flex">
                                     <div class="margin-left-auto small">{{ $message->formatted_time }}</div>    
                                 </div>
@@ -39,13 +39,18 @@
         <form action="" method="POST" class="post-form width-100p">
             <div class="flex-align-center width-100p">
                 <textarea name="body" id="" cols="30" rows="1" class="form-control margin-left-10 width-90p"></textarea>
+                {{ csrf_field() }}
                 <div class="flex-align-center-justify-center margin-left-auto width-10p">
-                    <div class="submit glyphicon glyphicon-circle-arrow-right font-size-19"></div>    
+                    <div class="message-send glyphicon glyphicon-circle-arrow-right font-size-19" href="{{ url('/message/'.$data['message_thread']->id.'/send') }}"></div>    
                 </div>
-                
-                {{ csrf_field() }}  
             </div>
         </form>
     </div>
 </div>
+@endsection
+
+
+
+@section('script')
+    <script src="{{ asset('js/message.js') }}"></script>
 @endsection

@@ -47,6 +47,105 @@ class QuizController extends Controller
         return view('quiz_start', ['data' => $data]);
     }
 
+    /**
+     * Show the question page.
+     *
+     @ @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function question(Request $request)
+    {
+        $user = Auth::user();
+        $unit = Unit::find($request->unit_id);
+        
+        $quiz = $this->get_quiz($request);
+        $quiz = $this->set_quiz($user, $quiz);
+
+        $question = $this->get_question($quiz, $request);
+        $question = $this->set_question($user, $quiz, $question);
+        $question = $this->set_previous_next_question($quiz, $question);
+
+        $data['unit'] = $unit;
+        $data['quiz'] = $quiz;
+        $data['question'] = $question;
+
+        return view('question', ['data' => $data]);
+    }
+
+    /**
+     * Save the user quiz option.
+     *
+     * @param  \Illuminate\Http\Request $request
+     */
+    public function save(Request $request)
+    {
+        $user = Auth::user();
+        $quiz = $this->get_quiz($request);
+
+        $this->update_user_quiz_time_limit_remaining($user, $quiz, $request);
+        $this->update_user_question($user, $quiz, $request);
+    }
+
+    /**
+     * Show the quiz review page.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function quiz_review(Request $request)
+    {
+        $user = Auth::user();
+        $unit = Unit::find($request->unit_id);
+        $quiz = $this->get_quiz($request);
+        $quiz = $this->set_quiz($user, $quiz);
+
+        $data['unit'] = $unit;
+        $data['quiz'] = $quiz;
+
+        return view('quiz_review', ['data' => $data]);
+    }
+
+    /**
+     * Store option, calculate grade, and show quiz summary page
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function submit(Request $request)
+    {
+        // Submit quiz
+        
+        $user = Auth::user();
+        $unit = Unit::find($request->unit_id);
+        $quiz = $this->get_quiz($request);
+        $quiz = $this->set_quiz($user, $quiz);
+        
+        $questions = $this->get_questions($quiz);
+        $quiz = $this->set_questions($user, $quiz, $questions);
+
+        $this->update_user_quiz_submitted_at_grade($user, $quiz);
+    }
+
+    /**
+     * Show the quiz summary page.
+     *
+     @ @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function quiz_summary(Request $request)
+    {
+        $user = Auth::user();
+        $unit = Unit::find($request->unit_id);
+
+        $quiz = $this->get_quiz($request);
+        $quiz = $this->set_quiz_where_attempt_no($user, $quiz, $request);
+
+        $data['unit'] = $unit;
+        $data['quiz'] = $quiz;
+
+        return view('quiz_summary', ['data' => $data]);
+    }
+
     private function set_quiz_where_all_attempts($user, $quiz)
     {
         $user_quizzes = $this->get_user_quizzes($user, $quiz);
@@ -153,69 +252,7 @@ class QuizController extends Controller
         return $grade;
     }
 
-    /**
-     * Show the question page.
-     *
-     @ @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function question(Request $request)
-    {
-        $user = Auth::user();
-        $unit = Unit::find($request->unit_id);
-        
-        $quiz = $this->get_quiz($request);
-        $quiz = $this->set_quiz($user, $quiz);
-
-        $question = $this->get_question($quiz, $request);
-        $question = $this->set_question($user, $quiz, $question);
-        $question = $this->set_previous_next_question($quiz, $question);
-
-        $data['unit'] = $unit;
-        $data['quiz'] = $quiz;
-        $data['question'] = $question;
-
-        return view('question', ['data' => $data]);
-    }
-
-    /**
-     * Show the quiz review page.
-     *
-     @ @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function quiz_review(Request $request)
-    {
-        $user = Auth::user();
-        $unit = Unit::find($request->unit_id);
-        $quiz = $this->get_quiz($request);
-        $quiz = $this->set_quiz($user, $quiz);
-
-        $data['unit'] = $unit;
-        $data['quiz'] = $quiz;
-
-        return view('quiz_review', ['data' => $data]);
-    }
-
-    /**
-     * Show the quiz summary page.
-     *
-     @ @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function quiz_summary(Request $request)
-    {
-        $user = Auth::user();
-        $unit = Unit::find($request->unit_id);
-
-        $quiz = $this->get_quiz($request);
-        $quiz = $this->set_quiz_where_attempt_no($user, $quiz, $request);
-
-        $data['unit'] = $unit;
-        $data['quiz'] = $quiz;
-
-        return view('quiz_summary', ['data' => $data]);
-    }
+    
 
     public function start(Request $request)
     {
@@ -223,36 +260,6 @@ class QuizController extends Controller
         $quiz = Quiz::find($request->quiz_id);
         $user_quiz = $this->create_user_quiz($user, $quiz);
         $this->create_user_questions($user_quiz);
-    }
-
-    public function save(Request $request)
-    {
-        $user = Auth::user();
-        $quiz = $this->get_quiz($request);
-
-        $this->update_user_quiz_time_limit_remaining($user, $quiz, $request);
-        $this->update_user_question($user, $quiz, $request);
-    }
-
-    /**
-     * Store option, calculate grade, and show quiz end page
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function submit(Request $request)
-    {
-        // Submit quiz
-        
-        $user = Auth::user();
-        $unit = Unit::find($request->unit_id);
-        $quiz = $this->get_quiz($request);
-        $quiz = $this->set_quiz($user, $quiz);
-        
-        $questions = $this->get_questions($quiz);
-        $quiz = $this->set_questions($user, $quiz, $questions);
-
-        $this->update_user_quiz_submitted_at_grade($user, $quiz);
     }
 
     private function seconds_to_time_string($seconds)
@@ -442,7 +449,7 @@ class QuizController extends Controller
     private function update_user_quiz_time_limit_remaining($user, $quiz, $request) 
     {
         $user_quiz = $this->get_user_quiz($user, $quiz);
-        $user_quiz->time_limit_remaining = $request->time_limit_remaining;
+        $user_quiz->time_limit_remaining = round($request->time_limit_remaining);
         $user_quiz->save();
     }
 

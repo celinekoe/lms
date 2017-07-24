@@ -132,7 +132,7 @@ class MessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function send_message(Request $request)
     {
         $user = Auth::user();
         $message = Message::create([

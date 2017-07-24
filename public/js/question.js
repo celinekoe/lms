@@ -1,17 +1,3 @@
-var option_html = 
-`
-<div class="option radio bg-white margin-top-0 margin-bottom-7 padding-10">
-    <label class="option-option"><input type="radio" name="option_id" value="" class="option-option"></label>
-</div>
-`;
-
-var selected_option_html = 
-`
-<div class="option radio bg-white margin-top-0 margin-bottom-7 padding-10">
-    <label class="option-option"><input type="radio" name="option_id" value="" checked class="option-option"></label>
-</div>
-`;
-
 var timer_html =
 `
 	<input type="hidden" name="time_limit_remaining">
