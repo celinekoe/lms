@@ -204,10 +204,14 @@ $(".file-delete").click(function(e) {
 
 // Toggle section
 
-$(".glyphicon-chevron-down").click(function(e) {
-	e.preventDefault();
-	$(this).parent().parent().parent().siblings(".subsection-files").toggle();
-	$(this).parent().parent().parent().siblings(".subsection-quizzes").toggle();
+$(".glyphicon-chevron-down").off().click(function(e) {
+	$(this).parent().parent().parent().find(".subsection-files").toggle();
+	$(this).parent().parent().parent().find(".subsection-quizzes").toggle();
+});
+
+$(".subsection").off().click(function(e) {
+	$(this).parent().find(".subsection-files").toggle();
+	$(this).parent().find(".subsection-quizzes").toggle();
 });
 
 // Toggle section download/delete

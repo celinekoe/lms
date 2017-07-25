@@ -9,7 +9,7 @@
     </div>
     <div class="messages margin-bottom-60">
         @foreach ($data['message_thread']->messages_grouped_by_date as $date => $messages)
-            <div>
+            <div class="message-group">
                 <div class="flex-align-center-justify-center">
                     <div class="bg-white border-radius-10 margin-bottom-10 padding-10">{{ $date }}</div>
                 </div>
