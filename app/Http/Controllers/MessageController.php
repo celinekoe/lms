@@ -172,7 +172,6 @@ class MessageController extends Controller
     {
         foreach ($message_threads as $message_thread)
         {
-
             $message_thread = $this->set_message_thread($user, $message_thread);
         }
         
@@ -181,8 +180,17 @@ class MessageController extends Controller
 
     private function set_message_thread($user, $message_thread)
     {
+        $message_thread = $this->set_updated_at_date($message_thread);
+
         $other_user = $this->get_other_user($user, $message_thread);
         $message_thread = $this->set_other_user($message_thread, $other_user);
+
+        return $message_thread;
+    }
+
+    private function set_updated_at_date($message_thread)
+    {
+        $message_thread->updated_at_date = Carbon::parse($message_thread->updated_at)->toDateString();
 
         return $message_thread;
     }

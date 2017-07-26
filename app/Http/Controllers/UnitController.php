@@ -315,12 +315,36 @@ class UnitController extends Controller
         $announcements = Announcement::where('unit_id', $unit->id)->get();
         foreach ($announcements as $announcement)
         {
-            $announcement->user = User::find($announcement->user_id);
-            $announcement->created_by_date = Carbon::parse($announcement->created_at)->toDateString();
+            $announcement = $this->set_announcement($announcement);
         }
         $data['unit'] = $unit;
         $data['announcements'] = $announcements;
         return view('unit_announcements', ['data' => $data]);
+    }
+
+    private function set_announcement($announcement)
+    {
+        $announcement->user = User::find($announcement->user_id);
+        $announcement->created_by_date = Carbon::parse($announcement->created_at)->toDateString();
+        
+        return $announcement;
+    }
+
+    /**
+     * Show the unit announcement page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function announcement(Request $request)
+    {
+        $unit = Unit::find($request->unit_id);
+        $announcement = Announcement::find($request->announcement_id);
+        $announcement = $this->set_announcement($announcement);
+
+        $data['unit'] = $unit;
+        $data['announcement'] = $announcement;
+        
+        return view('unit_announcement', ['data' => $data]);
     }
 
         // Unit Helper Functions

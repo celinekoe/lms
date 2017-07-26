@@ -11,7 +11,7 @@
                 <a href="{{ url('message/'.$message_thread->id) }}">
                     <div class="flex-align-center">
                         <div class="small">{{ $message_thread->other_user->name }}</div>
-                        <div class="margin-left-auto small">{{ $message_thread->updated_at }}</div>
+                        <div class="margin-left-auto small">{{ $message_thread->updated_at_date }}</div>
                     </div>
                     <div class="small">{{ $message_thread->preview }}</div>
                 </a>

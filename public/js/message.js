@@ -61,7 +61,9 @@ $('body').on('click', '.message-delete', function() {
     let message_delete = $(this);
 	let message_href = message_delete.attr("href");
 	$.get(message_href, function(data) {		
+		let message_group = message_delete.parent().parent().parent().parent().parent();
+		console.log(message_group);
 		let message = message_delete.parent().parent().parent().parent();
-		message.remove();
+		delete_message(message);
 	});	
 });

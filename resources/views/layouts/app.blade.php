@@ -88,8 +88,12 @@
                             <a class="back navbar-brand" href="{{ url('unit/'.$unit_id) }}">
                                 <span class="glyphicon glyphicon-chevron-left"></span>
                             </a>
-                        @elseif (strpos($url, 'announcement') == true) <!-- Announcement page -->
+                        @elseif (strpos($url, 'announcements') == true) <!-- Announcement page -->
                             <a class="back navbar-brand" href="{{ url('unit/'.$unit_id) }}">
+                                <span class="glyphicon glyphicon-chevron-left"></span>
+                            </a>
+                        @elseif (strpos($url, 'announcement') == true) <!-- Announcement page -->
+                            <a class="back navbar-brand" href="{{ url('unit/'.$unit_id.'announcements') }}">
                                 <span class="glyphicon glyphicon-chevron-left"></span>
                             </a>
                         @elseif (strpos($url, 'assignment/') == true) <!-- Unit assignment page -->

@@ -31,7 +31,7 @@
                 </div>
             </div>
         </a>
-        <a href="{{ url('unit/'.$data['unit']->id.'/announcement') }}" class="unit-tab announcements-tab bg-white flex-align-center-justify-center margin-right-2 width-25p" style="height: 86px;">
+        <a href="{{ url('unit/'.$data['unit']->id.'/announcements') }}" class="unit-tab announcements-tab bg-white flex-align-center-justify-center margin-right-2 width-25p" style="height: 86px;">
             <div>
                 <div class="glyphicon glyphicon-bullhorn flex-justify-center margin-bottom-4" aria-hidden="true"></div>
                 <div class="flex-justify-center">

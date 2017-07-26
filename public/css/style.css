@@ -539,7 +539,7 @@ a:link, a:hover, a:active, a:visited {
 
 .confirm-overlay {
 	background-color: rgba(0, 0, 0, 0.8);
-	height: calc(100% - 51px);
+	height: calc(100% - 50px);
 	position: fixed;
 	width: 100%;
 	z-index: 1;

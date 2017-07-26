@@ -44,7 +44,8 @@ Route::get('/unit/{unit_id}/unit_info/file/{file_id}/delete', 'UnitController@un
 
 // Announcements
 
-Route::get('/unit/{unit_id}/announcement', 'UnitController@announcements')->name('announcements');
+Route::get('/unit/{unit_id}/announcements', 'UnitController@announcements');
+Route::get('/unit/{unit_id}/announcement/{announcement_id}', 'UnitController@announcement');
 
 // Assignments
 
