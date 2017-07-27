@@ -58,7 +58,7 @@ class UnitController extends Controller
         $unit_files = File::where('unit_id', $request->unit_id)
             ->get();
         $user_unit_files = UserFile::where('user_id', $user->id)
-            ->where('file_id', $unit_files->pluck('id'))
+            ->whereIn('file_id', $unit_files->pluck('id'))
             ->update(['user_files.downloaded' => true]);
     }
 
@@ -74,7 +74,7 @@ class UnitController extends Controller
         $unit_files = File::where('unit_id', $request->unit_id)
             ->get();
         $user_unit_files = UserFile::where('user_id', $user->id)
-            ->where('file_id', $unit_files->pluck('id'))
+            ->whereIn('file_id', $unit_files->pluck('id'))
             ->update(['user_files.downloaded' => false]);
     }
 
@@ -90,7 +90,7 @@ class UnitController extends Controller
             ->whereNotNull('files.section_id')
             ->get();
         $sections_user_files = UserFile::where('user_id', $user->id)
-            ->where('file_id', $sections_files->pluck('id'))
+            ->whereIn('file_id', $sections_files->pluck('id'))
             ->update(['downloaded' => true]);
     }
 
@@ -106,7 +106,7 @@ class UnitController extends Controller
             ->whereNotNull('files.section_id')
             ->get();
         $sections_user_files = UserFile::where('user_id', $user->id)
-            ->where('file_id', $sections_files->pluck('id'))
+            ->whereIn('file_id', $sections_files->pluck('id'))
             ->update(['downloaded' => false]);
     }
 
@@ -134,7 +134,7 @@ class UnitController extends Controller
             ->whereNull('assignment_id')
             ->get();
         $unit_info_user_files = UserFile::where('user_id', $user->id)
-            ->where('file_id', $unit_info_files->pluck('id'))
+            ->whereIn('file_id', $unit_info_files->pluck('id'))
             ->update(['downloaded' => true]);
     }
 
@@ -146,7 +146,7 @@ class UnitController extends Controller
             ->whereNull('assignment_id')
             ->get();
         $unit_info_user_files = UserFile::where('user_id', $user->id)
-            ->where('file_id', $unit_info_files->pluck('id'))
+            ->whereIn('file_id', $unit_info_files->pluck('id'))
             ->update(['downloaded' => false]);
     }
 
