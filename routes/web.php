@@ -90,8 +90,8 @@ Route::get('/unit/{unit_id}/section/{section_id}', 'SectionController@index');
 Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/download', 'SectionController@subsection_download');
 Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/delete', 'SectionController@subsection_delete');
 
-Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/file/{file_id}/download', 'SectionController@individual_download');
-Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/file/{file_id}/delete', 'SectionController@individual_delete');
+Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/file/{file_id}/download', 'SectionController@file_download');
+Route::get('/unit/{unit_id}/section/{section_id}/subsection/{subsection_id}/file/{file_id}/delete', 'SectionController@file_delete');
 
 // Quiz routes
 

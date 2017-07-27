@@ -178,14 +178,12 @@ class SectionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function individual_download(Request $request)
+    public function file_download(Request $request)
     {
         $user = Auth::user();
         $file = File::find($request->file_id);
-        $user_file = DB::table('files')
-            ->join('user_files', 'files.id', '=', 'user_files.file_id')
-            ->where('files.id', $file->id)
-            ->where('user_files.user_id', $user->id)
+        $user_file = UserFile::where('user_id', $user->id)
+            ->where('file_id', $file->id)
             ->first();
         $user_file->downloaded = true;
         $user_file->save();
@@ -196,14 +194,12 @@ class SectionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function individual_delete(Request $request)
+    public function file_delete(Request $request)
     {
         $user = Auth::user();
         $file = File::find($request->file_id);
-        $user_file = DB::table('files')
-            ->join('user_files', 'files.id', '=', 'user_files.file_id')
-            ->where('files.id', $file->id)
-            ->where('user_files.user_id', $user->id)
+        $user_file = UserFile::where('user_id', $user->id)
+            ->where('file_id', $file->id)
             ->first();
         $user_file->downloaded = false;
         $user_file->save();
