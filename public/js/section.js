@@ -134,7 +134,7 @@ $(".section-delete").click(function(e) {
 });
 
 $(".subsection-download").click(function(e) {
-	e.preventStopPropagation();
+	e.stopPropagation();
 	var subsection_download = $(this);
 	var href = subsection_download.attr("href");
 	open_confirm_download();
@@ -151,7 +151,7 @@ $(".subsection-download").click(function(e) {
 });
 
 $(".subsection-delete").click(function(e) {
-	e.preventStopPropagation();
+	e.stopPropagation();
 	var href = $(this).attr("href");
 	var subsection_delete = $(this);
 	open_confirm_delete();
