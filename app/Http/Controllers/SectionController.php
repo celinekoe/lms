@@ -199,12 +199,13 @@ class SectionController extends Controller
     {
         $user = Auth::user();
         $file = File::find($request->file_id);
-        $user_subsection_files = DB::table('files')
+        $user_file = DB::table('files')
             ->join('user_files', 'files.id', '=', 'user_files.file_id')
-            ->join('users', 'user_files.user_id', '=', 'users.id')
-            ->where('users.id', $user->id)
             ->where('files.id', $file->id)
-            ->update(['downloaded' => false]);
+            ->where('user_files.user_id', $user->id)
+            ->first();
+        $user_file->downloaded = false;
+        $user_file->save();
     }
 
     // Section Page Helper Functions
