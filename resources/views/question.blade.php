@@ -13,15 +13,15 @@
             </div>
             <div class="question-question">{{ $data['question']->question }}</div>
         </div>
-        <div class="options">
+        <div class="question-options">
             @foreach ($data['question']->options as $option)
                 @if ($data['question']->user_question->option_id == $option->id)
-                    <div class="option radio bg-white margin-top-0 margin-bottom-7 padding-10">
-                        <label class="option-option"><input type="radio" name="option_id" value="{{ $option->id }}" checked class="option-option">{{ $option->option }}</label>
+                    <div class="question-option radio bg-white margin-top-0 margin-bottom-7 padding-10">
+                        <label class="question-option-body"><input type="radio" name="option_id" value="{{ $option->id }}" checked class="question-option-body">{{ $option->option }}</label>
                     </div>
                 @else
-                    <div class="option radio bg-white margin-top-0 margin-bottom-7 padding-10">
-                        <label class="option-option"><input type="radio" name="option_id" value="{{ $option->id }}" class="option-option">{{ $option->option }}</label>
+                    <div class="question-option radio bg-white margin-top-0 margin-bottom-7 padding-10">
+                        <label class="question-option-body"><input type="radio" name="option_id" value="{{ $option->id }}" class="question-option-body">{{ $option->option }}</label>
                     </div>
                 @endif
             @endforeach

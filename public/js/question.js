@@ -5,17 +5,9 @@ var timer_html =
 
 // Navigation
 
-$(".link").off().click(function(e) {
+$(".question-option").off().click(function(e) {
 	e.preventDefault();
-	var link_form = $(this).parent();
-	var link_href = link_form.attr("action");
-	var question_href = link_form.attr("href");
-	link_form.append(timer_html);
-	$("input[name=time_limit_remaining]").val(difference/1000);
-	$("input[name=hidden_option_id]").val($("input[name=option_id]:checked").val());
-	$.post(link_href, link_form.serialize(), function(data) {		
-		window.location = question_href;
-	});
+	$(this).children().children(".question-option-body").prop("checked", true);
 });
 
 $(".previous").off().click(function(e) {
@@ -38,6 +30,19 @@ $(".next").off().click(function(e) {
 	$("input[name=time_limit_remaining]").val(difference/1000);
 	$("input[name=hidden_option_id]").val($("input[name=option_id]:checked").val());
 	$.post(next_href, $(".next-form").serialize(), function(data) {		
+		window.location = question_href;
+	});
+});
+
+$(".link").off().click(function(e) {
+	e.preventDefault();
+	var link_form = $(this).parent();
+	var link_href = link_form.attr("action");
+	var question_href = link_form.attr("href");
+	link_form.append(timer_html);
+	$("input[name=time_limit_remaining]").val(difference/1000);
+	$("input[name=hidden_option_id]").val($("input[name=option_id]:checked").val());
+	$.post(link_href, link_form.serialize(), function(data) {		
 		window.location = question_href;
 	});
 });

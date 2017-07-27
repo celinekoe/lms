@@ -1,58 +1,70 @@
-$(".unit-open").click(function(e) {
-	e.preventDefault();
+$(".unit-open").off().click(function(e) {
+	e.stopPropagation();
 	$(this).parent().parent().siblings(".unit-files").toggle();
 });
 
-$(".assignments-open").click(function(e) {
-	e.preventDefault();
+$(".unit").off().click(function(e) {
+	$(this).siblings(".unit-files").toggle();
+});
+
+$(".assignments-open").off().click(function(e) {
+	e.stopPropagation();
 	$(this).parent().parent().siblings(".assignments-files").toggle();
 });
 
-$(".sections-open").click(function(e) {
-	e.preventDefault();
+$(".assignments").off().click(function(e) {
+	$(this).siblings(".assignments-files").toggle();
+});
+
+$(".sections-open").off().click(function(e) {
+	e.stopPropagation();
 	$(this).parent().parent().siblings(".sections-files").toggle();
 });
 
-$(".course-download").off().click(function(e) {
-	e.preventDefault();
-	var course_download = $(this);
-	var href = course_download.attr("href");
-	open_confirm_download();
-	$(".confirm-text").text("Confirm course download?");
-	$(".confirm-option-cancel").off().click(function(e) {
-		e.preventDefault();
-		close_confirm_download();
-	});
-	$(".confirm-option-download").off().click(function(e) {
-		e.preventDefault();
-		close_confirm_download();
-		$.get(href, function(data) {
-			toggle_course_download(course_download);
-		});
-	});
+$(".sections").off().click(function(e) {
+	$(this).siblings(".sections-files").toggle();
 });
 
-$(".course-delete").off().click(function(e) {
-	e.preventDefault();
-	var course_delete = $(this);
-	var href = course_delete.attr("href");
-	open_confirm_delete();
-	$(".confirm-text").text("Confirm course delete?");
-	$(".confirm-option-cancel").off().click(function(e) {
-		e.preventDefault();
-		close_confirm_delete();
-	});
-	$(".confirm-option-delete").off().click(function(e) {
-		e.preventDefault();
-		close_confirm_delete();
-		$.get(href, function(data) {
-			toggle_course_delete(course_delete);
-		});
-	});
-});
+// $(".course-download").off().click(function(e) {
+// 	e.preventDefault();
+// 	var course_download = $(this);
+// 	var href = course_download.attr("href");
+// 	open_confirm_download();
+// 	$(".confirm-text").text("Confirm course download?");
+// 	$(".confirm-option-cancel").off().click(function(e) {
+// 		e.preventDefault();
+// 		close_confirm_download();
+// 	});
+// 	$(".confirm-option-download").off().click(function(e) {
+// 		e.preventDefault();
+// 		close_confirm_download();
+// 		$.get(href, function(data) {
+// 			toggle_course_download(course_download);
+// 		});
+// 	});
+// });
+
+// $(".course-delete").off().click(function(e) {
+// 	e.preventDefault();
+// 	var course_delete = $(this);
+// 	var href = course_delete.attr("href");
+// 	open_confirm_delete();
+// 	$(".confirm-text").text("Confirm course delete?");
+// 	$(".confirm-option-cancel").off().click(function(e) {
+// 		e.preventDefault();
+// 		close_confirm_delete();
+// 	});
+// 	$(".confirm-option-delete").off().click(function(e) {
+// 		e.preventDefault();
+// 		close_confirm_delete();
+// 		$.get(href, function(data) {
+// 			toggle_course_delete(course_delete);
+// 		});
+// 	});
+// });
 
 $(".unit-download").off().click(function(e) {
-	e.preventDefault();
+	e.stopPropagation();
 	var unit_download = $(this);
 	var href = unit_download.attr("href");
 	open_confirm_download();
@@ -71,7 +83,7 @@ $(".unit-download").off().click(function(e) {
 });
 
 $(".unit-delete").off().click(function(e) {
-	e.preventDefault();
+	e.stopPropagation();
 	var unit_delete = $(this);
 	var href = unit_delete.attr("href");
 	open_confirm_delete();
@@ -90,7 +102,7 @@ $(".unit-delete").off().click(function(e) {
 });
 
 $(".unit-info-download").off().click(function(e) {
-	e.preventDefault();
+	e.stopPropagation();
 	var unit_info_download = $(this);
 	var href = unit_info_download.attr("href");
 	open_confirm_download();
@@ -109,7 +121,7 @@ $(".unit-info-download").off().click(function(e) {
 });
 
 $(".unit-info-delete").off().click(function(e) {
-	e.preventDefault();
+	e.stopPropagation();
 	var unit_info_delete = $(this);
 	var href = unit_info_delete.attr("href");
 	open_confirm_delete();
@@ -129,7 +141,7 @@ $(".unit-info-delete").off().click(function(e) {
 });
 
 $(".assignments-download").off().click(function(e) {
-	e.preventDefault();
+	e.stopPropagation();
 	var assignments_download = $(this);
 	var href = assignments_download.attr("href");
 	open_confirm_download();
@@ -148,7 +160,7 @@ $(".assignments-download").off().click(function(e) {
 });
 
 $(".assignments-delete").click(function(e) {
-	e.preventDefault();
+	e.stopPropagation();
 	var assignments_delete = $(this);
 	var href = assignments_delete.attr("href");
 	open_confirm_delete();
@@ -205,7 +217,7 @@ $(".assignment-delete").off().click(function(e) {
 });
 
 $(".sections-download").off().click(function(e) {
-	e.preventDefault();
+	e.stopPropagation();
 	var sections_download = $(this);
 	var href = sections_download.attr("href");
 	open_confirm_download();
@@ -224,7 +236,7 @@ $(".sections-download").off().click(function(e) {
 });
 
 $(".sections-delete").off().click(function(e) {
-	e.preventDefault();
+	e.stopPropagation();
 	var sections_delete = $(this);
 	var href = sections_delete.attr("href");
 	open_confirm_delete();
