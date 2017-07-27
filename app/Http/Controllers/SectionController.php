@@ -108,13 +108,10 @@ class SectionController extends Controller
     {
         $user = Auth::user();
         $section = Section::find($request->section_id);
-        $subsection_ids = Subsection::where('section_id', $section->id)->pluck('id');
-        $user_subsection_files = DB::table('subsections')
-            ->join('files', 'subsections.id', '=', 'files.subsection_id')
-            ->join('user_files', 'files.id', '=', 'user_files.file_id')
-            ->join('users', 'user_files.user_id', '=', 'users.id')
-            ->where('users.id', $user->id)
-            ->whereIn('subsections.id', $subsection_ids)
+        $section_files = File::where('section_id', $section->id)
+            ->get();
+        $section_user_files = UserFile::where('user_id', $user->id)
+            ->whereIn('file_id', $section_files->pluck('id'))
             ->update(['downloaded' => true]);
     }
 
@@ -127,13 +124,10 @@ class SectionController extends Controller
     {
         $user = Auth::user();
         $section = Section::find($request->section_id);
-        $subsection_ids = Subsection::where('section_id', $section->id)->pluck('id');
-        $user_subsection_files = DB::table('subsections')
-            ->join('files', 'subsections.id', '=', 'files.subsection_id')
-            ->join('user_files', 'files.id', '=', 'user_files.file_id')
-            ->join('users', 'user_files.user_id', '=', 'users.id')
-            ->where('users.id', $user->id)
-            ->whereIn('subsections.id', $subsection_ids)
+        $section_files = File::where('section_id', $section->id)
+            ->get();
+        $section_user_files = UserFile::where('user_id', $user->id)
+            ->whereIn('file_id', $section_files->pluck('id'))
             ->update(['downloaded' => false]);
     }
 
@@ -162,12 +156,10 @@ class SectionController extends Controller
     {
         $user = Auth::user();
         $subsection = Subsection::find($request->subsection_id);
-        $user_subsection_files = DB::table('subsections')
-            ->join('files', 'subsections.id', '=', 'files.subsection_id')
-            ->join('user_files', 'files.id', '=', 'user_files.file_id')
-            ->join('users', 'user_files.user_id', '=', 'users.id')
-            ->where('users.id', $user->id)
-            ->where('subsections.id', $subsection->id)
+        $subsection_files = File::where('subsection_id', $subsection->id)
+            ->get();
+        $subsection_user_files = UserFile::where('user_id', $user->id)
+            ->whereIn('file_id', $subsection_files->pluck('id'))
             ->update(['downloaded' => false]);
     }
 
@@ -182,9 +174,7 @@ class SectionController extends Controller
         $file = File::find($request->file_id);
         $user_file = UserFile::where('user_id', $user->id)
             ->where('file_id', $file->id)
-            ->first();
-        $user_file->downloaded = true;
-        $user_file->save();
+            ->update(['downloaded' => true]);
     }
 
     /**
@@ -198,9 +188,7 @@ class SectionController extends Controller
         $file = File::find($request->file_id);
         $user_file = UserFile::where('user_id', $user->id)
             ->where('file_id', $file->id)
-            ->first();
-        $user_file->downloaded = false;
-        $user_file->save();
+            ->update(['downloaded' => false]);
     }
 
     // Section Page Helper Functions
