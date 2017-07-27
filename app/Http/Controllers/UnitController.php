@@ -55,11 +55,10 @@ class UnitController extends Controller
     public function unit_download(Request $request)
     {
         $user = Auth::user();
-
-        $user_unit_files = DB::table('files')
-            ->join('user_files', 'files.id', '=', 'user_files.file_id')
-            ->where('files.unit_id', $request->unit_id)
-            ->where('user_files.user_id', $user->id)
+        $unit_files = File::where('unit_id', $request->unit_id)
+            ->get();
+        $user_unit_files = UserFile::where('user_id', $user->id)
+            ->where('file_id', $unit_files->pluck('id'))
             ->update(['user_files.downloaded' => true]);
     }
 
@@ -72,11 +71,10 @@ class UnitController extends Controller
     public function unit_delete(Request $request)
     {
         $user = Auth::user();
-
-        $user_unit_files = DB::table('files')
-            ->join('user_files', 'files.id', '=', 'user_files.file_id')
-            ->where('files.unit_id', $request->unit_id)
-            ->where('user_files.user_id', $user->id)
+        $unit_files = File::where('unit_id', $request->unit_id)
+            ->get();
+        $user_unit_files = UserFile::where('user_id', $user->id)
+            ->where('file_id', $unit_files->pluck('id'))
             ->update(['user_files.downloaded' => false]);
     }
 
@@ -88,13 +86,12 @@ class UnitController extends Controller
     public function sections_download(Request $request)
     {
         $user = Auth::user();
-
-        $user_sections_files = DB::table('files')
-            ->join('user_files', 'files.id', '=', 'user_files.file_id')
-            ->where('files.unit_id', $request->unit_id)
+        $sections_files = File::->where('unit_id', $request->unit_id)
             ->whereNotNull('files.section_id')
-            ->where('user_files.user_id', $user->id)
-            ->update(['user_files.downloaded' => true]);
+            ->get();
+        $sections_user_files = UserFile::where('user_id', $user->id)
+            ->where('file_id', $sections_files->pluck('id'))
+            ->update(['downloaded' => true]);
     }
 
     /**
@@ -105,13 +102,12 @@ class UnitController extends Controller
     public function sections_delete(Request $request)
     {
         $user = Auth::user();
-
-        $user_sections_files = DB::table('files')
-            ->join('user_files', 'files.id', '=', 'user_files.file_id')
-            ->where('files.unit_id', $request->unit_id)
+        $sections_files = File::->where('unit_id', $request->unit_id)
             ->whereNotNull('files.section_id')
-            ->where('user_files.user_id', $user->id)
-            ->update(['user_files.downloaded' => false]);
+            ->get();
+        $sections_user_files = UserFile::where('user_id', $user->id)
+            ->where('file_id', $sections_files->pluck('id'))
+            ->update(['downloaded' => false]);
     }
 
 
@@ -133,26 +129,24 @@ class UnitController extends Controller
     public function unit_info_download(Request $request)
     {
         $user = Auth::user();
-
-        $unit_info_files = DB::table('files')
-            ->join('user_files', 'files.id', '=', 'user_files.file_id')
-            ->where('files.unit_id', $request->unit_id)
-            ->whereNull('files.subsection_id')
-            ->whereNull('files.assignment_id')
-            ->where('user_files.user_id', $user->id)
+        $unit_info_files = File::where('unit_id', $request->unit_id)
+            ->whereNull('subsection_id')
+            ->whereNull('assignment_id')
+            ->get();
+        $unit_info_user_files = UserFile::where('user_id', $user->id)
+            ->where('file_id', $unit_info_files->pluck('id'))
             ->update(['downloaded' => true]);
     }
 
     public function unit_info_delete(Request $request)
     {
         $user = Auth::user();
-
-        $unit_info_files = DB::table('files')
-            ->join('user_files', 'files.id', '=', 'user_files.file_id')
-            ->where('files.unit_id', $request->unit_id)
-            ->whereNull('files.subsection_id')
-            ->whereNull('files.assignment_id')
-            ->where('user_files.user_id', $user->id)
+        $unit_info_files = File::where('unit_id', $request->unit_id)
+            ->whereNull('subsection_id')
+            ->whereNull('assignment_id')
+            ->get();
+        $unit_info_user_files = UserFile::where('user_id', $user->id)
+            ->where('file_id', $unit_info_files->pluck('id'))
             ->update(['downloaded' => false]);
     }
 

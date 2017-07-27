@@ -107,8 +107,7 @@ class SectionController extends Controller
     public function section_download(Request $request)
     {
         $user = Auth::user();
-        $section = Section::find($request->section_id);
-        $section_files = File::where('section_id', $section->id)
+        $section_files = File::where('section_id', $request->section_id)
             ->get();
         $section_user_files = UserFile::where('user_id', $user->id)
             ->whereIn('file_id', $section_files->pluck('id'))
@@ -123,8 +122,7 @@ class SectionController extends Controller
     public function section_delete(Request $request)
     {
         $user = Auth::user();
-        $section = Section::find($request->section_id);
-        $section_files = File::where('section_id', $section->id)
+        $section_files = File::where('section_id', $request->section_id)
             ->get();
         $section_user_files = UserFile::where('user_id', $user->id)
             ->whereIn('file_id', $section_files->pluck('id'))
@@ -139,8 +137,7 @@ class SectionController extends Controller
     public function subsection_download(Request $request)
     {
         $user = Auth::user();
-        $subsection = Subsection::find($request->subsection_id);
-        $subsection_files = File::where('subsection_id', $subsection->id)
+        $subsection_files = File::where('subsection_id', $request->subsection_id)
             ->get();
         $subsection_user_files = UserFile::where('user_id', $user->id)
             ->whereIn('file_id', $subsection_files->pluck('id'))
@@ -155,8 +152,7 @@ class SectionController extends Controller
     public function subsection_delete(Request $request)
     {
         $user = Auth::user();
-        $subsection = Subsection::find($request->subsection_id);
-        $subsection_files = File::where('subsection_id', $subsection->id)
+        $subsection_files = File::where('subsection_id', $request->subsection_id)
             ->get();
         $subsection_user_files = UserFile::where('user_id', $user->id)
             ->whereIn('file_id', $subsection_files->pluck('id'))
@@ -171,9 +167,8 @@ class SectionController extends Controller
     public function file_download(Request $request)
     {
         $user = Auth::user();
-        $file = File::find($request->file_id);
         $user_file = UserFile::where('user_id', $user->id)
-            ->where('file_id', $file->id)
+            ->where('file_id', $request->file_id)
             ->update(['downloaded' => true]);
     }
 
@@ -185,9 +180,8 @@ class SectionController extends Controller
     public function file_delete(Request $request)
     {
         $user = Auth::user();
-        $file = File::find($request->file_id);
         $user_file = UserFile::where('user_id', $user->id)
-            ->where('file_id', $file->id)
+            ->where('file_id', $request->file_id)
             ->update(['downloaded' => false]);
     }
 
