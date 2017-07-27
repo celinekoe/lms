@@ -86,7 +86,7 @@ class UnitController extends Controller
     public function sections_download(Request $request)
     {
         $user = Auth::user();
-        $sections_files = File::->where('unit_id', $request->unit_id)
+        $sections_files = File::where('unit_id', $request->unit_id)
             ->whereNotNull('files.section_id')
             ->get();
         $sections_user_files = UserFile::where('user_id', $user->id)
@@ -102,7 +102,7 @@ class UnitController extends Controller
     public function sections_delete(Request $request)
     {
         $user = Auth::user();
-        $sections_files = File::->where('unit_id', $request->unit_id)
+        $sections_files = File::where('unit_id', $request->unit_id)
             ->whereNotNull('files.section_id')
             ->get();
         $sections_user_files = UserFile::where('user_id', $user->id)
