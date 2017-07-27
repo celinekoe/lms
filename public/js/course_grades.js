@@ -1,4 +1,3 @@
-$(".glyphicon-chevron-down").click(function(e) {
-	e.preventDefault();
-	$(this).parent().parent().siblings(".unit-grades").toggle();
+$(".unit").off().click(function(e) {
+	$(this).siblings(".unit-grades").toggle();
 });

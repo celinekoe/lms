@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="margin-10">
-    <div class="bg-white margin-bottom-20 padding-10">
-        <div class="font-size-32">Create Thread</div>
+    <div class="bg-white margin-bottom-10 padding-10">
+        <div class="font-size-32">{{ $data['unit']->unit_code }} Create Thread</div>
     </div>
     <div class="bg-white padding-10">
     	<form action="{{ url('unit/'.$data['unit']->id.'/forum') }}" method="POST">
