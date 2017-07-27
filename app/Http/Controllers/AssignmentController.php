@@ -44,22 +44,22 @@ class AssignmentController extends Controller
     public function assignments_download(Request $request)
     {
         $user = Auth::user();
-        $user_files = DB::table('files')
-            ->join('user_files', 'files.id', '=', 'user_files.file_id')
-            ->where('files.unit_id', $request->unit_id)
-            ->whereNotNull('files.assignment_id')
-            ->where('user_files.user_id', $user->id)
+        $assignments_files = File::where('unit_id', $request->unit_id)
+            ->whereNotNull('assignment_id')
+            ->get();
+        $assignments_user_files = UserFile::where('user_id', $user->id)
+            ->whereIn('file_id', $assignments_files->pluck('id'))
             ->update(['downloaded' => true]);
     }
 
     public function assignments_delete(Request $request)
     {
         $user = Auth::user();
-        $user_files = DB::table('files')
-            ->join('user_files', 'files.id', '=', 'user_files.file_id')
-            ->where('files.unit_id', $request->unit_id)
-            ->whereNotNull('files.assignment_id')
-            ->where('user_files.user_id', $user->id)
+        $assignments_files = File::where('unit_id', $request->unit_id)
+            ->whereNotNull('assignment_id')
+            ->get();
+        $assignments_user_files = UserFile::where('user_id', $user->id)
+            ->whereIn('file_id', $assignments_files->pluck('id'))
             ->update(['downloaded' => false]);
     }
 
@@ -84,20 +84,20 @@ class AssignmentController extends Controller
     public function assignment_download(Request $request)
     {
         $user = Auth::user();
-        $user_files = DB::table('files')
-            ->join('user_files', 'files.id', '=', 'user_files.file_id')
-            ->where('files.assignment_id', $request->assignment_id)
-            ->where('user_files.user_id', $user->id)
+        $assignment_files = File::where('files.assignment_id', $request->assignment_id)
+            ->get();
+        $assignment_user_files = UserFile::where('user_id', $user->id)
+            ->whereIn('file_id', $assignment_files->pluck('id'))
             ->update(['downloaded' => true]);
     }
 
     public function assignment_delete(Request $request)
     {
         $user = Auth::user();
-        $user_files = DB::table('files')
-            ->join('user_files', 'files.id', '=', 'user_files.file_id')
-            ->where('files.assignment_id', $request->assignment_id)
-            ->where('user_files.user_id', $user->id)
+        $assignment_files = File::where('files.assignment_id', $request->assignment_id)
+            ->get();
+        $assignment_user_files = UserFile::where('user_id', $user->id)
+            ->whereIn('file_id', $assignment_files->pluck('id'))
             ->update(['downloaded' => false]);
     }
 

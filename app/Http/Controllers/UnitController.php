@@ -59,7 +59,7 @@ class UnitController extends Controller
             ->get();
         $user_unit_files = UserFile::where('user_id', $user->id)
             ->whereIn('file_id', $unit_files->pluck('id'))
-            ->update(['user_files.downloaded' => true]);
+            ->update(['downloaded' => true]);
     }
 
 
@@ -75,7 +75,7 @@ class UnitController extends Controller
             ->get();
         $user_unit_files = UserFile::where('user_id', $user->id)
             ->whereIn('file_id', $unit_files->pluck('id'))
-            ->update(['user_files.downloaded' => false]);
+            ->update(['downloaded' => false]);
     }
 
     /**
