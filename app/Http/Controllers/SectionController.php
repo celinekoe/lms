@@ -146,12 +146,10 @@ class SectionController extends Controller
     {
         $user = Auth::user();
         $subsection = Subsection::find($request->subsection_id);
-        $user_subsection_files = DB::table('subsections')
-            ->join('files', 'subsections.id', '=', 'files.subsection_id')
-            ->join('user_files', 'files.id', '=', 'user_files.file_id')
-            ->join('users', 'user_files.user_id', '=', 'users.id')
-            ->where('users.id', $user->id)
-            ->where('subsections.id', $subsection->id)
+        $subsection_files = File::where('subsection_id', $subsection->id)
+            ->get();
+        $subsection_user_files = UserFile::where('user_id', $user->id)
+            ->whereIn('file_id', $subsection_files->pluck('id'))
             ->update(['downloaded' => true]);
     }
 
