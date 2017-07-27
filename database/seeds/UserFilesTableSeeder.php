@@ -114,7 +114,7 @@ class UserFilesTableSeeder extends Seeder
         DB::table('user_files')->insert([
             'user_id' => 1,
             'file_id' => 11,
-            'completed' => false,
+            'completed' => true,
             'downloaded' => false,
             'uploaded' => false,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -320,7 +320,7 @@ class UserFilesTableSeeder extends Seeder
         DB::table('user_files')->insert([
             'user_id' => 2,
             'file_id' => 11,
-            'completed' => false,
+            'completed' => true,
             'downloaded' => false,
             'uploaded' => false,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
