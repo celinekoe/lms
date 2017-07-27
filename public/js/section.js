@@ -134,8 +134,7 @@ $(".section-delete").click(function(e) {
 });
 
 $(".subsection-download").click(function(e) {
-	console.log("Child called");
-	e.preventDefault();
+	e.preventStopPropagation();
 	var subsection_download = $(this);
 	var href = subsection_download.attr("href");
 	open_confirm_download();
@@ -152,7 +151,7 @@ $(".subsection-download").click(function(e) {
 });
 
 $(".subsection-delete").click(function(e) {
-	e.preventDefault();
+	e.preventStopPropagation();
 	var href = $(this).attr("href");
 	var subsection_delete = $(this);
 	open_confirm_delete();
@@ -210,7 +209,6 @@ $(".glyphicon-chevron-down").off().click(function(e) {
 });
 
 $(".subsection").off().click(function(e) {
-	console.log("Parent called");
 	$(this).parent().find(".subsection-files").toggle();
 	$(this).parent().find(".subsection-quizzes").toggle();
 });
