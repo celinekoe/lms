@@ -1,4 +1,4 @@
-$(".assignments-download").click(function(e) {
+$(".assignments-download").off().click(function(e) {
 	e.preventDefault();
 	var assignments_download = $(this);
 	var href = assignments_download.attr("href");
@@ -17,7 +17,7 @@ $(".assignments-download").click(function(e) {
 	});
 });
 
-$(".assignments-delete").click(function(e) {
+$(".assignments-delete").off().click(function(e) {
 	e.preventDefault();
 	var assignments_delete = $(this);
 	var href = assignments_delete.attr("href");
@@ -36,7 +36,7 @@ $(".assignments-delete").click(function(e) {
 	});
 });
 
-$(".assignment-download").click(function(e) {
+$(".assignment-download").off().click(function(e) {
 	e.preventDefault();
 	var assignment_download = $(this);
 	var href = assignment_download.attr("href");
@@ -55,7 +55,7 @@ $(".assignment-download").click(function(e) {
 	});
 });
 
-$(".assignment-delete").click(function(e) {
+$(".assignment-delete").off().click(function(e) {
 	e.preventDefault();
 	var assignment_delete = $(this);
 	var href = assignment_delete.attr("href");
@@ -74,7 +74,9 @@ $(".assignment-delete").click(function(e) {
 	});
 });
 
-$(".file-download").click(function(e) {
+alert("test");
+
+$(".file-download").off().click(function(e) {
 	e.preventDefault();
 	var file_download = $(this);
 	var href = file_download.attr("href");
@@ -93,7 +95,7 @@ $(".file-download").click(function(e) {
 	});
 });
 
-$(".file-delete").click(function(e) {
+$(".file-delete").off().click(function(e) {
 	e.preventDefault();
 	var file_delete = $(this);
 	var href = file_delete.attr("href");
@@ -101,11 +103,11 @@ $(".file-delete").click(function(e) {
 	$(".confirm-text").text("Confirm file delete?");
 	$(".confirm-option-cancel").off().click(function(e) {
 		e.preventDefault();
-		close_confirm_download();
+		close_confirm_delete();
 	});
 	$(".confirm-option-delete").off().click(function(e) {
 		e.preventDefault();
-		close_confirm_download();
+		close_confirm_delete();
 		$.get(href, function(data) {
 			toggle_file_delete(file_delete);
 		});
@@ -113,7 +115,7 @@ $(".file-delete").click(function(e) {
 });
 
 
-$(".glyphicon-chevron-down").click(function(e) {
+$(".glyphicon-chevron-down").off().click(function(e) {
 	e.preventDefault();
 	console.log();
 	$(this).parent().parent().parent().parent().find(".assignment-files").toggle();
