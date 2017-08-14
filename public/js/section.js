@@ -62,8 +62,6 @@ $(".resources-tab-header").click(function(e) {
 
 // Section mark as complete and incomplete
 
-var section_progress = $(".section-progress");
-
 $(document).on('click','.complete',function(e){
 	e.preventDefault();
 	var href = $(this).attr("href");
@@ -72,11 +70,12 @@ $(document).on('click','.complete',function(e){
 		complete.hide();
 		complete.siblings(".incomplete").show();
 		var new_section_progress = `<div class="section-progress c100 p` + data.section_progress + ` ` + `
-		font-size-228em green"><div class="slice"><div class="bar"></div><div class="fill"></div></div></div>`
+		font-size-228em green"><div class="slice"><div class="bar"></div><div class="fill"></div></div></div>`;
 		$(".section-progress").replaceWith(new_section_progress);
 		var new_subsection_progress = `<div class="subsection-progress c100 p` + data.subsection_progress + ` ` + `
-		font-size-171em green"><div class="slice"><div class="bar"></div><div class="fill"></div></div></div>`
-		$(".subsection-progress").replaceWith(new_subsection_progress);
+		font-size-171em green"><div class="slice"><div class="bar"></div><div class="fill"></div></div></div>`;
+		var subsection_progress = complete.parent().parent().parent().parent().parent().parent().find(".subsection-progress");
+		subsection_progress.replaceWith(new_subsection_progress);
 	});
 });
 
@@ -88,11 +87,12 @@ $(document).on('click','.incomplete',function(e){
 		incomplete.siblings(".complete").show();
 		incomplete.hide();
 		var new_section_progress = `<div class="section-progress c100 p` + data.section_progress + ` ` + `
-		font-size-228em green"><div class="slice"><div class="bar"></div><div class="fill"></div></div></div>`
+		font-size-228em green"><div class="slice"><div class="bar"></div><div class="fill"></div></div></div>`;
 		$(".section-progress").replaceWith(new_section_progress);
 		var new_subsection_progress = `<div class="subsection-progress c100 p` + data.subsection_progress + ` ` + `
-		font-size-171em green"><div class="slice"><div class="bar"></div><div class="fill"></div></div></div>`
-		$(".subsection-progress").replaceWith(new_subsection_progress);
+		font-size-171em green"><div class="slice"><div class="bar"></div><div class="fill"></div></div></div>`;
+		var subsection_progress = complete.parent().parent().parent().parent().parent().parent().find(".subsection-progress");
+		subsection_progress.replaceWith(new_subsection_progress);
 	});
 });
 
