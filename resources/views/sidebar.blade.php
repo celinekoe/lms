@@ -1,7 +1,11 @@
 <div class="sidebar height-100p">
     @if (Auth::guest())
-        <li><a href="{{ route('login') }}">Login</a></li>
-        <li><a href="{{ route('register') }}">Register</a></li>
+        <a href="{{ route('login') }}">
+            <div class="flex-align-center padding-10">Login</div>
+        </a>
+        <a href="{{ route('login') }}">
+            <div class="flex-align-center padding-10">Register</div>
+        </a>
     @else
         <div class="sidebar-close padding-10">
             <div class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></div>
