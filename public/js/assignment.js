@@ -79,11 +79,11 @@ $(".file-delete").click(function(e) {
 	$(".confirm-text").text("Confirm file delete?");
 	$(".confirm-option-cancel").off().click(function(e) {
 		e.preventDefault();
-		close_confirm_download();
+		close_confirm_delete();
 	});
 	$(".confirm-option-delete").off().click(function(e) {
 		e.preventDefault();
-		close_confirm_download();
+		close_confirm_delete();
 		$.get(href, function(data) {
 			toggle_file_delete(file_delete);
 		});

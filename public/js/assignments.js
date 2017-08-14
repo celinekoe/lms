@@ -74,8 +74,6 @@ $(".assignment-delete").off().click(function(e) {
 	});
 });
 
-alert("test");
-
 $(".file-download").off().click(function(e) {
 	e.preventDefault();
 	var file_download = $(this);
