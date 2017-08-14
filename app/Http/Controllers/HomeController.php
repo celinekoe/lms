@@ -51,7 +51,7 @@ class HomeController extends Controller
             $assignment = Assignment::where('unit_id', $unit->id)
                                         ->orderBy('submit_by_date', 'desc')
                                         ->first();
-            $unit->submit_by_date = ($assignment != null) ? Carbon::parse($assignment->submit_by_date)->toDateTimeString() : null;
+            $unit->submit_by_date = ($assignment != null) ? Carbon::parse($assignment->submit_by_date)->toDateString() : null;
         }
 
         $data['units'] = $units;
