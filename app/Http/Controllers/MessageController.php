@@ -72,9 +72,12 @@ class MessageController extends Controller
             'message_thread_id' => $message_thread->id,
             'body' => $request->message_body,
         ]);
+
         $message = $this->set_message($message);
 
-        return $message;
+        $data['message'] = $message;
+
+        return $data;
     }
     /**
      * Delete message.
@@ -85,6 +88,9 @@ class MessageController extends Controller
     {
         $user = Auth::user();
         $message = Message::find($request->message_id);
+        $message_thread_id = $message->message_thread_id;
+        $message_thread_messages = Message::where('message_thread_id', $message_thread_id)
+            ->get();
         $message->delete();
     }
 
@@ -265,6 +271,8 @@ class MessageController extends Controller
     {
         $formatted_time = $this->get_formatted_time($message);
         $message = $this->set_formatted_time($message, $formatted_time);
+        $formatted_date = $this->get_formatted_date($message);
+        $message = $this->set_formatted_date($message, $formatted_date);
 
         return $message;
     }
@@ -279,6 +287,20 @@ class MessageController extends Controller
     private function set_formatted_time($message, $formatted_time)
     {
         $message->formatted_time = $formatted_time;
+
+        return $message;
+    }
+
+    private function get_formatted_date($message)
+    {
+        $formatted_date = Carbon::parse($message->created_at)->format('D, d M');
+
+        return $formatted_date;
+    }
+
+    private function set_formatted_date($message, $formatted_date)
+    {
+        $message->formatted_date = $formatted_date;
 
         return $message;
     }
