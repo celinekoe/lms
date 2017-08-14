@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function(){
-	return redirect('HomeController@home');
+	return redirect('/home');
 });
 
 Auth::routes();
