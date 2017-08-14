@@ -29,6 +29,10 @@
             </div>
         </div>
     </nav>
+    <!-- Sidebar -->
+    <div class="sidebar-container">
+        @include('sidebar')    
+    </div>
 	@if ($data['file']->type == 'video')
 		<div class="container">
 		<div class="video-container">
